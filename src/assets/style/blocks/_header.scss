@@ -1,0 +1,13 @@
+.header {
+  color: var(--gray-smoky);
+  font-size: rem(48);
+
+  &__nav {
+    color: var(--red);
+  }
+
+  @include tablets {
+    color: var(--red);
+    font-size: rem(24);
+  }
+}
