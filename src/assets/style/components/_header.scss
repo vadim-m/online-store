@@ -1,9 +1,2 @@
 .header {
-  color: var(--gray-smoky);
-  font-size: rem(48);
-
-  @include tablets {
-    color: var(--red);
-    font-size: rem(24);
-  }
 }
