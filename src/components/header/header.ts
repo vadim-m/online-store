@@ -17,7 +17,7 @@ class Header extends Component {
 
     NavLinks.forEach((link) => {
       const linkHTML = document.createElement('a');
-      linkHTML.href = `/${link.id}`;
+      linkHTML.href = `#${link.id}`;
 
       linkHTML.innerText = link.text;
       pageLink.append(linkHTML);

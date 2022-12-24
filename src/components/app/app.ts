@@ -17,7 +17,6 @@ class App {
 
   static renderNewPage(idPage: string) {
     const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
-    console.log(currentPageHTML);
 
     if (currentPageHTML) {
       currentPageHTML.remove();
@@ -46,29 +45,10 @@ class App {
   }
 
   private enableRouteChange() {
-    window.addEventListener('click', (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (target instanceof HTMLElement && !target.matches('div a')) {
-        return;
-      }
-      event.preventDefault();
-      this.urlRoute(event);
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.slice(1);
+      App.renderNewPage(hash);
     });
-  }
-
-  private urlRoute(event: Event) {
-    event = event || window.event;
-    event.preventDefault();
-    const target = event.target as HTMLAnchorElement;
-    if (target) {
-      window.history.pushState({}, '', target.href);
-      this.urlLocationHandler();
-    }
-  }
-
-  private urlLocationHandler() {
-    const location = window.location.pathname.slice(1);
-    App.renderNewPage(location);
   }
 
   run() {
