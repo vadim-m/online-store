@@ -45,9 +45,36 @@ class App {
     }
   }
 
+  private enableRouteChange() {
+    window.addEventListener('click', (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (target instanceof HTMLElement && !target.matches('div a')) {
+        return;
+      }
+      event.preventDefault();
+      this.urlRoute(event);
+    });
+  }
+
+  private urlRoute(event: Event) {
+    event = event || window.event;
+    event.preventDefault();
+    const target = event.target as HTMLAnchorElement;
+    if (target) {
+      window.history.pushState({}, '', target.href);
+      this.urlLocationHandler();
+    }
+  }
+
+  private urlLocationHandler() {
+    const location = window.location.pathname.slice(1);
+    App.renderNewPage(location);
+  }
+
   run() {
     App.container.append(this.header.render());
     App.renderNewPage('store');
+    this.enableRouteChange();
   }
 }
 
