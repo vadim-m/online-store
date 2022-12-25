@@ -1,0 +1,16 @@
+.search {
+  margin-bottom: rem(24);
+
+  &__input {
+    display: block;
+    width: 100%;
+    font-size: rem(16);
+    color: var(--black);
+
+    border: 1px solid var(--gray-light);
+    border-radius: 2px;
+    transition: border-color 0.15s;
+
+    padding: rem(12);
+  }
+}

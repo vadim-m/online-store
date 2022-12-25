@@ -1,0 +1,13 @@
+.catalog {
+  display: grid;
+  gap: 0 rem(24);
+  grid-template-columns: repeat(4, 1fr);
+
+  &__filters {
+    grid-column: span 1;
+  }
+
+  &__content {
+    grid-column: span 3;
+  }
+}
