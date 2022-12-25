@@ -43,7 +43,19 @@
               </div>
             </section>
             <section class="catalog__sort sort">
-              sort
+              <div class="sort__view-wrap">
+                <button class="sort__view sort__view-row active"></button>
+                <button class="sort__view sort__view-column"></button>
+              </div>
+              <label for="sorting" class="sort__label">Сортировать:
+                <select class="sort__select-sorting" id="sorting">
+                  <option value="id" selected>По умолчанию</option>
+                  <option value="price-descending">Цена ↓</option>
+                  <option value="price-ascending">Цена ↑</option>
+                  <option value="name-descending">А - Я</option>
+                  <option value="name-ascending">Я - А</option>
+                </select>
+              </label>
             </section>
             <section class="catalog__list list">
               list
