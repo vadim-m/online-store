@@ -10,4 +10,14 @@
   &__content {
     grid-column: span 3;
   }
+
+  &__list {
+    display: grid;
+    gap: rem(24);
+    list-style: none;
+
+    &_column {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 }
