@@ -1,9 +1,9 @@
 import Page from '../../components/page';
 
-class CartPage extends Page {
+class ErrorPage extends Page {
   static CodeBlock = {
     MainTitle: `
-      <div>Сюда вставляем код корзины</div>
+      <div class="error__title">Ошибка 404. Страница не найдена</div>
     `,
   };
 
@@ -12,10 +12,10 @@ class CartPage extends Page {
   }
 
   render() {
-    const title = this.createBlock(CartPage.CodeBlock.MainTitle);
+    const title = this.createBlock(ErrorPage.CodeBlock.MainTitle);
     this.container.append(title);
     return this.container;
   }
 }
 
-export default CartPage;
+export default ErrorPage;
