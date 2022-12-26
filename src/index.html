@@ -29,9 +29,87 @@
     </header>
     <main class="content">
       <div class="container">
+        <hr>
+        <div>Пример отображения компонента product на отдельной странице c подробный описанием (page-product)
+          <article class="product" id="3">
+            <div class="product__photo">
+              <div class="product__photo-main">
+                <img src="https://raw.githubusercontent.com/vadim-m/api-fake/img/3/1.webp" alt="Product image"
+                  class="product__img">
+                <span class="product__top">Top</span>
+              </div>
+              <ul class="product__thumbnails">
+                <li class="product__thumbnail active">
+                  <button class="product__thumbnail-pic"></button>
+                </li>
+                <li class="product__thumbnail">
+                  <button class="product__thumbnail-pic"></button>
+                </li>
+                <li class="product__thumbnail">
+                  <button class="product__thumbnail-pic"></button>
+                </li>
+              </ul>
+            </div>
+            <div class="product__content">
+              <div class="product__info">
+                <h3 class="product__name">Набор столовых приборов PVD-покрытие 24 предмета</h3>
+                <div class="product__price active">55000 ₽
+                  <span class="product__discount-price">50000 ₽</span>
+                </div>
+              </div>
+              <div class="product__full-info">
+                <h4 class="product__description">Описание товара:</h4>
+                <p class="product__text">Столовые приборы с уникальным PVD-покрытием. Именно это покрытие позволяет
+                  создавать необычные актуальные оттенки приборов — медный, золотой и чёрный цвет.
+                </p>
+                <div class="product__stock">В наличии:
+                  <span class="product__stock-value">15</span>
+                </div>
+                <div class="product__category">Категория:
+                  <span class="product__category-value">Набор приборов</span>
+                </div>
+                <div class="product__color">Цвет:
+                  <span class="product__color-value">Золото</span>
+                </div>
+                <div class="product__material">Материал:
+                  <span class="product__material-value">Латунь</span>
+                </div>
+              </div>
+              <div class="product__buttons">
+                <div class="product__count">
+                  <button class="product__count_minus">-</button>
+                  <span class="product__count_amount">1</span>
+                  <button class="product__count_plus">+</button>
+                </div>
+                <button class="product__button product__button_cart">
+                  Добавить в корзину
+                </button>
+                <button class="product__button product__button_click">
+                  Купить в один клик
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <hr>
         <div class="catalog">
           <aside class="catalog__fiters filters">
-            filter
+            <div class="fake">Фильт по бренду</div>
+            <br>
+            <div class="fake">Фильт по категории</div>
+            <br>
+            <div class="fake">Фильт по цвету</div>
+            <br>
+            <div class="fake">Ползунок по цене</div>
+            <br>
+            <div class="fake">Ползунок по наличию</div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <span class="fake">Кнопка сброса фильров</span>
+            <hr>
+            <span class="fake">Кнопка скопировать URL</span>
           </aside>
           <article class="catalog__content">
             <section class="catalog__search search">
@@ -57,9 +135,92 @@
                 </select>
               </label>
             </section>
-            <section class="catalog__list list">
-              list
+            <section class="catalog__list-wrap">
+              <ul class="catalog__list">
+                <li class="catalog__item">
+                  <article class="product" id="3">
+                    <div class="product__photo">
+                      <div class="product__photo-main">
+                        <img src="https://raw.githubusercontent.com/vadim-m/api-fake/img/3/1.webp" alt="Product image"
+                          class="product__img">
+                        <span class="product__top">Top</span>
+                      </div>
+                      <ul class="product__thumbnails">
+                        <li class="product__thumbnail active">
+                          <button class="product__thumbnail-pic"></button>
+                        </li>
+                        <li class="product__thumbnail">
+                          <button class="product__thumbnail-pic"></button>
+                        </li>
+                        <li class="product__thumbnail">
+                          <button class="product__thumbnail-pic"></button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="product__content">
+                      <div class="product__info">
+                        <h3 class="product__name">Набор столовых приборов PVD-покрытие 24 предмета</h3>
+                        <div class="product__price active">55000 ₽
+                          <span class="product__discount-price">50000 ₽</span>
+                        </div>
+                      </div>
+                      <div class="product__full-info">
+                        <h4 class="product__description">Описание товара:</h4>
+                        <p class="product__text">Столовые приборы с уникальным PVD-покрытием. Именно это покрытие
+                          позволяет
+                          создавать необычные актуальные оттенки приборов — медный, золотой и чёрный цвет.
+                        </p>
+                        <div class="product__stock">В наличии:
+                          <span class="product__stock-value">15</span>
+                        </div>
+                        <div class="product__color">Цвет:
+                          <span class="product__color-value">Золото</span>
+                        </div>
+                        <div class="product__material">Материал:
+                          <span class="product__material-value">Латунь</span>
+                        </div>
+                      </div>
+                      <div class="product__buttons">
+                        <div class="product__count">
+                          <button class="product__count_minus">-</button>
+                          <span class="product__count_amount">1</span>
+                          <button class="product__count_plus">+</button>
+                        </div>
+                        <button class="product__button product__button_cart">
+                          Добавить в корзину
+                        </button>
+                        <button class="product__button product__button_click">
+                          Купить в один клик
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              </ul>
             </section>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div class="product">Товар
+              <li>Id</li>
+              <li>Картинка</li> +
+              <li>Блок еще 3х картинок</li> +
+              <li>Название</li> +
+              <li>Иконка выбор покупателей</li> +
+              <li>На складе</li> +
+              <li>Описание</li> +
+              <li>Цвет</li>
+              <li>Материал</li>
+              <li>Цена</li> +
+              <li>Цена по промокоду</li> +
+              <li>Кнопка добавить в корзину</li>
+              <li>Кнопка купить в 1 клик</li>
+            </div>
           </article>
         </div>
       </div>
