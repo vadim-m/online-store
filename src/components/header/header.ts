@@ -1,5 +1,5 @@
 import Component from '../component';
-import { NavLinks } from '../../constants/constants';
+import { NavLinks } from '../../constants/nav-links';
 
 class Header extends Component {
   constructor(tagName: string, className: string) {

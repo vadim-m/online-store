@@ -4,6 +4,7 @@ import CartPage from '../../pages/cart-page/cart';
 import ProductPage from '../../pages/product-page/product';
 import Header from '../header/header';
 import ErrorPage from '../../pages/error-page/error';
+import StoreItems from '../store-items/store-items';
 import { PageIds } from '../../types/types';
 
 class App {
@@ -40,6 +41,13 @@ class App {
     if (page) {
       const pageHTML = page.render();
       pageHTML.id = App.defaultPageId;
+
+      if (idPage === 'store') {
+        const itemsHTML = new StoreItems('div', 'products__items').renderItems();
+        const place = pageHTML.querySelector('.products') as HTMLElement;
+        place.append(itemsHTML);
+      }
+
       App.container.append(pageHTML);
     }
   }
