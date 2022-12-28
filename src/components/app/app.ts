@@ -3,6 +3,7 @@ import StorePage from '../../pages/store-page/store';
 import CartPage from '../../pages/cart-page/cart';
 import ProductPage from '../../pages/product-page/product';
 import Header from '../header/header';
+import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
 import CardsMain from '../cards-main/cards-main';
 import { PageIds } from '../../types/types';
@@ -11,9 +12,11 @@ class App {
   private static container: HTMLElement = document.querySelector('.wrapper') as HTMLElement;
   private static defaultPageId = 'current-page';
   private header: Header;
+  private footer: Footer;
 
   constructor() {
     this.header = new Header('header', 'header');
+    this.footer = new Footer('footer', 'footer');
   }
 
   static renderNewPage(idPage: string) {
@@ -62,6 +65,7 @@ class App {
   run() {
     App.container.append(this.header.render());
     App.renderNewPage('store');
+    App.container.append(this.footer.render());
     this.enableRouteChange();
   }
 }
