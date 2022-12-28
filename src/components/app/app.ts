@@ -4,7 +4,7 @@ import CartPage from '../../pages/cart-page/cart';
 import ProductPage from '../../pages/product-page/product';
 import Header from '../header/header';
 import ErrorPage from '../../pages/error-page/error';
-import StoreItems from '../store-items/store-items';
+import CardsMain from '../cards-main/cards-main';
 import { PageIds } from '../../types/types';
 
 class App {
@@ -43,7 +43,7 @@ class App {
       pageHTML.id = App.defaultPageId;
 
       if (idPage === 'store') {
-        const itemsHTML = new StoreItems('div', 'products__items').renderItems();
+        const itemsHTML = new CardsMain('div', 'products__items').renderItems();
         const place = pageHTML.querySelector('.products') as HTMLElement;
         place.append(itemsHTML);
       }
