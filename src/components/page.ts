@@ -1,9 +1,9 @@
 abstract class Page {
   protected container: HTMLElement;
-  static CodeBlock = {};
+  static CodeBlock: string;
 
   constructor(className: string) {
-    this.container = document.createElement('div');
+    this.container = document.createElement('main');
     this.container.className = className;
   }
 

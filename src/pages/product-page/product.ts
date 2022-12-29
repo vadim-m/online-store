@@ -1,18 +1,15 @@
 import Page from '../../components/page';
+import ProductFull from '../../components/products/productFull';
 
 class ProductPage extends Page {
-  static CodeBlock = {
-    MainTitle: `
-      <div class="product-details__title">Сюда вставляем код для описания товара</div>
-    `,
-  };
+  static CodeBlock = new ProductFull().render();
 
   constructor(id: string) {
     super(id);
   }
 
   render() {
-    const title = this.createBlock(ProductPage.CodeBlock.MainTitle);
+    const title = this.createBlock(ProductPage.CodeBlock);
     this.container.append(title);
     return this.container;
   }

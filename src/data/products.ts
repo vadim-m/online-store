@@ -1,4 +1,6 @@
-const CATALOG = [
+import { Product } from '../interfaces/product';
+
+const PRODUCTS: Product[] = [
   {
     id: 3,
     brand: 'DomaYa',
@@ -96,4 +98,4 @@ const CATALOG = [
   },
 ];
 
-export default CATALOG;
+export default PRODUCTS;

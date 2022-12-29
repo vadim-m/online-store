@@ -3,20 +3,20 @@ import StorePage from '../../pages/store-page/store';
 import CartPage from '../../pages/cart-page/cart';
 import ProductPage from '../../pages/product-page/product';
 import Header from '../header/header';
-import Footer from '../footer/footer';
+//import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
-import CardsMain from '../cards-main/cards-main';
+import ProductsList from '../products/productsList';
 import { PageIds } from '../../types/types';
 
 class App {
   private static container: HTMLElement = document.querySelector('.wrapper') as HTMLElement;
   private static defaultPageId = 'current-page';
   private header: Header;
-  private footer: Footer;
+  //private footer: Footer;
 
   constructor() {
     this.header = new Header('header', 'header');
-    this.footer = new Footer('footer', 'footer');
+    //this.footer = new Footer('footer', 'footer');
   }
 
   static renderNewPage(idPage: string) {
@@ -29,16 +29,16 @@ class App {
 
     switch (idPage) {
       case PageIds.StorePage:
-        page = new StorePage(idPage);
+        page = new StorePage('content');
         break;
       case PageIds.CartPage:
-        page = new CartPage(idPage);
+        page = new CartPage('content');
         break;
       case PageIds.ProductPage:
-        page = new ProductPage(idPage);
+        page = new ProductPage('content');
         break;
       default:
-        page = new ErrorPage(idPage);
+        page = new ErrorPage('content');
     }
 
     if (page) {
@@ -46,9 +46,9 @@ class App {
       pageHTML.id = App.defaultPageId;
 
       if (idPage === 'store') {
-        const itemsHTML = new CardsMain('div', 'products__items').renderItems();
-        const place = pageHTML.querySelector('.products') as HTMLElement;
-        place.append(itemsHTML);
+        const itemsHTML = new ProductsList('div', 'products__items').renderItems();
+        const placeForAdding = pageHTML.querySelector('.catalog__content') as HTMLElement;
+        placeForAdding.append(itemsHTML);
       }
 
       App.container.append(pageHTML);
@@ -65,7 +65,7 @@ class App {
   run() {
     App.container.append(this.header.render());
     App.renderNewPage('store');
-    App.container.append(this.footer.render());
+    //App.container.append(this.footer.render());
     this.enableRouteChange();
   }
 }
