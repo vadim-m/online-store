@@ -34,6 +34,9 @@ class App {
       case PageIds.CartPage:
         page = new CartPage('content');
         break;
+      case 'product-details/3': // плохо ужасно, только для наглядности
+        page = new ProductPage('content');
+        break;
       case PageIds.ProductPage:
         page = new ProductPage('content');
         break;

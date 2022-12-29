@@ -12,7 +12,7 @@ class ProductMain {
         <article class="product product_row" id="${id}">
           <div class="product__photo">
             <div class="product__photo-main">
-              <a class="catalog__href" href="#${PageLinks[2].id}">
+              <a class="catalog__href" href="#${PageLinks[2].id}/${id}">
                 <img src="${thumbnail}" alt="Product image"
                 class="product__img">
               </a>
