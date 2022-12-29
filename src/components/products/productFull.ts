@@ -1,12 +1,13 @@
+import PRODUCTS from '../../data/products';
+
 class ProductFull {
-  render() {
+  render(id: number) {
     return `
-    <article class="product" id="3">
+    <article class="product" id="${PRODUCTS[id].id}">
             <div class="product__photo">
               <div class="product__photo-main">
-                <img src="https://raw.githubusercontent.com/vadim-m/api-fake/img/3/1.webp" alt="Product image"
+                <img src="${PRODUCTS[id].thumbnail}" alt="Product image"
                   class="product__img">
-                <span class="product__top">Top</span>
               </div>
               <ul class="product__thumbnails">
                 <li class="product__thumbnail active">
@@ -22,27 +23,26 @@ class ProductFull {
             </div>
             <div class="product__content">
               <div class="product__info">
-                <h3 class="product__name">Набор столовых приборов PVD-покрытие 24 предмета</h3>
-                <div class="product__price active">55000 ₽
+                <h3 class="product__name">${PRODUCTS[id].title}</h3>
+                <div class="product__price active">${PRODUCTS[id].price} ₽
                   <span class="product__discount-price">50000 ₽</span>
                 </div>
               </div>
               <div class="product__full-info">
                 <h4 class="product__description">Описание товара:</h4>
-                <p class="product__text">Столовые приборы с уникальным PVD-покрытием. Именно это покрытие позволяет
-                  создавать необычные актуальные оттенки приборов — медный, золотой и чёрный цвет.
+                <p class="product__text">${PRODUCTS[id].description}
                 </p>
                 <div class="product__stock">В наличии:
-                  <span class="product__stock-value">15</span>
+                  <span class="product__stock-value">${PRODUCTS[id].stock}</span>
                 </div>
                 <div class="product__category">Категория:
-                  <span class="product__category-value">Набор приборов</span>
+                  <span class="product__category-value">${PRODUCTS[id].category}</span>
                 </div>
                 <div class="product__color">Цвет:
-                  <span class="product__color-value">Золото</span>
+                  <span class="product__color-value">${PRODUCTS[id].color}</span>
                 </div>
                 <div class="product__material">Материал:
-                  <span class="product__material-value">Латунь</span>
+                  <span class="product__material-value">${PRODUCTS[id].material}</span>
                 </div>
               </div>
               <div class="product__buttons">

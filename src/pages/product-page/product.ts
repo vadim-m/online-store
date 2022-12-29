@@ -2,7 +2,7 @@ import Page from '../../components/page';
 import ProductFull from '../../components/products/productFull';
 
 class ProductPage extends Page {
-  static CodeBlock = new ProductFull().render();
+  static CodeBlock = new ProductFull().render(4); // addEventListener
 
   constructor(id: string) {
     super(id);

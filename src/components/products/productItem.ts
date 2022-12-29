@@ -1,4 +1,5 @@
 import PRODUCTS from '../../data/products';
+import { PageLinks } from '../../constants/nav-links';
 
 class ProductItem {
   render() {
@@ -7,16 +8,21 @@ class ProductItem {
     PRODUCTS.forEach(({ id, thumbnail, title, price, stock }) => {
       htmlCatalog += `
        <li class="catalog__item">
+       
         <article class="product product_row" id="${id}">
           <div class="product__photo">
             <div class="product__photo-main">
-              <img src="${thumbnail}" alt="Product image"
+              <a class="catalog__href" href="#${PageLinks[2].id}">
+                <img src="${thumbnail}" alt="Product image"
                 class="product__img">
+              </a>
             </div>
           </div>
           <div class="product__content">
             <div class="product__info">
-              <h3 class="product__name">${title}</h3>
+              <a class="catalog__href" href="#${PageLinks[2].id}">
+                <h3 class="product__name">${title}</h3>
+              </a>
               <div class="product__price">${price} ₽
               </div>
             </div>
