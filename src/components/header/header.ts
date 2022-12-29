@@ -1,5 +1,6 @@
 import Component from '../component';
 import { PageLinks } from '../../constants/page-links';
+const logo = require('../../assets/img/logo/logo.png');
 
 class Header extends Component {
   constructor(tagName: string, className: string) {
@@ -12,7 +13,7 @@ class Header extends Component {
 
     const componentCode = `
     <a class="header__logo" href="#${PageLinks[0].id}">
-      <img src="./assets/img/logo/logo.png" alt="Site Logo!" class="header__logo-pic">
+      <img src="${logo}" alt="Site Logo!" class="header__logo-pic">
     </a>
     <div class="header__order">
       <div class="header__amount">

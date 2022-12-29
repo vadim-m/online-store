@@ -1,5 +1,5 @@
 import Component from '../component';
-import ProductMain from './productMain';
+import ProductMain from '../products/productMain';
 
 class ProductsList extends Component {
   private productsComponents: ProductMain[] = [new ProductMain()];

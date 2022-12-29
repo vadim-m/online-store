@@ -1,5 +1,5 @@
 import Page from '../../components/page';
-import CartComponent from '../../components/cart/cart-component';
+import CartComponent from '../../components/cart/cart';
 
 class CartPage extends Page {
   static CodeBlock = new CartComponent().render();

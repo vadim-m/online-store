@@ -1,5 +1,5 @@
 import Page from '../../components/page';
-import ErrorComponent from '../../components/error/error-component';
+import ErrorComponent from '../../components/error/error';
 
 class ErrorPage extends Page {
   static CodeBlock = new ErrorComponent().render();

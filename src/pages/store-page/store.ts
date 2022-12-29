@@ -1,5 +1,5 @@
 import Page from '../../components/page';
-import StoreComponent from '../../components/store/store-component';
+import StoreComponent from '../../components/store/store';
 
 class StorePage extends Page {
   static CodeBlock = new StoreComponent().render();

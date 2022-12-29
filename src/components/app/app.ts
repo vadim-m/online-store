@@ -5,7 +5,7 @@ import ProductPage from '../../pages/product-page/product';
 import Header from '../header/header';
 //import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
-import ProductsList from '../products/productsList';
+import ProductsList from '../catalogList/catalogList';
 import { PageIds } from '../../types/types';
 
 class App {
@@ -33,9 +33,6 @@ class App {
         break;
       case PageIds.CartPage:
         page = new CartPage('content');
-        break;
-      case 'product-details/3': // плохо ужасно, только для наглядности
-        page = new ProductPage('content');
         break;
       case PageIds.ProductPage:
         page = new ProductPage('content');

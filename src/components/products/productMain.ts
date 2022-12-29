@@ -1,5 +1,6 @@
 import PRODUCTS from '../../data/products';
 import { PageLinks } from '../../constants/page-links';
+import { PageIds } from '../../types/types';
 
 class ProductMain {
   render() {
@@ -12,7 +13,7 @@ class ProductMain {
         <article class="product product_row" id="${id}">
           <div class="product__photo">
             <div class="product__photo-main">
-              <a class="catalog__href" href="#${PageLinks[2].id}/${id}">
+              <a class="product__href" href="?id=${id}#${PageIds.ProductPage}">
                 <img src="${thumbnail}" alt="Product image"
                 class="product__img">
               </a>
@@ -20,7 +21,7 @@ class ProductMain {
           </div>
           <div class="product__content">
             <div class="product__info">
-              <a class="catalog__href" href="#${PageLinks[2].id}">
+              <a class="product__href" href="#${PageLinks[2].id}">
                 <h3 class="product__name">${title}</h3>
               </a>
               <div class="product__price">${price} ₽
