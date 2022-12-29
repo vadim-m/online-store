@@ -1,5 +1,5 @@
 import Component from '../component';
-import { PageLinks } from '../../constants/nav-links';
+import { PageLinks } from '../../constants/page-links';
 
 class Header extends Component {
   constructor(tagName: string, className: string) {

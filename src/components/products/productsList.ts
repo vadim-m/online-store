@@ -1,8 +1,8 @@
 import Component from '../component';
-import ProductItem from './productItem';
+import ProductMain from './productMain';
 
 class ProductsList extends Component {
-  private productsComponents: ProductItem[] = [new ProductItem()];
+  private productsComponents: ProductMain[] = [new ProductMain()];
 
   constructor(tagName: string, className: string) {
     super(tagName, className);

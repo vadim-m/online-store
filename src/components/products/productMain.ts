@@ -1,7 +1,7 @@
 import PRODUCTS from '../../data/products';
-import { PageLinks } from '../../constants/nav-links';
+import { PageLinks } from '../../constants/page-links';
 
-class ProductItem {
+class ProductMain {
   render() {
     let htmlCatalog = '';
 
@@ -53,4 +53,4 @@ class ProductItem {
   }
 }
 
-export default ProductItem;
+export default ProductMain;
