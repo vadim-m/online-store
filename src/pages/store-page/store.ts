@@ -1,17 +1,17 @@
+import Catalog from '../../components/catalog/catalog';
 import Page from '../../components/page';
-import StoreComponent from '../../components/store/store';
 
 class StorePage extends Page {
-  static CodeBlock = new StoreComponent().render();
+  public catalog: Catalog;
 
-  constructor(id: string) {
-    super(id);
+  constructor(className: string) {
+    super(className);
+    this.catalog = new Catalog('div', 'catalog container');
   }
 
   render() {
-    const title = this.createBlock(StorePage.CodeBlock);
-    this.container.append(title);
-    return this.container;
+    this.appendBlock(this.catalog.render());
+    return this.mainEl;
   }
 }
 

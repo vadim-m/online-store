@@ -12,7 +12,7 @@ class Header extends Component {
     container.className = 'container  header__container';
 
     const componentCode = `
-    <a class="header__logo" href="#${PageLinks[0].id}">
+    <a class="header__logo" href="#${PageLinks[0].id}?">
       <img src="${logo}" alt="Site Logo!" class="header__logo-pic">
     </a>
     <div class="header__order">
@@ -20,7 +20,7 @@ class Header extends Component {
         <span class="header__sum">10200</span>
         <span class="header__currency">₽</span>
       </div>
-      <a class="header__cart header__cart_filled" href="#${PageLinks[1].id}">
+      <a class="header__cart header__cart_filled" href="#${PageLinks[1].id}?">
         <span class="header__cart-counter">12</span>
       </a>
     </div>

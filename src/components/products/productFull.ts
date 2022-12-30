@@ -1,15 +1,19 @@
 import PRODUCTS from '../../data/products';
+import Component from '../component';
 
-class ProductFull {
-  clearTemplate() {
-    
+class ProductFull extends Component {
+  private id: number;
+
+  constructor(tagName: string, className: string, id: number) {
+    super(tagName, className);
+    this.id = id;
   }
 
-  render(id: number) {
+  renderProduct() {
+    const id = this.id;
     const item = PRODUCTS.filter((item) => {
       return item.id === id;
     })[0];
-    console.log(item);
 
     return `
     <article class="product" id="${item.id}">
@@ -70,6 +74,11 @@ class ProductFull {
             </div>
           </article>
     `;
+  }
+
+  render() {
+    this.container.innerHTML = this.renderProduct();
+    return this.container;
   }
 }
 

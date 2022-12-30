@@ -1,7 +1,7 @@
 import Component from '../component';
 import ProductMain from '../products/productMain';
 
-class ProductsList extends Component {
+class CatalogList extends Component {
   private productsComponents: ProductMain[] = [new ProductMain()];
 
   constructor(tagName: string, className: string) {
@@ -23,4 +23,4 @@ class ProductsList extends Component {
   }
 }
 
-export default ProductsList;
+export default CatalogList;
