@@ -2,6 +2,7 @@ import Page from '../page';
 import StorePage from '../../pages/store-page/store';
 import CartPage from '../../pages/cart-page/cart';
 import ProductPage from '../../pages/product-page/product';
+import CatalogList from '../catalog/catalogList';
 import Header from '../header/header';
 //import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
@@ -12,6 +13,7 @@ class App {
   private static defaultPageId = 'current-page';
   private header: Header;
   // private footer: Footer;
+  private catalogList = new CatalogList('main', 'main');
 
   constructor() {
     this.header = new Header('header', 'header');
@@ -66,6 +68,10 @@ class App {
     App.renderNewPage('store');
     // App.container.append(this.footer.render());
     this.enableRouteChange();
+  }
+
+  addEvents() {
+    this.catalogList.addEvents();
   }
 }
 

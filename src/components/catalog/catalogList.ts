@@ -1,11 +1,21 @@
 import Component from '../component';
 import ProductMain from '../products/productMain';
+import { Product } from '../../types/interfaces';
+import PRODUCTS from '../../data/products';
 
 class CatalogList extends Component {
-  private productsComponents: ProductMain[] = [new ProductMain()];
+  private error: Error | null = null;
+  private products: Product[] = [];
+  private productsComponents: ProductMain[] = [];
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
+    this.getProducts();
+  }
+
+  getProducts() {
+    this.products = PRODUCTS;
+    this.productsComponents = this.products.map((product) => new ProductMain(product));
   }
 
   renderItems() {
@@ -20,6 +30,10 @@ class CatalogList extends Component {
 
     container.innerHTML = html;
     return container;
+  }
+
+  addEvents() {
+    this.productsComponents.forEach((item) => item.addEvents());
   }
 }
 

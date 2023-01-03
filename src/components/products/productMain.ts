@@ -1,33 +1,34 @@
-import PRODUCTS from '../../data/products';
+import { Product } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
 
 class ProductMain {
-  render() {
-    let htmlCatalog = '';
+  constructor(private product: Product) {}
 
-    PRODUCTS.forEach(({ id, thumbnail, title, price, stock }) => {
-      htmlCatalog += `
+  private getHtmlID = () => `button__${this.product.id}`;
+
+  render() {
+    return `
        <li class="catalog__item">
        
-        <article class="product product_row" id="${id}">
+        <article class="product product_row" id="${this.product.id}">
           <div class="product__photo">
             <div class="product__photo-main">
-              <a class="product__href" href="#${PageIds.ProductPage}?id=${id}">
-                <img src="${thumbnail}" alt="Product image"
+              <a class="product__href" href="#${PageIds.ProductPage}?id=${this.product.id}">
+                <img src="${this.product.thumbnail}" alt="Product image"
                 class="product__img">
               </a>
             </div>
           </div>
           <div class="product__content">
             <div class="product__info">
-              <a class="product__href" href="#${PageIds.ProductPage}?id=${id}">
-                <h3 class="product__name">${title}</h3>
+              <a class="product__href" href="#${PageIds.ProductPage}?id=${this.product.id}">
+                <h3 class="product__name">${this.product.title}</h3>
               </a>
-              <div class="product__price">${price} ₽
+              <div class="product__price">${this.product.price} ₽
               </div>
             </div>
             <div class="product__stock">В наличии:
-                <span class="product__stock-value">${stock}</span>
+                <span class="product__stock-value">${this.product.stock}</span>
             </div>
             <div class="product__buttons">
               <div class="product__count">
@@ -35,7 +36,7 @@ class ProductMain {
                 <span class="product__count_amount">1</span>
                 <button class="product__count_plus">+</button>
               </div>
-              <button class="product__button product__button_cart">
+              <button class="product__button product__button_cart" id="button__${this.product.id}">
                 Добавить в корзину
               </button>
               <button class="product__button product__button_click">
@@ -47,9 +48,18 @@ class ProductMain {
        </article>
      </li>
     `;
-    });
+  }
 
-    return htmlCatalog;
+  addEvents() {
+    const button = document.getElementById(this.getHtmlID());
+
+    if (!button) {
+      throw new Error('Button is undefined');
+    }
+    button.addEventListener('click', (event: MouseEvent) => {
+      event.preventDefault();
+      console.log('click', this.product);
+    });
   }
 }
 
