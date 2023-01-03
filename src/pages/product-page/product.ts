@@ -7,7 +7,7 @@ class ProductPage extends Page {
 
   constructor(className: string) {
     super(className);
-    this.product = new ProductFull('div', 'container', this.getId());
+    this.product = new ProductFull('div', 'container', this.getId() as number);
   }
 
   getId() {
@@ -16,8 +16,7 @@ class ProductPage extends Page {
     const searchParams = new URLSearchParams(queries);
     const id = searchParams.get('id');
     // console.log(queries, searchParams.toString(), id);
-
-    return +id!;
+    if (id) return +id;
   }
 
   render() {

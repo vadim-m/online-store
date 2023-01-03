@@ -3,7 +3,7 @@ import StorePage from '../../pages/store-page/store';
 import CartPage from '../../pages/cart-page/cart';
 import ProductPage from '../../pages/product-page/product';
 import Header from '../header/header';
-import Footer from '../footer/footer';
+//import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
 import { PageIds } from '../../types/types';
 
