@@ -20,9 +20,7 @@ class ProductPage extends Page {
   }
 
   render() {
-    const title = this.product.render();
-
-    this.mainEl.append(title);
+    this.appendBlock(this.product.render());
     return this.mainEl;
   }
 }

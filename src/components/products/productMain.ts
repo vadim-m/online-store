@@ -1,5 +1,4 @@
 import PRODUCTS from '../../data/products';
-import { PageLinks } from '../../constants/page-links';
 import { PageIds } from '../../types/types';
 
 class ProductMain {
@@ -21,7 +20,7 @@ class ProductMain {
           </div>
           <div class="product__content">
             <div class="product__info">
-              <a class="product__href" href="#${PageLinks[2].id}">
+              <a class="product__href" href="#${PageIds.ProductPage}?id=${id}">
                 <h3 class="product__name">${title}</h3>
               </a>
               <div class="product__price">${price} ₽
