@@ -1,5 +1,5 @@
 import Component from '../component';
-import { PageLinks } from '../../constants/page-links';
+import { PageLinks } from '../../types/constants';
 const logo = require('../../assets/img/logo/logo.png');
 
 class Header extends Component {

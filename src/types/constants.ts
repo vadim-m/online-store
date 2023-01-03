@@ -1,4 +1,4 @@
-import { PageIds } from '../types/types';
+import { PageIds } from './types';
 
 export const PageLinks = [
   {
