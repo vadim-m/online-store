@@ -1,18 +1,16 @@
 import Page from '../../components/page';
+import Cart from '../../components/cart/cart';
 
 class CartPage extends Page {
-  static htmlTemplate = `
-    <div class="cart"> СТРАНИЦА КОРЗИНЫ
-    </div>
-  `;
+  private cart: Cart;
 
   constructor(className: string) {
     super(className);
+    this.cart = new Cart('div', 'container');
   }
 
   render() {
-    const title = this.createBlock(CartPage.htmlTemplate);
-    this.mainEl.append(title);
+    this.appendBlock(this.cart.render());
     return this.mainEl;
   }
 }
