@@ -7,6 +7,7 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
 import { PageIds } from '../../types/types';
+import { addEvents } from '../../helpers/utils';
 
 class App {
   private static container: HTMLElement = document.querySelector('.wrapper') as HTMLElement;
@@ -51,6 +52,11 @@ class App {
 
       pageHTML.id = App.defaultPageId;
       App.container.insertBefore(pageHTML, before);
+
+      // MODAL FORM - перенести
+      const buttonBuy = document.getElementById('buy');
+      if (buttonBuy) addEvents();
+      // КОНЕЦ
     }
   }
 
