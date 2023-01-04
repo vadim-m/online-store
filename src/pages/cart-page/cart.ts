@@ -1,20 +1,19 @@
 import Page from '../../components/page';
 
 class CartPage extends Page {
-  static CodeBlock = {
-    MainTitle: `
-      <div>Сюда вставляем код корзины</div>
-    `,
-  };
+  static htmlTemplate = `
+    <div class="cart"> СТРАНИЦА КОРЗИНЫ
+    </div>
+  `;
 
-  constructor(id: string) {
-    super(id);
+  constructor(className: string) {
+    super(className);
   }
 
   render() {
-    const title = this.createBlock(CartPage.CodeBlock.MainTitle);
-    this.container.append(title);
-    return this.container;
+    const title = this.createBlock(CartPage.htmlTemplate);
+    this.mainEl.append(title);
+    return this.mainEl;
   }
 }
 

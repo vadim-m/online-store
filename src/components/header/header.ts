@@ -1,33 +1,38 @@
 import Component from '../component';
-import { NavLinks } from '../../constants/constants';
+import { PageLinks } from '../../types/constants';
+const logo = require('../../assets/img/logo/logo.png');
 
 class Header extends Component {
   constructor(tagName: string, className: string) {
     super(tagName, className);
   }
 
-  renderPageLinks() {
+  renderHeader() {
     const container = document.createElement('div');
-    container.className = 'container';
+    container.className = 'container  header__container';
 
-    const pageLink = document.createElement('div');
-    pageLink.className = 'header__nav';
+    const componentCode = `
+    <a class="header__logo" href="#${PageLinks[0].id}?">
+      <img src="${logo}" alt="Site Logo!" class="header__logo-pic">
+    </a>
+    <div class="header__order">
+      <div class="header__amount">
+        <span class="header__sum">10200</span>
+        <span class="header__currency">₽</span>
+      </div>
+      <a class="header__cart header__cart_filled" href="#${PageLinks[1].id}?">
+        <span class="header__cart-counter">12</span>
+      </a>
+    </div>
+    `;
 
-    container.append(pageLink);
-
-    NavLinks.forEach((link) => {
-      const linkHTML = document.createElement('a');
-      linkHTML.href = `#${link.id}`;
-
-      linkHTML.innerText = link.text;
-      pageLink.append(linkHTML);
-    });
+    container.innerHTML = componentCode;
 
     this.container.append(container);
   }
 
   render() {
-    this.renderPageLinks();
+    this.renderHeader();
     return this.container;
   }
 }

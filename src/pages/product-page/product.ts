@@ -1,20 +1,27 @@
 import Page from '../../components/page';
+import ProductFull from '../../components/products/productFull';
 
 class ProductPage extends Page {
-  static CodeBlock = {
-    MainTitle: `
-      <div class="product-details__title">Сюда вставляем код для описания товара</div>
-    `,
-  };
+  private product: ProductFull;
+  // ! нужно получить ID и передать в конструктор
 
-  constructor(id: string) {
-    super(id);
+  constructor(className: string) {
+    super(className);
+    this.product = new ProductFull('div', 'container', this.getId() as number);
+  }
+
+  getId() {
+    const hash = window.location.hash;
+    const queries = hash.split('?')[1];
+    const searchParams = new URLSearchParams(queries);
+    const id = searchParams.get('id');
+    // console.log(queries, searchParams.toString(), id);
+    if (id) return +id;
   }
 
   render() {
-    const title = this.createBlock(ProductPage.CodeBlock.MainTitle);
-    this.container.append(title);
-    return this.container;
+    this.appendBlock(this.product.render());
+    return this.mainEl;
   }
 }
 

@@ -1,20 +1,17 @@
+import Catalog from '../../components/catalog/catalog';
 import Page from '../../components/page';
 
 class StorePage extends Page {
-  static CodeBlock = {
-    MainTitle: `
-    <div class="store__title">Сюда вставим код для основной страницы с товарами</div>
-    `,
-  };
+  public catalog: Catalog;
 
-  constructor(id: string) {
-    super(id);
+  constructor(className: string) {
+    super(className);
+    this.catalog = new Catalog('div', 'catalog container');
   }
 
   render() {
-    const title = this.createBlock(StorePage.CodeBlock.MainTitle);
-    this.container.append(title);
-    return this.container;
+    this.appendBlock(this.catalog.render());
+    return this.mainEl;
   }
 }
 

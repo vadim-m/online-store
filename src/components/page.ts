@@ -1,10 +1,10 @@
 abstract class Page {
-  protected container: HTMLElement;
-  static CodeBlock = {};
+  protected mainEl: HTMLElement;
+  static htmlTemplate: string;
 
   constructor(className: string) {
-    this.container = document.createElement('div');
-    this.container.className = className;
+    this.mainEl = document.createElement('main');
+    this.mainEl.className = className;
   }
 
   protected createBlock(text: string) {
@@ -14,8 +14,12 @@ abstract class Page {
     return block;
   }
 
+  protected appendBlock(item: HTMLElement) {
+    this.mainEl.append(item);
+  }
+
   render() {
-    return this.container;
+    return this.mainEl;
   }
 }
 
