@@ -1,8 +1,13 @@
 import { Product } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
+import LocalStorage from '../../data/localStorage';
 
 class ProductMain {
-  constructor(private product: Product) {}
+  private localStorage: LocalStorage;
+
+  constructor(private product: Product) {
+    this.localStorage = new LocalStorage();
+  }
 
   private getHtmlID = () => `button__${this.product.id}`;
 
@@ -59,6 +64,7 @@ class ProductMain {
     button.addEventListener('click', (event: MouseEvent) => {
       event.preventDefault();
       console.log('click', this.product);
+      this.localStorage.putProducts(this.product.id);
     });
   }
 }
