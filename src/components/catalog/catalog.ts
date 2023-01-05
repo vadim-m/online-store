@@ -12,9 +12,18 @@ class Catalog extends Component {
     this.catalogContent = new CatalogContent('article', 'catalog__content');
   }
 
+  renderStore() {
+    const container = document.createElement('div');
+    container.className = 'catalog';
+
+    container.append(this.catalogFilters.render());
+    container.append(this.catalogContent.render());
+
+    this.container.append(container);
+  }
+
   render() {
-    this.container.append(this.catalogFilters.render());
-    this.container.append(this.catalogContent.render());
+    this.renderStore();
     return this.container;
   }
 }
