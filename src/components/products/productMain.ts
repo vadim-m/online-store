@@ -1,15 +1,52 @@
 import { Product } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
 import LocalStorage from '../../data/localStorage';
+import Header from '../header/header';
+//import StorePage from '../../pages/store-page/store';
 
 class ProductMain {
   private localStorage: LocalStorage;
+  private header: Header;
+  //private mainPage: StorePage;
+  //private classNameActive: string;
+  private labelAdd: string;
+  private labelRemove: string;
+  private button: HTMLElement | null;
 
   constructor(private product: Product) {
     this.localStorage = new LocalStorage();
+    this.header = new Header();
+    //this.mainPage = new StorePage('content');
+    //this.classNameActive = 'products-element__btn_active';
+    this.labelAdd = 'Добавить в корзину';
+    this.labelRemove = 'Удалить из корзины';
+    this.button = document.querySelector('.product__button_cart');
   }
 
   private getHtmlID = () => `button__${this.product.id}`;
+
+  handleSetLocationStorage(element: HTMLElement, id: number) {
+    const pushProduct = this.localStorage.getButtonState(id);
+    if (!pushProduct) {
+      //element.classList.add(this.classNameActive);
+      element.innerHTML = this.labelRemove;
+    } else {
+      //element.classList.remove(this.classNameActive);
+      element.innerHTML = this.labelAdd;
+    }
+  }
+
+  changeButtonLabel() {
+    const productsStore = this.localStorage.getProducts();
+    let activeText = '';
+
+    if (productsStore.indexOf(this.product.id) === -1) {
+      activeText = this.labelAdd;
+    } else {
+      activeText = this.labelRemove;
+    }
+    return activeText;
+  }
 
   render() {
     return `
@@ -42,10 +79,7 @@ class ProductMain {
                 <button class="product__count_plus">+</button>
               </div>
               <button class="product__button product__button_cart" id="button__${this.product.id}">
-                Добавить в корзину
-              </button>
-              <button class="product__button product__button_click">
-                Купить в один клик
+                ${this.changeButtonLabel()}
               </button>
             </div>
           </div> 
@@ -58,14 +92,18 @@ class ProductMain {
   addEvents() {
     const button = document.getElementById(this.getHtmlID());
 
-    if (!button) {
-      throw new Error('Button is undefined');
+    if (button) {
+      button.addEventListener('click', (event: MouseEvent) => {
+        event.preventDefault();
+        this.localStorage.putProducts(this.product.id);
+        this.localStorage.putPrices(this.product.price);
+        this.header.render();
+        const button = event.target as HTMLElement;
+        if (button) {
+          this.handleSetLocationStorage(button, this.product.id);
+        }
+      });
     }
-    button.addEventListener('click', (event: MouseEvent) => {
-      event.preventDefault();
-      console.log('click', this.product);
-      this.localStorage.putProducts(this.product.id);
-    });
   }
 }
 
