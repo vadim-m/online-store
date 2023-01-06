@@ -2,60 +2,56 @@ import Component from '../component';
 import Modal from '../../components/modal-form/modal-form';
 import LocalStorage from '../../data/localStorage';
 import PRODUCTS from '../../data/products';
+import CartItem from './cartItem';
+import { Product } from '../../types/interfaces';
 
 class Cart extends Component {
   private modal: Modal;
   private localStorage: LocalStorage;
+  private products: Product[] = [];
+  private productsComponents: CartItem[] = [];
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
     this.modal = new Modal('div', 'container');
     this.localStorage = new LocalStorage();
+    this.getProducts();
+  }
+
+  getProducts() {
+    this.products = PRODUCTS;
+    this.productsComponents = this.products.map((product) => new CartItem(product));
   }
 
   renderCart() {
     const productsStore = this.localStorage.getProducts();
-    let htmlCatalog = '';
-    let sumCatalog = 0;
-    let amountCatalog = 0;
 
     const container = document.createElement('div');
     container.className = 'cart';
 
-    PRODUCTS.forEach(({ id, title, price }) => {
-      if (productsStore.indexOf(id) !== -1) {
-        htmlCatalog += `
-              <div class="product__content">
-                <div class="product__info">
-                  <h3 class="product__name">${title}</h3>
-                <div class="product__price">${price} ₽</div>
-                </div>
-              </div>
-          `;
-        sumCatalog += price;
-        amountCatalog += 1;
+    const filteredItems = [];
+    this.productsComponents.forEach((product) => {
+      if (productsStore.indexOf(product.getId()) !== -1) {
+        filteredItems.push(product);
       }
     });
 
-    const htmlTemplate = `
-      <div class="cart__items">
-        ${htmlCatalog}
+    // const a = [];
+    // filteredItems.forEach((el) => a.push(el.product.price));
+
+    // const price = a.reduce((a, b) => a + b);
+
+    const html = `
+      <ul class="catalog__list">
+        ${filteredItems.map((product) => product.render()).join(' ')}
+      </ul>
+      <div>
+        <div><span>Количество:</span></div>
+        <div><span>Сумма:</span></div>
       </div>
-      <div class="cart__summary">
-        <div class="cart__amount">
-          <span>Количество: </span>
-          ${amountCatalog} ₽
-        </div>
-        <div class="cart__sum">
-          <span>Сумма:</span>
-          ${sumCatalog} ₽
-        </div>
+      `;
 
-        <button class="cart__button product__button product__button_cart" id="buy">КУПИТЬ</button>
-      </div>        
-  `;
-
-    container.innerHTML = htmlTemplate;
+    container.innerHTML = html;
 
     this.container.append(container);
     this.container.append(this.modal.render());
