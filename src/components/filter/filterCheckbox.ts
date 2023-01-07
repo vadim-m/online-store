@@ -1,15 +1,26 @@
 import Component from '../component';
 import PRODUCTS from '../../data/products';
 import { Product } from '../../types/interfaces';
+import { getParamValues } from '../../helpers/hash';
 
 class FilterCheckbox extends Component {
   private filterName = '';
   private category = '';
+  private checkedAttr = '';
 
   constructor(tagName: string, className: string, filterName: string, category: string) {
     super(tagName, className);
     this.filterName = filterName;
     this.category = category;
+  }
+
+  isChecked(option: string) {
+    const values = getParamValues();
+    if (values.indexOf(option) !== -1) {
+      return 'checked';
+    }
+
+    return '';
   }
 
   addCheckbox(productKey: string) {
@@ -19,12 +30,15 @@ class FilterCheckbox extends Component {
 
     let htmlTemplate = '';
     filterOptions.forEach((option) => {
-      htmlTemplate += `
-        <label class="filters__checkbox" data-filter="${option}">
-          <input class="filters__input hide" type="checkbox" name="${this.category}" value="${option}">
-          <span class="filters__checkbox-span"></span>${option}
-        </label>
-      `;
+      if (typeof option === 'string') {
+        this.checkedAttr = this.isChecked(option);
+        htmlTemplate += `
+          <label class="filters__checkbox" data-filter="${option}">
+            <input class="filters__input hide" type="checkbox" name="${this.category}" value="${option}" ${this.checkedAttr}>
+            <span class="filters__checkbox-span"></span>${option}
+          </label>
+        `;
+      }
     });
 
     return htmlTemplate;

@@ -1,5 +1,12 @@
-function getHash() {
-  return window.location.hash;
+export function addParams(name: string, value: string) {
+  const queries = getQueries();
+  const params = new URLSearchParams(queries);
+  for (const value of params.values()) {
+    console.log(value);
+  }
+  params.append(name, value);
+
+  changeHash(params.toString());
 }
 
 function changeHash(queries: string) {
@@ -7,12 +14,8 @@ function changeHash(queries: string) {
   window.location.hash = page + '?' + queries;
 }
 
-export function addParams(name:string, value:string) {
-  const queries = getQueries();
-  let params = new URLSearchParams(queries);
-  params.append(name, value);
-
-  changeHash(params.toString());
+function getHash() {
+  return window.location.hash;
 }
 
 export function getPage() {
@@ -20,6 +23,17 @@ export function getPage() {
   const page = hash.split('?')[0].slice(1);
 
   return page;
+}
+
+export function getParamValues() {
+  const values = [];
+  const queries = getQueries();
+  const params = new URLSearchParams(queries);
+  for (const value of params.values()) {
+    values.push(value);
+  }
+  console.log(values);
+  return values;
 }
 
 export function getQueries() {

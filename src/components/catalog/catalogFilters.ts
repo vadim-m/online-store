@@ -42,7 +42,7 @@ class CatalogFilters extends Component {
         const target = <HTMLInputElement>e.target;
         const paramName = target.name;
         const paramValue = target.value;
-        addParams(paramName,paramValue);
+        addParams(paramName, paramValue);
       });
     });
   }
