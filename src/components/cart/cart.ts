@@ -25,29 +25,35 @@ class Cart extends Component {
 
   renderCart() {
     const productsStore = this.localStorage.getProducts();
+    const productsInCart: number[] = [];
+    productsStore.forEach((product: Product) => {
+      productsInCart.push(product.id);
+    });
 
     const container = document.createElement('div');
     container.className = 'cart';
 
-    const filteredItems = [];
+    const filteredItems: CartItem[] = [];
     this.productsComponents.forEach((product) => {
-      if (productsStore.indexOf(product.getId()) !== -1) {
+      if (productsInCart.indexOf(product.getId()) !== -1) {
         filteredItems.push(product);
       }
     });
-
-    // const a = [];
-    // filteredItems.forEach((el) => a.push(el.product.price));
-
-    // const price = a.reduce((a, b) => a + b);
 
     const html = `
       <ul class="catalog__list">
         ${filteredItems.map((product) => product.render()).join(' ')}
       </ul>
-      <div>
-        <div><span>Количество:</span></div>
-        <div><span>Сумма:</span></div>
+      <div class="cart__summary">
+        <h3>ИТОГО</h3>
+        <div><span>Количество товаров:</span></div>
+        <div><span>Стоимость товаров:</span></div>
+        <div class="cart__promocode">
+            <input class="cart__input" placeholder="Введите промокод" type="text">
+          </div>
+        <button class="product__button product__button_cart" id="buy">
+          Купить
+        </button>
       </div>
       `;
 

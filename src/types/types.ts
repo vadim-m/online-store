@@ -3,3 +3,8 @@ export enum PageIds {
   CartPage = 'cart',
   ProductPage = 'product-details',
 }
+
+export type ItemCart = {
+  id: number;
+  price: number;
+};

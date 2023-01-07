@@ -1,3 +1,5 @@
+import { ItemCart } from '../types/types';
+
 class LocalStorage {
   private keyName: string;
   private priceName: string;
@@ -23,17 +25,22 @@ class LocalStorage {
     return [];
   }
 
-  putProducts(id: number) {
-    const products = this.getProducts();
-    //let pushProduct = false;
-    const index = products.indexOf(id);
+  putProducts(id: number, price: number) {
+    let products = this.getProducts();
+    const index = products.some((object: ItemCart) => object.id === id && object.price === price);
+    const item = {
+      id: 0,
+      price: 0,
+      count: 1,
+    };
 
-    if (index === -1) {
-      products.push(id);
-      //pushProduct = true;
-      //console.log(pushProduct);
+    if (!index) {
+      item.id = id;
+      item.price = price;
+      products.push(item);
+      console.log(item);
     } else {
-      products.splice(index, 1);
+      products = products.filter((object: ItemCart) => object.id !== id && object.price !== price);
     }
 
     localStorage.setItem(this.keyName, JSON.stringify(products));
@@ -59,12 +66,12 @@ class LocalStorage {
   getButtonState(id: number) {
     const products = this.getProducts();
     let pushProduct = false;
-    const index = products.indexOf(id);
+    const index = products.some((object: ItemCart) => object.id === id);
 
-    if (index === -1) {
+    if (!index) {
       pushProduct = true;
     } else {
-      products.splice(index, 1);
+      pushProduct = false;
     }
 
     return pushProduct;
