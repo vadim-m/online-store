@@ -8,6 +8,7 @@ import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
 import { PageIds } from '../../types/types';
 import { addEvents } from '../../helpers/utils';
+import { getPage, getQueries } from '../../helpers/hash';
 
 class App {
   private static container: HTMLElement = document.querySelector('.wrapper') as HTMLElement;
@@ -61,11 +62,10 @@ class App {
 
   private enableRouteChange() {
     window.addEventListener('hashchange', () => {
-      const hash = window.location.hash;
-      const link = hash.split('?')[0].slice(1);
-      //! const queries = hash.split('?')[1]; потом передаем
-
-      App.renderNewPage(link);
+      const page = getPage();
+      const queries = getQueries();
+      console.log(queries);
+      App.renderNewPage(page);
       this.catalogList.addEvents();
     });
   }
