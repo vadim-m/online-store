@@ -1,0 +1,56 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    border-width: 2px;
+    border-color: var(--red);
+
+    padding: rem(8) rem(18);
+    margin-bottom: rem(14);
+  }
+
+  &__subtitle {
+    color: var(--white);
+    font-size: rem(18);
+    font-weight: bold;
+    background-color: var(--red);
+    border-radius: rem(8);
+
+    padding: rem(4) rem(8);
+  }
+
+  &__checkbox {
+    cursor: pointer;
+    margin-bottom: rem(4);
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    line-height: 0;
+
+    padding: 0;
+  }
+
+  &__btn {
+    height: rem(36);
+    flex: 0 0 48%;
+    cursor: pointer;
+    color: var(--black);
+    font-size: rem(12);
+    font-weight: bold;
+    line-height: rem(36);
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+    background-color: var(--white);
+    border: 2px solid;
+
+    padding: 0;
+  }
+}

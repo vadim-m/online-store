@@ -8,7 +8,7 @@ class Catalog extends Component {
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
-    this.catalogFilters = new CatalogFilters('aside', 'catalog__fiters filters');
+    this.catalogFilters = new CatalogFilters('aside', 'catalog__fiters');
     this.catalogContent = new CatalogContent('article', 'catalog__content');
   }
 
