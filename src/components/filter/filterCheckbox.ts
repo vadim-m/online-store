@@ -1,5 +1,6 @@
 import Component from '../component';
 import PRODUCTS from '../../data/products';
+import { Product } from '../../types/interfaces';
 
 class FilterCheckbox extends Component {
   private filterName = '';
@@ -13,7 +14,7 @@ class FilterCheckbox extends Component {
 
   addCheckbox(productKey: string) {
     const filterOptions = Array.from(
-      new Set(PRODUCTS.map((product) => product[productKey]))
+      new Set(PRODUCTS.map((product) => product[productKey as keyof Product]))
     ).sort();
 
     let htmlTemplate = '';

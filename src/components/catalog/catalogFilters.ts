@@ -1,5 +1,6 @@
 import Component from '../component';
 import FilterCheckbox from '../filter/filterCheckbox';
+import { addParams } from '../../helpers/hash';
 
 class CatalogFilters extends Component {
   public filterBrand: FilterCheckbox;
@@ -37,10 +38,13 @@ class CatalogFilters extends Component {
 
   eventListener() {
     this.container.querySelectorAll('.filters__input').forEach((el) => {
-      el.addEventListener('click', (event) => {
-        console.log(event.target); 
+      el.addEventListener('click', (e) => {
+        const target = <HTMLInputElement>e.target;
+        const paramName = target.name;
+        const paramValue = target.value;
+        addParams(paramName,paramValue);
       });
-    })
+    });
   }
 }
 
