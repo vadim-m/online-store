@@ -31,11 +31,17 @@ class CatalogFilters extends Component {
 
   render() {
     this.container = this.renderFilters();
-
+    this.eventListener();
     return this.container;
   }
 
-  // addEventList() {}
+  eventListener() {
+    this.container.querySelectorAll('.filters__input').forEach((el) => {
+      el.addEventListener('click', (event) => {
+        console.log(event.target); 
+      });
+    })
+  }
 }
 
 export default CatalogFilters;

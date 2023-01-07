@@ -15,16 +15,13 @@ class FilterCheckbox extends Component {
     const filterOptions = Array.from(
       new Set(PRODUCTS.map((product) => product[productKey]))
     ).sort();
-    console.log(filterOptions);
 
     let htmlTemplate = '';
-
     filterOptions.forEach((option) => {
       htmlTemplate += `
-        <label class="filters__checkbox">
-          <input class="filters__input hide" type="checkbox">
-          <span class="filters__checkbox-span"></span>
-          ${option}
+        <label class="filters__checkbox" data-filter="${option}">
+          <input class="filters__input hide" type="checkbox" name="${this.category}" value="${option}">
+          <span class="filters__checkbox-span"></span>${option}
         </label>
       `;
     });
@@ -37,7 +34,6 @@ class FilterCheckbox extends Component {
     const htmlTemplate = `
       <legend class="filters__subtitle">${this.filterName}</legend>
         ${labels}
-      </label>
     `;
     this.container.innerHTML = htmlTemplate;
 
