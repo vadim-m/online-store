@@ -16,7 +16,7 @@ class FilterCheckbox extends Component {
 
   isChecked(option: string) {
     const values = getParamValues();
-    if (values.indexOf(option) !== -1) {
+    if (values.includes(option)) {
       return 'checked';
     }
 

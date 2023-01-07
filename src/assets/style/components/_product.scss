@@ -455,6 +455,22 @@
   }
 }
 
+.product[id='0'] {
+  pointer-events: none;
+
+  .product__price {
+    display: none;
+  }
+
+  .product__stock {
+    display: none;
+  }
+
+  .product__buttons {
+    display: none;
+  }
+}
+
 @keyframes bounceY {
   0% {
     transform: translateY(-205px);

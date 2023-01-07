@@ -7,6 +7,7 @@ import {
   DATE_REGEXP,
   CVV_REGEXP,
 } from '../types/constants';
+import { Product } from '../types/interfaces';
 
 // НАВЕШИВАЕМ ОБРАБОТЧИКИ
 
@@ -136,4 +137,8 @@ export function addSplitter(event: Event) {
 
 export function fixLength(event: Event) {
   (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value.slice(0, 3);
+}
+
+export function getOptions(array: Product[], key: string) {
+  return Array.from(new Set(array.map((product) => product[key as keyof Product]))).sort();
 }
