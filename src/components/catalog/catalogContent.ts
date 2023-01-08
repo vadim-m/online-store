@@ -34,12 +34,13 @@ class CatalogContent extends Component {
       el.addEventListener('click', (e) => {
         const button = <HTMLButtonElement>e.target;
         const value = button.dataset.view!;
-        replaceParams('sort', value);
+        replaceParams('view', value);
       });
     });
-    this.container.querySelector('.sort__select')?.addEventListener('change', (e) => {
+    this.container.querySelector('.sort__select')?.addEventListener('input', (e) => {
       const label = <HTMLSelectElement>e.target;
-      console.log(label.options[label.selectedIndex].value);
+      const value = label.options[label.selectedIndex].value;
+      replaceParams('sort', value);
     });
   }
 }

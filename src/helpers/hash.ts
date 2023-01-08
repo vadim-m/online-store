@@ -14,8 +14,8 @@ function checkParams(name: string, value: string) {
   let paramValue = '';
   let isAdded = false;
   const params = getURLSearchParams();
-  const keys = getParamKeys();
-  const values = getParamValues();
+  const keys = getParamsKeys();
+  const values = getParamsValues();
 
   if (keys.indexOf(name) === -1) {
     paramName = name;
@@ -72,7 +72,7 @@ export function getPage() {
   return page;
 }
 
-function getParamKeys() {
+function getParamsKeys() {
   const keys = [];
   const params = getURLSearchParams();
   for (const value of params.keys()) {
@@ -92,7 +92,7 @@ export function getParamsSpecificValue(key: string) {
   return null;
 }
 
-export function getParamValues() {
+export function getParamsValues() {
   const values = [];
   const params = getURLSearchParams();
   for (const key of params.keys()) {

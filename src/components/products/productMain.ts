@@ -2,6 +2,7 @@ import { Product } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
 import LocalStorage from '../../data/localStorage';
 import Header from '../header/header';
+import { getParamsSpecificValue } from '../../helpers/hash';
 //import StorePage from '../../pages/store-page/store';
 
 class ProductMain {
@@ -12,6 +13,7 @@ class ProductMain {
   private labelAdd: string;
   private labelRemove: string;
   private button: HTMLElement | null;
+  private productViewStyle: string;
 
   constructor(private product: Product) {
     this.localStorage = new LocalStorage();
@@ -21,6 +23,7 @@ class ProductMain {
     this.labelAdd = 'Добавить в корзину';
     this.labelRemove = 'Удалить из корзины';
     this.button = document.querySelector('.product__button_cart');
+    this.productViewStyle = this.checkViewParam();
   }
 
   private getHtmlID = () => `button__${this.product.id}`;
@@ -34,6 +37,11 @@ class ProductMain {
       //element.classList.remove(this.classNameActive);
       element.innerHTML = this.labelAdd;
     }
+  }
+
+  checkViewParam() {
+    const viewValue = getParamsSpecificValue('view') ?? 'column';
+    return `product_${viewValue}`;
   }
 
   changeButtonLabel() {
@@ -50,9 +58,8 @@ class ProductMain {
 
   render() {
     return `
-       <li class="catalog__item">
-       
-        <article class="product product_row" id="${this.product.id}">
+      <li class="catalog__item">
+        <article class="product ${this.productViewStyle}" id="${this.product.id}">
           <div class="product__photo">
             <div class="product__photo-main">
               <a class="product__href" href="#${PageIds.ProductPage}?id=${this.product.id}">
@@ -80,10 +87,8 @@ class ProductMain {
                 ${this.changeButtonLabel()}
               </button>
             </div>
-          </div> 
-        </div>
-       </article>
-     </li>
+        </article>
+      </li>
     `;
   }
 

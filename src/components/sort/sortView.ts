@@ -2,15 +2,16 @@ import Component from '../component';
 import { getParamsSpecificValue } from '../../helpers/hash';
 
 class SortView extends Component {
-  private buttonActiveClass = '';
+  private buttonActiveClass: string;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
+    this.buttonActiveClass = this.checkViewParam();
   }
 
   checkViewParam() {
-    const viewValue = getParamsSpecificValue('sort') ?? 'column';
-    this.buttonActiveClass = `sort__view-${viewValue}_active`;
+    const viewValue = getParamsSpecificValue('view') ?? 'column';
+    return `sort__view-${viewValue}_active`;
   }
 
   renderViewButtons() {

@@ -16,8 +16,12 @@
     gap: rem(24);
     list-style: none;
 
+    &_row {
+      grid-template-columns: 1fr;
+    }
+
     &_column {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 }

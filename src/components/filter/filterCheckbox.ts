@@ -1,7 +1,7 @@
 import Component from '../component';
 import PRODUCTS from '../../data/products';
 import { Product } from '../../types/interfaces';
-import { getParamValues } from '../../helpers/hash';
+import { getParamsValues } from '../../helpers/hash';
 
 class FilterCheckbox extends Component {
   private filterName = '';
@@ -15,7 +15,7 @@ class FilterCheckbox extends Component {
   }
 
   isChecked(option: string) {
-    const values = getParamValues();
+    const values = getParamsValues();
     if (values.includes(option)) {
       return 'checked';
     }

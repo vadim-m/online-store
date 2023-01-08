@@ -6,13 +6,19 @@ import { getParamsSpecificValue } from '../../helpers/hash';
 import { getOptions } from '../../helpers/utils';
 
 class CatalogList extends Component {
-  private error: Error | null = null;
   private products: Product[] = [];
   private productsComponents: ProductMain[] = [];
+  private listViewStyle: string;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
     this.getProducts();
+    this.listViewStyle = this.checkViewParam();
+  }
+
+  checkViewParam() {
+    const viewValue = getParamsSpecificValue('view') ?? 'column';
+    return `catalog__list_${viewValue}`;
   }
 
   getProducts() {
@@ -66,11 +72,10 @@ class CatalogList extends Component {
     container.className = 'catalog__list-wrap';
 
     const html = `
-      <ul class="catalog__list">
+      <ul class="catalog__list ${this.listViewStyle}">
         ${this.productsComponents.map((product) => product.render()).join('')}
       </ul>
       `;
-
     container.innerHTML = html;
     return container;
   }

@@ -1,4 +1,4 @@
-import { PageIds } from './types';
+import { PageIds, labelOption } from './types';
 
 export const PageLinks = [
   {
@@ -27,3 +27,11 @@ export const CARD_REGEXP = /\d{4}\s\d{4}\s\d{4}\s\d{4}/g;
 export const DATE_REGEXP = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/gi;
 
 export const CVV_REGEXP = /\d{3}/g;
+
+export const sortOptions: labelOption[] = [
+  { value: 'default', text: 'По-умолчанию' },
+  { value: 'p-des', text: 'Цена ⬇️' },
+  { value: 'p-asc', text: 'Цена ⬆️' },
+  { value: 'n-des', text: 'Название ⬆️' },
+  { value: 'n-asc', text: 'Название ⬇️' },
+];
