@@ -4,6 +4,7 @@ import LocalStorage from '../../data/localStorage';
 import PRODUCTS from '../../data/products';
 import CartItem from './cartItem';
 import { Product, IProductInStorage } from '../../types/interfaces';
+import Header from '../header/header';
 
 class Cart extends Component {
   private modal: Modal;
@@ -12,6 +13,7 @@ class Cart extends Component {
   private productsComponents: CartItem[] = [];
   private productsInStore;
   private productsInStorage: IProductInStorage[] = [];
+  private header: Header;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
@@ -19,6 +21,7 @@ class Cart extends Component {
     this.localStorage = new LocalStorage();
     this.getProducts();
     this.productsInStore = this.localStorage.getProducts();
+    this.header = new Header();
   }
 
   getProducts() {
@@ -120,14 +123,20 @@ class Cart extends Component {
 
     if (button.classList.value === 'product__count_plus') {
       if (counter) {
-        counter.innerText = String(+counter.innerText + 1);
-        this.localStorage.putOneTypeProducts(product.id);
-        price.innerText = this.getOneTypeProductPrice(product.id);
+        counter.innerText = String(this.localStorage.getOneTypeProductsAmount(product.id) + 1);
+        this.localStorage.putOneTypeProducts(product.id, true);
+        price.innerText = `${this.getOneTypeProductPrice(product.id)} ₽`;
+        this.header.render();
       }
     }
 
     if (button.classList.value === 'product__count_minus') {
-      if (parseInt(counter.innerText) > 1) counter.innerText = String(+counter.innerText - 1);
+      if (parseInt(counter.innerText) > 1) {
+        counter.innerText = String(this.localStorage.getOneTypeProductsAmount(product.id) - 1);
+        this.localStorage.putOneTypeProducts(product.id, false);
+        price.innerText = `${this.getOneTypeProductPrice(product.id)} ₽`;
+        this.header.render();
+      }
     }
   }
 }

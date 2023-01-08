@@ -1,11 +1,14 @@
 import { Product } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
+import LocalStorage from '../../data/localStorage';
 
 class CartItem {
   private container: HTMLElement;
+  private localStorage: LocalStorage;
 
   constructor(private product: Product) {
     this.container = document.querySelector('.cart') as HTMLElement;
+    this.localStorage = new LocalStorage();
   }
 
   getId() {
@@ -48,7 +51,9 @@ class CartItem {
             <div class="product__buttons cart__buttons">
             <div class="product__count">
               <button class="product__count_minus">-</button>
-              <span class="product__count_amount">1</span>
+              <span class="product__count_amount">${this.localStorage.getOneTypeProductsAmount(
+                String(this.product.id)
+              )}</span>
               <button class="product__count_plus">+</button>
             </div>
             </div>

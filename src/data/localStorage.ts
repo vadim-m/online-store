@@ -34,17 +34,30 @@ class LocalStorage {
     return { products };
   }
 
-  putOneTypeProducts(id: string) {
+  putOneTypeProducts(id: string, boolean: boolean) {
     const products = this.getProducts();
     const index = products.findIndex((item: ItemCart) => item.id === +id);
-    let fixedPrice = null;
+    let fixedPrice: number | null = null;
     PRODUCTS.forEach((item) => {
       if (item.id === +id) fixedPrice = item.price;
     });
-    products[index].count = ++products[index].count;
-    products[index].price = products[index].price + fixedPrice;
+    if (boolean) {
+      products[index].count = ++products[index].count;
+      products[index].price = products[index].price + fixedPrice;
+    } else {
+      if (fixedPrice) {
+        products[index].count = --products[index].count;
+        products[index].price = products[index].price - fixedPrice;
+      }
+    }
     localStorage.setItem(this.keyName, JSON.stringify(products));
     return { products };
+  }
+
+  getOneTypeProductsAmount(id: string) {
+    const products = this.getProducts();
+    const index = products.findIndex((item: ItemCart) => item.id === +id);
+    return products[index].count;
   }
 
   getButtonState(id: number) {
