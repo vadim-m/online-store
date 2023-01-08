@@ -7,7 +7,7 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
 import { PageIds } from '../../types/types';
-import { addEventsOnModalForm } from '../../helpers/utils';
+import { addEventsOnModalForm } from '../../helpers/validation';
 
 class App {
   private static container: HTMLElement = document.querySelector('.wrapper') as HTMLElement;
