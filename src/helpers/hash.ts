@@ -9,11 +9,6 @@ export function addParams(name: string, value: string) {
   changeHash(params.toString());
 }
 
-function changeHash(queries: string) {
-  const page = getPage();
-  window.location.hash = page + '?' + queries;
-}
-
 function checkParams(name: string, value: string) {
   let paramName = '';
   let paramValue = '';
@@ -49,8 +44,25 @@ function checkParams(name: string, value: string) {
   return { paramName, paramValue, isAdded };
 }
 
+export function replaceParams(name: string, value: string) {
+  const params = getURLSearchParams();
+  const filter = getParamsSpecificValue(name); 
+  if (filter) {
+    params.set(name, value)
+  } else {
+    params.append(name, value)
+  }
+
+  changeHash(params.toString());
+}
+
 function getHash() {
   return window.location.hash;
+}
+
+function changeHash(queries: string) {
+  const page = getPage();
+  window.location.hash = page + '?' + queries;
 }
 
 export function getPage() {
@@ -70,7 +82,7 @@ function getParamKeys() {
   return keys;
 }
 
-export function getParamsSecificValue(key: string) {
+export function getParamsSpecificValue(key: string) {
   const params = getURLSearchParams();
   const value = params.get(key);
   if (value) {

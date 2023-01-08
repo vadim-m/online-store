@@ -2,7 +2,7 @@ import Component from '../component';
 import ProductMain from '../products/productMain';
 import { Product } from '../../types/interfaces';
 import PRODUCTS from '../../data/products';
-import { getParamsSecificValue } from '../../helpers/hash';
+import { getParamsSpecificValue } from '../../helpers/hash';
 import { getOptions } from '../../helpers/utils';
 
 class CatalogList extends Component {
@@ -26,9 +26,9 @@ class CatalogList extends Component {
   }
 
   filterProducts() {
-    const brandValue = getParamsSecificValue('brand') ?? getOptions(PRODUCTS, 'brand');
-    const categoryValue = getParamsSecificValue('category') ?? getOptions(PRODUCTS, 'category');
-    const colorValue = getParamsSecificValue('color') ?? getOptions(PRODUCTS, 'color');
+    const brandValue = getParamsSpecificValue('brand') ?? getOptions(PRODUCTS, 'brand');
+    const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
+    const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
 
     const filteredProducts = PRODUCTS.filter((element) => {
       return (
