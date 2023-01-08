@@ -35,7 +35,7 @@ class Cart extends Component {
     this.productsInStore.forEach((product: IProductInStorage) => {
       totalAmount.push(product.count);
     });
-    return totalAmount.reduce((a, b) => a + b);
+    return totalAmount.length > 0 ? totalAmount.reduce((a, b) => a + b) : 0;
   }
 
   getTotalCost() {
@@ -43,7 +43,12 @@ class Cart extends Component {
     this.productsInStore.forEach((product: Product) => {
       productsPrices.push(product.price);
     });
-    return productsPrices.reduce((a, b) => a + b);
+    return productsPrices.length > 0 ? productsPrices.reduce((a, b) => a + b) : 0;
+  }
+
+  cartIsEmprty() {
+    const a = document.querySelector('.cart');
+    console.log(a);
   }
 
   renderCart() {
@@ -61,6 +66,10 @@ class Cart extends Component {
         filteredItems.push(product);
       }
     });
+
+    const emptyHtml = `
+      <div class="cart__empty">КОРЗИНА ПУСТА</div>
+    `;
 
     const html = `
       <ul class="catalog__list">
@@ -85,7 +94,11 @@ class Cart extends Component {
       </div>
       `;
 
-    container.innerHTML = html;
+    if (filteredItems.length === 0) {
+      container.innerHTML = emptyHtml;
+    } else {
+      container.innerHTML = html;
+    }
 
     this.container.append(container);
     this.container.append(this.modal.render());
@@ -129,8 +142,8 @@ class Cart extends Component {
         this.localStorage.putOneTypeProducts(product.id, false);
         this.header.render();
       }
-      if (parseInt(counter.innerText) < 1) {
-        //
+      if (parseInt(counter.innerText) === 1) {
+        this.localStorage.putProducts(parseInt(product.id), 0);
       }
     }
   }
