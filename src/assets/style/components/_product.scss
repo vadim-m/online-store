@@ -139,6 +139,16 @@
     margin-left: rem(4);
   }
 
+  &__brand {
+    font-weight: bold;
+    margin-bottom: rem(12);
+  }
+
+  &__brand-value {
+    font-weight: normal;
+    margin-left: rem(4);
+  }
+
   &__category {
     font-weight: bold;
     margin-bottom: rem(12);
@@ -290,26 +300,6 @@
       margin-bottom: rem(12);
     }
 
-    .product__description {
-      display: none;
-    }
-
-    .product__text {
-      display: none;
-    }
-
-    .product__category {
-      display: none;
-    }
-
-    .product__color {
-      display: none;
-    }
-
-    .product__material {
-      display: none;
-    }
-
     .product__buttons {
       flex-wrap: wrap;
       border-bottom: none;
@@ -324,10 +314,6 @@
 
     .product__button {
       height: rem(42);
-
-      &_click {
-        display: none;
-      }
     }
   }
 
@@ -383,30 +369,6 @@
       margin-bottom: rem(12);
     }
 
-    .product__description {
-      display: none;
-    }
-
-    .product__text {
-      display: none;
-    }
-
-    .product__stock {
-      display: none;
-    }
-
-    .product__category {
-      display: none;
-    }
-
-    .product__color {
-      display: none;
-    }
-
-    .product__material {
-      display: none;
-    }
-
     .product__buttons {
       flex-wrap: wrap;
       border-bottom: none;
@@ -414,19 +376,8 @@
       transition: all 0.2s ease-in-out 0.3s;
     }
 
-    .product__count {
-      width: 100%;
-      height: rem(42);
-
-      margin-bottom: rem(12);
-    }
-
     .product__button {
       height: rem(42);
-
-      &_click {
-        display: none;
-      }
     }
 
     &:hover {

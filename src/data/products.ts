@@ -494,7 +494,7 @@ const PRODUCTS: Product[] = [
       'https://raw.githubusercontent.com/vadim-m/api-fake/img/26/2.webp',
       'https://raw.githubusercontent.com/vadim-m/api-fake/img/26/3.webp',
     ],
-  },  
+  },
   {
     id: 27,
     brand: 'AKIE',

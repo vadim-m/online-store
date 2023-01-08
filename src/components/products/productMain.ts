@@ -72,12 +72,10 @@ class ProductMain {
             <div class="product__stock">В наличии:
                 <span class="product__stock-value">${this.product.stock}</span>
             </div>
-            <div class="product__buttons">
-              <div class="product__count">
-                <button class="product__count_minus">-</button>
-                <span class="product__count_amount">1</span>
-                <button class="product__count_plus">+</button>
-              </div>
+            <div class="product__brand">Бренд:
+                <span class="product__brand-value">${this.product.brand}</span>
+            </div>
+            <div class="product__buttons">  
               <button class="product__button product__button_cart" id="button__${this.product.id}">
                 ${this.changeButtonLabel()}
               </button>
