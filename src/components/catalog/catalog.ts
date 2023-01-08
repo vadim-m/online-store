@@ -8,11 +8,11 @@ class Catalog extends Component {
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
-    this.catalogFilters = new CatalogFilters('aside', 'catalog__fiters');
+    this.catalogFilters = new CatalogFilters('aside', 'catalog__filters');
     this.catalogContent = new CatalogContent('article', 'catalog__content');
   }
 
-  renderStore() {
+  renderCatalog() {
     const container = document.createElement('div');
     container.className = 'catalog';
 
@@ -23,7 +23,7 @@ class Catalog extends Component {
   }
 
   render() {
-    this.renderStore();
+    this.renderCatalog();
     return this.container;
   }
 }

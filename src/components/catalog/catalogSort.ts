@@ -1,31 +1,22 @@
 import Component from '../component';
+import SortView from '../sort/sortView';
+import SortLabel from '../sort/sortLabel';
 
 class CatalogSort extends Component {
+  public viewButtons: SortView;
+  public sortSelect: SortLabel;
+
   constructor(tagName: string, className: string) {
     super(tagName, className);
+    this.viewButtons = new SortView('div', 'sort__view-wrap');
+    this.sortSelect = new SortLabel('div', 'sort__label-wrap');
   }
 
   renderSort() {
     const container = document.createElement('section');
     container.className = 'catalog__sort sort';
-
-    const htmlTemplate = `
-      <div class="sort__view-wrap">
-        <button class="sort__view sort__view-column active"></button>
-        <button class="sort__view sort__view-row"></button>
-      </div>
-      <label for="sorting" class="sort__label">Сортировать:
-        <select class="sort__select-sorting" id="sorting">
-          <option value="id" selected>По умолчанию</option>
-          <option value="price-descending">Цена ↓</option>
-          <option value="price-ascending">Цена ↑</option>
-          <option value="name-descending">А - Я</option>
-          <option value="name-ascending">Я - А</option>
-        </select>
-      </label>
-    `;
-
-    container.innerHTML = htmlTemplate;
+    container.append(this.viewButtons.renderViewButtons());
+    container.append(this.sortSelect.renderSortLabel());
 
     return container;
   }

@@ -31,7 +31,7 @@ function checkParams(name: string, value: string) {
     const prevValue = params.get(paramName)?.split('↕');
     if (prevValue?.length !== 1) {
       const newValue = prevValue?.filter((item) => item !== value);
-      params.set(paramName, newValue!.join('↕'));
+      if (newValue !== undefined) params.set(paramName, newValue.join('↕'));
       changeHash(params.toString());
     } else {
       params.delete(paramName);

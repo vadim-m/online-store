@@ -15,11 +15,30 @@ class CatalogContent extends Component {
     this.catalogItems = new CatalogList('section', 'catalog__list-wrap');
   }
 
-  render() {
+  renderContent() {
     this.container.append(this.catalogSearch.renderSearch());
     this.container.append(this.catalogSort.renderSort());
     this.container.append(this.catalogItems.renderItems());
+  }
+
+  render() {
+    this.renderContent();
+    this.eventListener();
+
     return this.container;
+  }
+
+  eventListener() {
+    this.container.querySelectorAll('.sort__view').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        console.log(e.target);
+        // replaceParam(data-view)
+      });
+    });
+    this.container.querySelector('.sort__select')?.addEventListener('change', (e) => {
+      const label = <HTMLSelectElement>e.target;
+      console.log(label.options[label.selectedIndex].value);
+    });
   }
 }
 
