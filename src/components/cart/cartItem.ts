@@ -57,7 +57,9 @@ class CartItem {
               <button class="product__count_plus">+</button>
             </div>
             </div>
-            <div class="product__price">${this.product.price} ₽
+            <div class="product__price">${this.localStorage.getOneTypeProductPrice(
+              String(this.product.id)
+            )} ₽
             </div>
           </div>
         </div>

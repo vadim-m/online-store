@@ -1,9 +1,11 @@
 import { ItemCart } from '../types/types';
 import { ITEM } from '../types/constants';
 import PRODUCTS from './products';
+import { Product } from '../types/interfaces';
 
 class LocalStorage {
   private keyName: string;
+  private products: Product[] = [];
 
   constructor() {
     this.keyName = 'products';
@@ -18,15 +20,15 @@ class LocalStorage {
   }
 
   putProducts(id: number, price: number) {
-    let products = this.getProducts();
-    const index = products.some((object: ItemCart) => object.id === id && object.price === price);
+    const products = this.getProducts();
+    const index = products.findIndex((object: ItemCart) => object.id === id);
 
-    if (!index) {
+    if (index === -1) {
       ITEM.id = id;
       ITEM.price = price;
       products.push(ITEM);
     } else {
-      products = products.filter((object: ItemCart) => object.id !== id && object.price !== price);
+      products.splice(index, 1);
     }
 
     localStorage.setItem(this.keyName, JSON.stringify(products));
@@ -60,17 +62,26 @@ class LocalStorage {
     return products[index].count;
   }
 
+  getOneTypeProductPrice(id: string) {
+    const products = this.getProducts();
+    let oneProductPrice: number | null = null;
+    products.forEach((product: Product) => {
+      if (product.id === +id) oneProductPrice = product.price;
+    });
+    return String(oneProductPrice);
+  }
+
   getButtonState(id: number) {
     const products = this.getProducts();
     let pushProduct = false;
-    const index = products.some((object: ItemCart) => object.id === id);
+    const index = products.findIndex((object: ItemCart) => object.id === id);
 
-    if (!index) {
+    if (index !== -1) {
       pushProduct = true;
     } else {
       pushProduct = false;
     }
-
+    console.log(pushProduct);
     return pushProduct;
   }
 }

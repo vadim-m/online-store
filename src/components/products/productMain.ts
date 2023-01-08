@@ -2,7 +2,7 @@ import { Product } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
 import LocalStorage from '../../data/localStorage';
 import Header from '../header/header';
-//import StorePage from '../../pages/store-page/store';
+import { ItemCart } from '../../types/types';
 
 class ProductMain {
   private localStorage: LocalStorage;
@@ -27,7 +27,7 @@ class ProductMain {
 
   handleSetLocationStorage(element: HTMLElement, id: number) {
     const pushProduct = this.localStorage.getButtonState(id);
-    if (!pushProduct) {
+    if (pushProduct) {
       //element.classList.add(this.classNameActive);
       element.innerHTML = this.labelRemove;
     } else {
@@ -38,9 +38,10 @@ class ProductMain {
 
   changeButtonLabel() {
     const productsStore = this.localStorage.getProducts();
+    const index = productsStore.findIndex((object: ItemCart) => object.id === this.product.id);
     let activeText = '';
 
-    if (productsStore.indexOf(this.product.id) === -1) {
+    if (index === -1) {
       activeText = this.labelAdd;
     } else {
       activeText = this.labelRemove;
@@ -97,9 +98,9 @@ class ProductMain {
         event.preventDefault();
         this.localStorage.putProducts(this.product.id, this.product.price);
         this.header.render();
-        const button = event.target as HTMLElement;
+        const currentButton = event.target as HTMLElement;
         if (button) {
-          this.handleSetLocationStorage(button, this.product.id);
+          this.handleSetLocationStorage(currentButton, this.product.id);
         }
       });
     }

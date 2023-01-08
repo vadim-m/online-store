@@ -5,6 +5,7 @@ import PRODUCTS from '../../data/products';
 import CartItem from './cartItem';
 import { Product, IProductInStorage } from '../../types/interfaces';
 import Header from '../header/header';
+import { addParams } from '../../helpers/hash';
 
 class Cart extends Component {
   private modal: Modal;
@@ -43,15 +44,6 @@ class Cart extends Component {
       productsPrices.push(product.price);
     });
     return productsPrices.reduce((a, b) => a + b);
-  }
-
-  getOneTypeProductPrice(id: string) {
-    const products = this.localStorage.getProducts();
-    let oneProductPrice: number | null = null;
-    products.forEach((product: Product) => {
-      if (product.id === +id) oneProductPrice = product.price;
-    });
-    return String(oneProductPrice);
   }
 
   renderCart() {
@@ -109,6 +101,9 @@ class Cart extends Component {
     this.container.querySelectorAll('button').forEach((el) => {
       el.addEventListener('click', (e) => {
         const target = <HTMLInputElement>e.target;
+        const paramName = target.name;
+        const paramValue = target.value;
+        addParams(paramName, paramValue);
         this.changePlusMinus(target);
       });
     });
@@ -118,14 +113,12 @@ class Cart extends Component {
     const counterWrapper = button.closest('.product__count');
     const counter = counterWrapper?.querySelector('.product__count_amount') as HTMLElement;
     const product = button.closest('.cart__row') as HTMLElement;
-    const priceWrapper = button.closest('.cart__item-price');
-    const price = priceWrapper?.querySelector('.product__price') as HTMLElement;
+    const stock = product.querySelector('.product__stock-value') as HTMLElement;
 
     if (button.classList.value === 'product__count_plus') {
-      if (counter) {
+      if (counter && parseInt(counter.innerText) < parseInt(stock.innerText)) {
         counter.innerText = String(this.localStorage.getOneTypeProductsAmount(product.id) + 1);
         this.localStorage.putOneTypeProducts(product.id, true);
-        price.innerText = `${this.getOneTypeProductPrice(product.id)} ₽`;
         this.header.render();
       }
     }
@@ -134,8 +127,10 @@ class Cart extends Component {
       if (parseInt(counter.innerText) > 1) {
         counter.innerText = String(this.localStorage.getOneTypeProductsAmount(product.id) - 1);
         this.localStorage.putOneTypeProducts(product.id, false);
-        price.innerText = `${this.getOneTypeProductPrice(product.id)} ₽`;
         this.header.render();
+      }
+      if (parseInt(counter.innerText) < 1) {
+        //
       }
     }
   }
