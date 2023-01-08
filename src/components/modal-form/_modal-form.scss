@@ -12,7 +12,7 @@
   transition: transform 0.4s, top 0.4s;
   z-index: 10;
 
-  &_open {
+  &__open {
     visibility: visible;
     top: 50%;
     transform: translate(-50%, -50%) scale(1);

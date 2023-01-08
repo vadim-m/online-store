@@ -81,7 +81,6 @@ class LocalStorage {
     } else {
       pushProduct = false;
     }
-    console.log(pushProduct);
     return pushProduct;
   }
 }

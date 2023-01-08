@@ -40,6 +40,8 @@
   }
 
   &__summary {
+    display: flex;
+    flex-direction: column;
     background-color: var(--white);
     border: 2px solid var(--red);
     border-radius: 0.5rem;
@@ -49,5 +51,18 @@
 
   &__title {
     margin-bottom: 1rem;
+  }
+
+  &__promocode {
+    margin-bottom: 1.5rem;
+  }
+
+  &__input {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  &__button {
+    padding: 0.5rem 1rem;
   }
 }

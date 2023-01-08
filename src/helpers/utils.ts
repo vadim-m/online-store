@@ -10,7 +10,7 @@ import {
 
 // НАВЕШИВАЕМ ОБРАБОТЧИКИ
 
-export function addEvents() {
+export function addEventsOnModalForm() {
   const buttonBuy = document.getElementById('buy');
   const buttonClose = document.getElementById('close');
   const form = document.getElementById('form');
@@ -23,7 +23,7 @@ export function addEvents() {
     buttonClose.addEventListener('click', closeModalForm);
     form.addEventListener('submit', handleForm);
     inputNumber.addEventListener('input', addSpace);
-    inputDate.addEventListener('input', addSplitter);
+    inputDate.addEventListener('keyup', addSplitter);
     inputCVV.addEventListener('input', fixLength);
   }
 }
@@ -31,13 +31,13 @@ export function addEvents() {
 // ЗАКРЫТЬ/ОТКРЫТЬ
 
 export function openModalForm() {
-  const form = document.getElementById('modal-form');
-  form?.classList.add('modal-form_open');
+  const form = document.getElementById('modal-form') as HTMLElement;
+  form.classList.add('modal-form__open');
 }
 
 export function closeModalForm() {
   const form = document.getElementById('modal-form') as HTMLElement;
-  form?.classList.remove('modal-form_open');
+  form.classList.remove('modal-form__open');
 }
 
 // ПРОВЕРКА ВСЕХ ПОЛЕЙ НА ВАЛИДНОСТЬ
@@ -55,6 +55,7 @@ function validation(form: HTMLElement) {
   let result = true;
   form.querySelectorAll<HTMLInputElement>('.form__input').forEach((input) => {
     const check = validateInput(input);
+    console.log(check);
     if (!check) {
       validationError(input, 'Ошибка');
       result = false;
@@ -127,9 +128,17 @@ export function addSpace(event: Event) {
 
 export function addSplitter(event: Event) {
   (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value.slice(0, 5);
-  (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value
-    .replace(/[^0-9]/gi, '')
-    .replace(/(.{2})/g, '$1/');
+
+  if ((<HTMLInputElement>event.target).value.length === 2)
+    (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value + '/';
+  else if (
+    (<HTMLInputElement>event.target).value.length === 3 &&
+    (<HTMLInputElement>event.target).value.charAt(2) === '/'
+  )
+    (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value.replace(
+      '/',
+      ''
+    );
 }
 
 // ОБРЕЗАЕТ CVV

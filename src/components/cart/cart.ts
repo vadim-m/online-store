@@ -77,18 +77,19 @@ class Cart extends Component {
       </ul>
       <div class="cart__summary">
         <h3 class="cart__title">ИТОГО</h3>
-        <div><span>Количество товаров:</span>
-          <h3>${this.getTotalAmount()}</h3>
+        <div class="cart__amount"><span>Количество товаров:</span>
+          <div class="product__price">${this.getTotalAmount()}</div>
         </div>
-        <div><span>Стоимость товаров:</span>
+        <div class="cart__price"><span>Стоимость товаров:</span>
           <div class="product__price">${this.getTotalCost()}₽
             <span class="product__discount-price">50 ₽ promo (JS)</span>
         </div>
         </div>
         <div class="cart__promocode">
             <input class="cart__input" placeholder="Введите промокод" type="text">
-          </div>
-        <button class="product__button product__button_cart" id="buy">
+            <div class="cart__promocode-example">Например, "Лебединое озеро" </div>
+        </div>
+        <button class="product__button product__button_cart cart__button" id="buy">
           Купить
         </button>
       </div>
@@ -113,11 +114,13 @@ class Cart extends Component {
   eventListener() {
     this.container.querySelectorAll('button').forEach((el) => {
       el.addEventListener('click', (e) => {
-        const target = <HTMLInputElement>e.target;
-        const paramName = target.name;
-        const paramValue = target.value;
-        addParams(paramName, paramValue);
-        this.changePlusMinus(target);
+        const target = <HTMLButtonElement>e.target;
+        if (target.innerText === '-' || target.innerText === '+') {
+          const paramName = target.name;
+          const paramValue = target.value;
+          addParams(paramName, paramValue);
+          this.changePlusMinus(target);
+        }
       });
     });
   }
@@ -126,7 +129,7 @@ class Cart extends Component {
     const counterWrapper = button.closest('.product__count');
     const counter = counterWrapper?.querySelector('.product__count_amount') as HTMLElement;
     const product = button.closest('.cart__row') as HTMLElement;
-    const stock = product.querySelector('.product__stock-value') as HTMLElement;
+    const stock = product.querySelector('.product__stock-value') as HTMLButtonElement;
 
     if (button.classList.value === 'product__count_plus') {
       if (counter && parseInt(counter.innerText) < parseInt(stock.innerText)) {
@@ -144,6 +147,7 @@ class Cart extends Component {
       }
       if (parseInt(counter.innerText) === 1) {
         this.localStorage.putProducts(parseInt(product.id), 0);
+        this.header.render();
       }
     }
   }

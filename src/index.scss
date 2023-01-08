@@ -12,6 +12,6 @@
 @import './assets/style/components/_sort';
 @import './assets/style/components/_product';
 
-@import './components/error/error';
-@import './components/modal-form/modal-form';
-@import './components/cart/_cart';
+@import './components/error/_error.scss';
+@import './components/modal-form/_modal-form.scss';
+@import './components/cart/_cart.scss';
