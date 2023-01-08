@@ -46,11 +46,11 @@ function checkParams(name: string, value: string) {
 
 export function replaceParams(name: string, value: string) {
   const params = getURLSearchParams();
-  const filter = getParamsSpecificValue(name); 
+  const filter = getParamsSpecificValue(name);
   if (filter) {
-    params.set(name, value)
+    params.set(name, value);
   } else {
-    params.append(name, value)
+    params.append(name, value);
   }
 
   changeHash(params.toString());

@@ -2,7 +2,7 @@ import Component from '../component';
 import CatalogSearch from './catalogSearch';
 import CatalogSort from './catalogSort';
 import CatalogList from './catalogList';
-import { replaceParams } from '../../helpers/hash'
+import { replaceParams } from '../../helpers/hash';
 
 class CatalogContent extends Component {
   public catalogSearch: CatalogSearch;
