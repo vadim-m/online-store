@@ -96,7 +96,6 @@ class ProductMain {
       button.addEventListener('click', (event: MouseEvent) => {
         event.preventDefault();
         this.localStorage.putProducts(this.product.id, this.product.price);
-        this.localStorage.putPrices(this.product.price);
         this.header.render();
         const button = event.target as HTMLElement;
         if (button) {

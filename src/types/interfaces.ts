@@ -12,3 +12,9 @@ export interface Product {
   thumbnail: string;
   images: string[];
 }
+
+export interface IProductInStorage {
+  id: number;
+  price: number;
+  count: number;
+}

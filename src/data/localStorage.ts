@@ -1,12 +1,12 @@
 import { ItemCart } from '../types/types';
+import { ITEM } from '../types/constants';
+import PRODUCTS from './products';
 
 class LocalStorage {
   private keyName: string;
-  private priceName: string;
 
   constructor() {
     this.keyName = 'products';
-    this.priceName = 'prices';
   }
 
   getProducts() {
@@ -17,28 +17,14 @@ class LocalStorage {
     return [];
   }
 
-  getPrice() {
-    const pricesLocalStorage = localStorage.getItem(this.priceName);
-    if (pricesLocalStorage !== null) {
-      return JSON.parse(pricesLocalStorage);
-    }
-    return [];
-  }
-
   putProducts(id: number, price: number) {
     let products = this.getProducts();
     const index = products.some((object: ItemCart) => object.id === id && object.price === price);
-    const item = {
-      id: 0,
-      price: 0,
-      count: 1,
-    };
 
     if (!index) {
-      item.id = id;
-      item.price = price;
-      products.push(item);
-      console.log(item);
+      ITEM.id = id;
+      ITEM.price = price;
+      products.push(ITEM);
     } else {
       products = products.filter((object: ItemCart) => object.id !== id && object.price !== price);
     }
@@ -48,19 +34,17 @@ class LocalStorage {
     return { products };
   }
 
-  putPrices(price: number) {
-    const prices = this.getPrice();
-    const index = prices.indexOf(price);
-
-    if (index === -1) {
-      prices.push(price);
-    } else {
-      prices.splice(index, 1);
-    }
-
-    localStorage.setItem(this.priceName, JSON.stringify(prices));
-
-    return { prices };
+  putOneTypeProducts(id: string) {
+    const products = this.getProducts();
+    const index = products.findIndex((item: ItemCart) => item.id === +id);
+    let fixedPrice = null;
+    PRODUCTS.forEach((item) => {
+      if (item.id === +id) fixedPrice = item.price;
+    });
+    products[index].count = ++products[index].count;
+    products[index].price = products[index].price + fixedPrice;
+    localStorage.setItem(this.keyName, JSON.stringify(products));
+    return { products };
   }
 
   getButtonState(id: number) {

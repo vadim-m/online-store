@@ -1,12 +1,11 @@
 import { Product } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
-import LocalStorage from '../../data/localStorage';
 
 class CartItem {
-  private localStorage: LocalStorage;
+  private container: HTMLElement;
 
   constructor(private product: Product) {
-    this.localStorage = new LocalStorage();
+    this.container = document.querySelector('.cart') as HTMLElement;
   }
 
   getId() {

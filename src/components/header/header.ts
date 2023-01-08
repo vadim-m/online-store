@@ -1,6 +1,7 @@
 import ComponentHF from '../componentHeader';
 import { PageLinks } from '../../types/constants';
 import LocalStorage from '../../data/localStorage';
+import { IProductInStorage } from '../../types/interfaces';
 
 const logo = require('../../assets/img/logo/logo.png');
 
@@ -13,13 +14,21 @@ class Header extends ComponentHF {
   }
 
   countPrice() {
-    const pricesInStorage = this.localStorage.getPrice();
-    return pricesInStorage.length > 0 ? pricesInStorage.reduce((a: number, b: number) => a + b) : 0;
+    const totalPrice: number[] = [];
+    const productsInStorage = this.localStorage.getProducts();
+    productsInStorage.forEach((product: IProductInStorage) => {
+      totalPrice.push(product.price);
+    });
+    return totalPrice.length > 0 ? totalPrice.reduce((a: number, b: number) => a + b) : 0;
   }
 
   countProducts() {
+    const totalAmount: number[] = [];
     const productsInStorage = this.localStorage.getProducts();
-    return productsInStorage.length;
+    productsInStorage.forEach((product: IProductInStorage) => {
+      totalAmount.push(product.count);
+    });
+    return totalAmount.length > 0 ? totalAmount.reduce((a, b) => a + b) : 0;
   }
 
   render() {
