@@ -48,11 +48,6 @@ class Cart extends Component {
     return productsPrices.length > 0 ? productsPrices.reduce((a, b) => a + b) : 0;
   }
 
-  cartIsEmprty() {
-    const a = document.querySelector('.cart');
-    console.log(a);
-  }
-
   renderCart() {
     const container = document.createElement('div');
     container.className = 'cart';
@@ -130,7 +125,7 @@ class Cart extends Component {
     inputPromo?.addEventListener('keyup', (e) => {
       const target = <HTMLInputElement>e.target;
       const coupon10 = 'Лебединое озеро';
-      if (target.value === coupon10) console.log('yes');
+      if (target.value === coupon10) console.log('Купон принят');
     });
   }
 
