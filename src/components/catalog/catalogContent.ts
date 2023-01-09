@@ -67,6 +67,10 @@ class CatalogContent extends Component {
     this.container.querySelector('.search__input-reset')?.addEventListener('click', (e) => {
       e.preventDefault();
       deleteParams('search');
+      const input = <HTMLInputElement>this.container.querySelector('.search__input');
+      if (input) {
+        input.value = '';
+      }
     });
   }
 }

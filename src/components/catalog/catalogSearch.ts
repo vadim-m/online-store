@@ -1,8 +1,16 @@
 import Component from '../component';
+import { getParamsSpecificValue } from '../../helpers/hash';
 
 class CatalogSearch extends Component {
+  private searchInputValue: string;
+
   constructor(tagName: string, className: string) {
     super(tagName, className);
+    this.searchInputValue = this.getSearchInputValue();
+  }
+
+  getSearchInputValue() {
+    return getParamsSpecificValue('search') ?? '';
   }
 
   setFoundProductsAmount() {
@@ -21,7 +29,7 @@ class CatalogSearch extends Component {
     const htmlTemplate = `
       <div class="search">
         <input class="search__input" type="search" title="Для поиска необходимо нажать 'Enter' либо кнопку 'Поиск'"  placeholder="Какой товар Вас интересует?"
-        autocomplete="off">
+        autocomplete="off" value=${this.searchInputValue}>
         <input class="search__input search__input-find" type="button" value="Поиск"></input>
         <input class="search__input search__input-reset" type="button" value="Очистить"></input>
         <div class="search__result">
