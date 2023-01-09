@@ -1,7 +1,7 @@
 import Component from '../component';
 import FilterCheckbox from '../filter/filterCheckbox';
 import FilterButtons from '../filter/filterButtons';
-import { addParams } from '../../helpers/hash';
+import { addParams, changeHash } from '../../helpers/hash';
 
 class CatalogFilters extends Component {
   public filterBrand: FilterCheckbox;
@@ -48,6 +48,11 @@ class CatalogFilters extends Component {
         const paramValue = target.value;
         addParams(paramName, paramValue);
       });
+    });
+    this.container.querySelector('.filters__btn-reset')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log(e.target);
+      changeHash('');
     });
   }
 }

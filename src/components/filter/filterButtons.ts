@@ -7,8 +7,8 @@ class FilterButtons extends Component {
 
   addButtons() {
     const htmlTemplate = `
-      <button class="filters__btn">Сбросить</button>
-      <button class="filters__btn">Копировать</button>
+      <button class="filters__btn filters__btn-reset">Сбросить</button>
+      <button class="filters__btn filters__btn-copy">Копировать</button>
     `;
 
     return htmlTemplate;

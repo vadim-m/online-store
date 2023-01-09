@@ -60,7 +60,7 @@ function getHash() {
   return window.location.hash;
 }
 
-function changeHash(queries: string) {
+export function changeHash(queries: string) {
   const page = getPage();
   window.location.hash = page + '?' + queries;
 }
