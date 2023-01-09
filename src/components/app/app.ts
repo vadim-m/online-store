@@ -62,9 +62,9 @@ class App {
 
   private enableRouteChange() {
     window.addEventListener('hashchange', () => {
-      const page = getPage();
+      const page = getPage() ?? 'store';
       const queries = getQueries();
-      console.log(queries);
+      console.log(page, queries);
       App.renderNewPage(page);
       this.catalogList.addEvents();
     });
@@ -72,7 +72,10 @@ class App {
 
   run() {
     this.header.render();
-    App.renderNewPage('store');
+    const page = getPage() ?? 'store';
+    const queries = getQueries() ?? '';
+    App.renderNewPage(page);
+    window.location.hash = page + '?' + queries;
     App.container.append(this.footer.render());
     this.enableRouteChange();
   }

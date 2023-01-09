@@ -68,8 +68,11 @@ function changeHash(queries: string) {
 export function getPage() {
   const hash = getHash();
   const page = hash.split('?')[0].slice(1);
+  if (page) {
+    return page;
+  }
 
-  return page;
+  return null;
 }
 
 function getParamsKeys() {
