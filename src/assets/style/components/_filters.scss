@@ -49,8 +49,14 @@
     text-align: center;
     vertical-align: middle;
     background-color: var(--white);
-    border: 2px solid;
+    border: 2px solid var(--black);
+    transition: all 0.25s ease-in;
 
     padding: 0;
+
+    &:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
   }
 }
