@@ -13,17 +13,17 @@ class CatalogSearch extends Component {
     } else {
       amount = `${products.length}`;
     }
-    console.log(products);
-
-    const btn = <HTMLFormElement>this.container.querySelector('.search__result-amount');
-    btn.textContent = amount;
+    const amountEl = <HTMLFormElement>this.container.querySelector('.search__result-amount');
+    amountEl.textContent = amount;
   }
 
   addSearch() {
     const htmlTemplate = `
       <div class="search">
-        <input class="search__input" type="search" id="search" placeholder="Какой товар Вас интересует?"
+        <input class="search__input" type="search" title="Для поиска необходимо нажать 'Enter' либо кнопку 'Поиск'"  placeholder="Какой товар Вас интересует?"
         autocomplete="off">
+        <input class="search__input search__input-find" type="button" value="Поиск"></input>
+        <input class="search__input search__input-reset" type="button" value="Очистить"></input>
         <div class="search__result">
           <span class="search__result-text">Товаров найдено:&nbsp;</span>
           <span class="search__result-amount">0</span>

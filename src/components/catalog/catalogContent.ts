@@ -2,7 +2,7 @@ import Component from '../component';
 import CatalogSearch from './catalogSearch';
 import CatalogSort from './catalogSort';
 import CatalogList from './catalogList';
-import { replaceParams } from '../../helpers/hash';
+import { deleteParams, replaceParams } from '../../helpers/hash';
 
 class CatalogContent extends Component {
   public catalogSearch: CatalogSearch;
@@ -47,6 +47,26 @@ class CatalogContent extends Component {
       const label = <HTMLSelectElement>e.target;
       const value = label.options[label.selectedIndex].value;
       replaceParams('sort', value);
+    });
+    this.container.querySelector('.search__input')?.addEventListener('search', (e) => {
+      e.preventDefault();
+      const input = <HTMLInputElement>e.target;
+      const value = input.value;
+      if (value === '') {
+        deleteParams('search');
+      } else {
+        replaceParams('search', value);
+      }
+    });
+    this.container.querySelector('.search__input-find')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const input = <HTMLInputElement>this.container.querySelector('.search__input');
+      const searchEvent = new Event('search');
+      input.dispatchEvent(searchEvent);
+    });
+    this.container.querySelector('.search__input-reset')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      deleteParams('search');
     });
   }
 }

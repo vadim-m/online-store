@@ -44,6 +44,13 @@ function checkParams(name: string, value: string) {
   return { paramName, paramValue, isAdded };
 }
 
+export function deleteParams(name: string) {
+  const params = getURLSearchParams();
+  params.delete(name);
+
+  changeHash(params.toString());
+}
+
 export function replaceParams(name: string, value: string) {
   const params = getURLSearchParams();
   const filter = getParamsSpecificValue(name);

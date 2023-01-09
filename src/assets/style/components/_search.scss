@@ -7,16 +7,36 @@
 
   &__input {
     display: block;
-    width: 100%;
+    width: 70%;
     font-size: rem(16);
     color: var(--black);
-
-    border: 1px solid var(--gray-light);
-    border-radius: 2px;
-    transition: border-color 0.15s;
+    border: 1px solid var(--black);
+    outline: none;
+    transition: all 0.25s ease-in;
 
     padding: rem(12);
     margin-bottom: rem(30);
+
+    &:hover,
+    &:focus {
+      border-color: var(--orange);
+    }
+
+    &-reset,
+    &-find {
+      width: 15%;
+      font-size: rem(18);
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--red);
+        border-color: var(--black);
+      }
+    }
+
+    &-find:hover {
+      background-color: var(--yellow);
+    }
   }
 
   &__result {
