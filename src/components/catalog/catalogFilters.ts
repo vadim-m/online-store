@@ -51,8 +51,17 @@ class CatalogFilters extends Component {
     });
     this.container.querySelector('.filters__btn-reset')?.addEventListener('click', (e) => {
       e.preventDefault();
-      console.log(e.target);
       changeHash('');
+    });
+    this.container.querySelector('.filters__btn-copy')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const button = <HTMLButtonElement>e.target;
+      button.innerText = 'Успешно';
+      const currentLocation = window.location.href;
+      navigator.clipboard.writeText(currentLocation);
+      setTimeout(() => {
+        button.innerText = 'Копировать';
+      }, 1000);
     });
   }
 }
