@@ -117,9 +117,6 @@
       }
     }
   }
-  z &__top {
-    position: absolute;
-  }
 
   &__description {
     margin-bottom: rem(12);
@@ -409,15 +406,7 @@
 .product[id='0'] {
   pointer-events: none;
 
-  .product__price {
-    display: none;
-  }
-
-  .product__stock {
-    display: none;
-  }
-
-  .product__buttons {
+  .product__content {
     display: none;
   }
 }

@@ -58,8 +58,7 @@ class CatalogList extends Component {
           material: 'fake',
           price: 0,
           stock: 0,
-          thumbnail:
-            'https://www.electricbikesuperstore.com.au/wp-content/uploads/2020/12/dummy-image-white.jpg',
+          thumbnail: 'https://basharathospital.clinta.biz/assets/under-construction.png',
           title: 'Товаров не найдено',
           top: 'fake',
         },
