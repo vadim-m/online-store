@@ -23,6 +23,8 @@
   }
 
   &__checkbox {
+    display: flex;
+    align-items: center;
     cursor: pointer;
     margin-bottom: rem(4);
   }
@@ -59,4 +61,30 @@
       color: var(--red);
     }
   }
+}
+
+.hide {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.filters__checkbox .filters__checkbox-span {
+  position: relative;
+  display: block;
+  float: left;
+  width: rem(18);
+  height: rem(18);
+  background-color: transparent;
+  border: 1px solid var(--black);
+  transition: background-color 5.25s ease-in-out;
+
+  margin-right: rem(8);
+}
+
+input:checked + .filters__checkbox-span {
+  background-color: var(--red);
 }
