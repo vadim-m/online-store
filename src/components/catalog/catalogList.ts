@@ -26,8 +26,10 @@ class CatalogList extends Component {
     if (this.products.length === 0) {
       this.products = PRODUCTS;
     }
-    //! Add sorting PRODUCTS array
-    //! PUT sorted PODUCTS to LocStr for filters
+
+    const sortValue = getParamsSpecificValue('sort') ?? 'default';
+    this.sortProducts(sortValue);
+
     this.productsComponents = this.products.map((product) => new ProductMain(product));
   }
 
@@ -65,6 +67,48 @@ class CatalogList extends Component {
     }
 
     return filteredProducts;
+  }
+
+  sortProducts(sortFilter: string) {
+    switch (sortFilter) {
+      case 'p-asc':
+        this.products.sort((a: Product, b: Product) => a.price - b.price);
+        break;
+
+      case 'p-des':
+        this.products.sort((a: Product, b: Product) => -a.price + b.price);
+        break;
+
+      case 'n-asc':
+        this.products.sort((a: Product, b: Product) => {
+          const firstTitle = a.title.toLocaleLowerCase();
+          const secondTitle = b.title.toLocaleLowerCase();
+          if (firstTitle > secondTitle) {
+            return 1;
+          }
+          if (firstTitle < secondTitle) {
+            return -1;
+          }
+
+          return 0;
+        });
+        break;
+
+      case 'n-des':
+        this.products.sort((a: Product, b: Product) => {
+          const firstTitle = a.title[0];
+          const secondTitle = b.title[0];
+          if (firstTitle > secondTitle) {
+            return -1;
+          }
+          if (firstTitle < secondTitle) {
+            return 1;
+          }
+
+          return 0;
+        });
+        break;
+    }
   }
 
   renderItems() {

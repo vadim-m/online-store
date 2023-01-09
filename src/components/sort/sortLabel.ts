@@ -31,12 +31,12 @@ class SortLabel extends Component {
   }
 
   renderSortLabel() {
-    const labels = this.addLabelOption(this.sortOptions);
+    const options = this.addLabelOption(this.sortOptions);
 
     const htmlTemplate = `
     <label class="sort__label">Сортировать:
       <select class="sort__select">
-        ${labels}
+        ${options}
       </select>
     </label>
   `;
