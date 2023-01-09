@@ -30,6 +30,7 @@ class CatalogContent extends Component {
   render() {
     this.container.append(this.addContent());
     this.eventListener();
+    this.catalogSearch.setFoundProductsAmount.call(this);
 
     return this.container;
   }

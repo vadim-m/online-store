@@ -5,6 +5,20 @@ class CatalogSearch extends Component {
     super(tagName, className);
   }
 
+  setFoundProductsAmount() {
+    let amount = '';
+    const products = this.container.querySelectorAll('.product');
+    if (products.length === 1 && products[0].id === '0') {
+      amount = '0';
+    } else {
+      amount = `${products.length}`;
+    }
+    console.log(products);
+
+    const btn = <HTMLFormElement>this.container.querySelector('.search__result-amount');
+    btn.textContent = amount;
+  }
+
   addSearch() {
     const htmlTemplate = `
       <div class="search">
@@ -12,7 +26,7 @@ class CatalogSearch extends Component {
         autocomplete="off">
         <div class="search__result">
           <span class="search__result-text">Товаров найдено:&nbsp;</span>
-          <span class="search__result-amount">2</span>
+          <span class="search__result-amount">0</span>
         </div>
       </div">
     `;

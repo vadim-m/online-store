@@ -30,8 +30,8 @@ export const CVV_REGEXP = /\d{3}/g;
 
 export const sortOptions: labelOption[] = [
   { value: 'default', text: 'По-умолчанию' },
-  { value: 'p-des', text: 'Цена ⬇️' },
-  { value: 'p-asc', text: 'Цена ⬆️' },
-  { value: 'n-des', text: 'Название ⬇️' },
-  { value: 'n-asc', text: 'Название ⬆️' },
+  { value: 'p-des', text: 'Цена ⬇' },
+  { value: 'p-asc', text: 'Цена ⬆' },
+  { value: 'n-des', text: 'Название ⬇' },
+  { value: 'n-asc', text: 'Название ⬆' },
 ];
