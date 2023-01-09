@@ -1,12 +1,23 @@
 import PRODUCTS from '../../data/products';
 import Component from '../component';
+import LocalStorage from '../../data/localStorage';
+import Header from '../header/header';
+import { ItemCart } from '../../types/types';
 
 class ProductFull extends Component {
   private id: number;
+  private localStorage: LocalStorage;
+  private header: Header;
+  private labelAdd: string;
+  private labelRemove: string;
 
   constructor(tagName: string, className: string, id: number) {
     super(tagName, className);
     this.id = id;
+    this.localStorage = new LocalStorage();
+    this.header = new Header();
+    this.labelAdd = 'Добавить в корзину';
+    this.labelRemove = 'Удалить из корзины';
   }
 
   renderProduct() {
@@ -59,13 +70,8 @@ class ProductFull extends Component {
                 </div>
               </div>
               <div class="product__buttons">
-                <div class="product__count">
-                  <button class="product__count_minus">-</button>
-                  <span class="product__count_amount">1</span>
-                  <button class="product__count_plus">+</button>
-                </div>
                 <button class="product__button product__button_cart">
-                  Добавить в корзину
+                  ${this.changeButtonLabel()}
                 </button>
                 <button class="product__button product__button_click">
                   Купить в один клик
@@ -78,7 +84,55 @@ class ProductFull extends Component {
 
   render() {
     this.container.innerHTML = this.renderProduct();
+    this.eventListener();
     return this.container;
+  }
+
+  changeButtonLabel() {
+    const productsStore = this.localStorage.getProducts();
+    const index = productsStore.findIndex((object: ItemCart) => object.id === this.id);
+    let activeText = '';
+
+    if (index === -1) {
+      activeText = this.labelAdd;
+    } else {
+      activeText = this.labelRemove;
+    }
+    return activeText;
+  }
+
+  handleSetLocationStorage(element: HTMLElement, id: number) {
+    const pushProduct = this.localStorage.getButtonState(id);
+    if (pushProduct) {
+      element.innerHTML = this.labelRemove;
+    } else {
+      element.innerHTML = this.labelAdd;
+    }
+  }
+
+  eventListener() {
+    this.container.querySelectorAll('.product__button').forEach((el) => {
+      el.addEventListener('click', (event) => {
+        const currentButton = <HTMLButtonElement>event.target;
+        const id = this.id;
+        const item = PRODUCTS.filter((item) => {
+          return item.id === id;
+        })[0];
+        if (
+          currentButton.innerText === 'ДОБАВИТЬ В КОРЗИНУ' ||
+          currentButton.innerText === 'УДАЛИТЬ ИЗ КОРЗИНЫ'
+        ) {
+          this.localStorage.putProducts(item.id, item.price);
+          this.header.render();
+          this.handleSetLocationStorage(currentButton, item.id);
+        } else if (currentButton.innerText === 'КУПИТЬ В ОДИН КЛИК') {
+          this.localStorage.putProductQuick(item.id, item.price);
+          this.header.render();
+          this.localStorage.putOneProductQuick(item.id);
+          window.location.hash = '#cart?';
+        }
+      });
+    });
   }
 }
 

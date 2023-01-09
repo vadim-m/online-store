@@ -5,10 +5,12 @@ import { Product } from '../types/interfaces';
 
 class LocalStorage {
   private keyName: string;
+  private keyOneName: string;
   private products: Product[] = [];
 
   constructor() {
     this.keyName = 'products';
+    this.keyOneName = 'quick-product';
   }
 
   getProducts() {
@@ -34,6 +36,44 @@ class LocalStorage {
     localStorage.setItem(this.keyName, JSON.stringify(products));
 
     return { products };
+  }
+
+  putProductQuick(id: number, price: number) {
+    const products = this.getProducts();
+    const index = products.findIndex((object: ItemCart) => object.id === id);
+
+    if (index === -1) {
+      ITEM.id = id;
+      ITEM.price = price;
+      products.push(ITEM);
+    }
+
+    localStorage.setItem(this.keyName, JSON.stringify(products));
+
+    return { products };
+  }
+
+  putOneProductQuick(id: number) {
+    const product = id;
+
+    localStorage.setItem(this.keyOneName, JSON.stringify(product));
+
+    return { product };
+  }
+
+  clearOneProductQuick() {
+    localStorage.removeItem(this.keyOneName);
+  }
+
+  clearOLocalStorage() {
+    localStorage.removeItem(this.keyName);
+  }
+
+  getOneProductQuick() {
+    const productsLocalStorage = localStorage.getItem(this.keyOneName);
+    if (productsLocalStorage !== null) {
+      return JSON.parse(productsLocalStorage);
+    }
   }
 
   putOneTypeProducts(id: string, boolean: boolean) {

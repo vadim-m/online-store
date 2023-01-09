@@ -3,22 +3,24 @@ import Modal from '../../components/modal-form/modal-form';
 import LocalStorage from '../../data/localStorage';
 import PRODUCTS from '../../data/products';
 import CartItem from './cartItem';
+import SuccessPurchase from '../modal-form/successPurchase';
 import { Product, IProductInStorage } from '../../types/interfaces';
 import Header from '../header/header';
 import { addParams } from '../../helpers/hash';
 
 class Cart extends Component {
   private modal: Modal;
+  private sucessPurchase: SuccessPurchase;
   private localStorage: LocalStorage;
   private products: Product[] = [];
   private productsComponents: CartItem[] = [];
   private productsInStore;
-  private productsInStorage: IProductInStorage[] = [];
   private header: Header;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
     this.modal = new Modal('div', 'container');
+    this.sucessPurchase = new SuccessPurchase('div', 'container');
     this.localStorage = new LocalStorage();
     this.getProducts();
     this.productsInStore = this.localStorage.getProducts();
@@ -103,6 +105,7 @@ class Cart extends Component {
 
     this.container.append(container);
     this.container.append(this.modal.render());
+    this.container.append(this.sucessPurchase.render());
   }
 
   render() {
@@ -123,6 +126,12 @@ class Cart extends Component {
         }
       });
     });
+    const inputPromo = this.container.querySelector('input');
+    inputPromo?.addEventListener('keyup', (e) => {
+      const target = <HTMLInputElement>e.target;
+      const coupon10 = 'Лебединое озеро';
+      if (target.value === coupon10) console.log('yes');
+    });
   }
 
   changePlusMinus(button: HTMLElement) {
@@ -140,12 +149,12 @@ class Cart extends Component {
     }
 
     if (button.classList.value === 'product__count_minus') {
-      if (parseInt(counter.innerText) > 1) {
+      if (parseInt(counter.innerText) >= 1) {
         counter.innerText = String(this.localStorage.getOneTypeProductsAmount(product.id) - 1);
         this.localStorage.putOneTypeProducts(product.id, false);
         this.header.render();
       }
-      if (parseInt(counter.innerText) === 1) {
+      if (parseInt(counter.innerText) < 1) {
         this.localStorage.putProducts(parseInt(product.id), 0);
         this.header.render();
       }

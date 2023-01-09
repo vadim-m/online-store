@@ -7,8 +7,6 @@ import { ItemCart } from '../../types/types';
 class ProductMain {
   private localStorage: LocalStorage;
   private header: Header;
-  //private mainPage: StorePage;
-  //private classNameActive: string;
   private labelAdd: string;
   private labelRemove: string;
   private button: HTMLElement | null;
@@ -16,8 +14,6 @@ class ProductMain {
   constructor(private product: Product) {
     this.localStorage = new LocalStorage();
     this.header = new Header();
-    //this.mainPage = new StorePage('content');
-    //this.classNameActive = 'products-element__btn_active';
     this.labelAdd = 'Добавить в корзину';
     this.labelRemove = 'Удалить из корзины';
     this.button = document.querySelector('.product__button_cart');
@@ -28,10 +24,8 @@ class ProductMain {
   handleSetLocationStorage(element: HTMLElement, id: number) {
     const pushProduct = this.localStorage.getButtonState(id);
     if (pushProduct) {
-      //element.classList.add(this.classNameActive);
       element.innerHTML = this.labelRemove;
     } else {
-      //element.classList.remove(this.classNameActive);
       element.innerHTML = this.labelAdd;
     }
   }

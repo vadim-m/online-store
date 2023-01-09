@@ -7,6 +7,11 @@ import {
   DATE_REGEXP,
   CVV_REGEXP,
 } from '../types/constants';
+import LocalStorage from '../data/localStorage';
+import Header from '../components/header/header';
+
+const localStorage = new LocalStorage();
+const header = new Header();
 
 // НАВЕШИВАЕМ ОБРАБОТЧИКИ
 
@@ -20,6 +25,7 @@ export function addEventsOnModalForm() {
 
   if (buttonBuy && buttonClose && form && inputNumber && inputDate && inputCVV) {
     buttonBuy.addEventListener('click', openModalForm);
+    if (localStorage.getOneProductQuick()) openModalForm();
     buttonClose.addEventListener('click', closeModalForm);
     form.addEventListener('submit', handleForm);
     inputNumber.addEventListener('input', addSpace);
@@ -33,6 +39,7 @@ export function addEventsOnModalForm() {
 export function openModalForm() {
   const form = document.getElementById('modal-form') as HTMLElement;
   form.classList.add('modal-form__open');
+  localStorage.clearOneProductQuick();
 }
 
 export function closeModalForm() {
@@ -46,7 +53,16 @@ export function handleForm(e: Event) {
   e.preventDefault();
   const form = document.getElementById('form') as HTMLElement;
 
-  if (validation(form)) alert('Заказ оформлен!');
+  if (validation(form)) {
+    const notification = document.getElementById('success');
+    notification?.classList.add('success-purchase_open');
+    setTimeout(function () {
+      notification?.classList.remove('success-purchase_open');
+      localStorage.clearOLocalStorage();
+      header.render();
+      window.location.hash = '#store?';
+    }, 5000);
+  }
 }
 
 // ПРОВЕРЯЕМ ПУСТЫЕ ЛИ ПОЛЯ
@@ -55,7 +71,6 @@ function validation(form: HTMLElement) {
   let result = true;
   form.querySelectorAll<HTMLInputElement>('.form__input').forEach((input) => {
     const check = validateInput(input);
-    console.log(check);
     if (!check) {
       validationError(input, 'Ошибка');
       result = false;
