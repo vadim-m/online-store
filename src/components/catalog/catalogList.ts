@@ -110,17 +110,20 @@ class CatalogList extends Component {
     }
   }
 
-  renderItems() {
-    const container = document.createElement('section');
-    container.className = 'catalog__list-wrap';
+  addItems() {
+    const container = document.createElement('ul');
+    container.className = `catalog__list ${this.listViewStyle}`;
 
-    const html = `
-      <ul class="catalog__list ${this.listViewStyle}">
-        ${this.productsComponents.map((product) => product.render()).join('')}
-      </ul>
-      `;
-    container.innerHTML = html;
+    const htmlTemplate = `${this.productsComponents.map((product) => product.render()).join('')}`;
+    container.innerHTML = htmlTemplate;
+
     return container;
+  }
+
+  render() {
+    this.container.append(this.addItems());
+
+    return this.container;
   }
 
   addEvents() {

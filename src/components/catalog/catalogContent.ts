@@ -7,23 +7,28 @@ import { replaceParams } from '../../helpers/hash';
 class CatalogContent extends Component {
   public catalogSearch: CatalogSearch;
   public catalogSort: CatalogSort;
-  public catalogItems: CatalogList;
+  public catalogList: CatalogList;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
     this.catalogSearch = new CatalogSearch('section', 'catalog__search search');
-    this.catalogSort = new CatalogSort('section', 'catalog__sort sort');
-    this.catalogItems = new CatalogList('section', 'catalog__list-wrap');
+    this.catalogSort = new CatalogSort('section', 'catalog__sort');
+    this.catalogList = new CatalogList('section', 'catalog__list-wrap');
   }
 
-  renderContent() {
-    this.container.append(this.catalogSearch.renderSearch());
-    this.container.append(this.catalogSort.renderSort());
-    this.container.append(this.catalogItems.renderItems());
+  addContent() {
+    const container = document.createElement('div');
+    container.className = 'catalog__content-wrap';
+
+    container.append(this.catalogSearch.renderSearch());
+    container.append(this.catalogSort.render());
+    container.append(this.catalogList.render());
+
+    return container;
   }
 
   render() {
-    this.renderContent();
+    this.container.append(this.addContent());
     this.eventListener();
 
     return this.container;

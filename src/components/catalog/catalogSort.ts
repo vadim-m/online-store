@@ -1,24 +1,31 @@
 import Component from '../component';
 import SortView from '../sort/sortView';
-import SortLabel from '../sort/sortLabel';
+import SortSelect from '../sort/sortSelect';
 
 class CatalogSort extends Component {
-  public viewButtons: SortView;
-  public sortSelect: SortLabel;
+  public sortView: SortView;
+  public sortSelect: SortSelect;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
-    this.viewButtons = new SortView('div', 'sort__view-wrap');
-    this.sortSelect = new SortLabel('div', 'sort__label-wrap');
+    this.sortView = new SortView('div', 'sort__view-wrap');
+    this.sortSelect = new SortSelect('div', 'sort__label-wrap');
   }
 
-  renderSort() {
-    const container = document.createElement('section');
-    container.className = 'catalog__sort sort';
-    container.append(this.viewButtons.renderViewButtons());
-    container.append(this.sortSelect.renderSortLabel());
+  addSort() {
+    const container = document.createElement('div');
+    container.className = 'sort';
+
+    container.append(this.sortView.render());
+    container.append(this.sortSelect.render());
 
     return container;
+  }
+
+  render() {
+    this.container.append(this.addSort());
+
+    return this.container;
   }
 }
 

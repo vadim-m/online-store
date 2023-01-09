@@ -37,6 +37,7 @@ class CatalogFilters extends Component {
   render() {
     this.container.append(this.renderFilters());
     this.eventListener();
+
     return this.container;
   }
 

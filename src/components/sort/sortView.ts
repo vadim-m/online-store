@@ -14,12 +14,18 @@ class SortView extends Component {
     return `sort__view-${viewValue}_active`;
   }
 
-  renderViewButtons() {
+  addSortView() {
     this.checkViewParam();
     const htmlTemplate = `
         <button class="sort__view sort__view-column ${this.buttonActiveClass}" data-view="column"></button>
         <button class="sort__view sort__view-row ${this.buttonActiveClass}" data-view="row"></button>
     `;
+
+    return htmlTemplate;
+  }
+
+  render() {
+    const htmlTemplate = this.addSortView();
     this.container.innerHTML = htmlTemplate;
 
     return this.container;

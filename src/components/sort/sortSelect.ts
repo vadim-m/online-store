@@ -3,7 +3,7 @@ import { sortOptions } from '../../types/constants';
 import { labelOption } from '../../types/types';
 import Component from '../component';
 
-class SortLabel extends Component {
+class SortSelect extends Component {
   private sortOptions: labelOption[];
 
   constructor(tagName: string, className: string) {
@@ -15,7 +15,7 @@ class SortLabel extends Component {
     return getParamsSpecificValue('sort') ?? 'default';
   }
 
-  addLabelOption(options: labelOption[]) {
+  getSortingOptions(options: labelOption[]) {
     const sortParamValue = this.checkSortParam();
 
     let htmlTemplate = '';
@@ -30,8 +30,8 @@ class SortLabel extends Component {
     return htmlTemplate;
   }
 
-  renderSortLabel() {
-    const options = this.addLabelOption(this.sortOptions);
+  addSortSelect() {
+    const options = this.getSortingOptions(this.sortOptions);
 
     const htmlTemplate = `
     <label class="sort__label">Сортировать:
@@ -40,10 +40,16 @@ class SortLabel extends Component {
       </select>
     </label>
   `;
+
+    return htmlTemplate;
+  }
+
+  render() {
+    const htmlTemplate = this.addSortSelect();
     this.container.innerHTML = htmlTemplate;
 
     return this.container;
   }
 }
 
-export default SortLabel;
+export default SortSelect;
