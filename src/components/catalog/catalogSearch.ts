@@ -5,22 +5,26 @@ class CatalogSearch extends Component {
     super(tagName, className);
   }
 
-  renderSearch() {
-    const container = document.createElement('section');
-    container.className = 'catalog__search search';
-
+  addSearch() {
     const htmlTemplate = `
-      <input class="search__input" type="search" id="search" placeholder="Какой товар Вас интересует?"
-      autocomplete="off">
-      <div class="search__result">
-        <span class="search__result-text">Товаров найдено:&nbsp;</span>
-        <span class="search__result-amount">2</span>
-      </div>
+      <div class="search">
+        <input class="search__input" type="search" id="search" placeholder="Какой товар Вас интересует?"
+        autocomplete="off">
+        <div class="search__result">
+          <span class="search__result-text">Товаров найдено:&nbsp;</span>
+          <span class="search__result-amount">2</span>
+        </div>
+      </div">
     `;
 
-    container.innerHTML = htmlTemplate;
+    return htmlTemplate;
+  }
 
-    return container;
+  render() {
+    const htmlTemplate = this.addSearch();
+    this.container.innerHTML = htmlTemplate;
+
+    return this.container;
   }
 }
 
