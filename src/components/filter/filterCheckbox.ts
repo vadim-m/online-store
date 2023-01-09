@@ -44,7 +44,7 @@ class FilterCheckbox extends Component {
     return htmlTemplate;
   }
 
-  renderCheckbox() {
+  render() {
     const labels = this.addCheckbox(this.category);
     const htmlTemplate = `
       <legend class="filters__subtitle">${this.filterName}</legend>

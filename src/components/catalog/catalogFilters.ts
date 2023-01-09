@@ -26,16 +26,16 @@ class CatalogFilters extends Component {
     const container = document.createElement('form');
     container.className = 'filters';
 
-    container.append(this.filterBrand.renderCheckbox());
-    container.append(this.filterCategory.renderCheckbox());
-    container.append(this.filterColor.renderCheckbox());
-    container.append(this.filterButtons.renderCheckbox());
+    container.append(this.filterBrand.render());
+    container.append(this.filterCategory.render());
+    container.append(this.filterColor.render());
+    container.append(this.filterButtons.render());
 
     return container;
   }
 
   render() {
-    this.container = this.renderFilters();
+    this.container.append(this.renderFilters());
     this.eventListener();
     return this.container;
   }
@@ -56,7 +56,7 @@ class CatalogFilters extends Component {
     this.container.querySelector('.filters__btn-copy')?.addEventListener('click', (e) => {
       e.preventDefault();
       const button = <HTMLButtonElement>e.target;
-      button.innerText = 'Успешно';
+      button.innerText = 'Успешно!';
       const currentLocation = window.location.href;
       navigator.clipboard.writeText(currentLocation);
       setTimeout(() => {

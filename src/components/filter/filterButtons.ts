@@ -14,7 +14,7 @@ class FilterButtons extends Component {
     return htmlTemplate;
   }
 
-  renderCheckbox() {
+  render() {
     const htmlTemplate = this.addButtons();
     this.container.innerHTML = htmlTemplate;
 

@@ -19,11 +19,11 @@ class Catalog extends Component {
     container.append(this.catalogFilters.render());
     container.append(this.catalogContent.render());
 
-    this.container.append(container);
+    return container;
   }
 
   render() {
-    this.renderCatalog();
+    this.container.append(this.renderCatalog());
     return this.container;
   }
 }
