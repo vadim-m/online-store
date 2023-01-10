@@ -1,7 +1,7 @@
 .catalog {
   display: grid;
   gap: 0 rem(24);
-  grid-template-columns: 0.75fr repeat(3, 1fr);
+  grid-template-columns: auto repeat(3, 1fr);
 
   &__filters {
     grid-column: span 1;
@@ -23,7 +23,7 @@
     }
 
     &_column {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(278px, 1fr));
     }
   }
 }
