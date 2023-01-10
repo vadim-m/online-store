@@ -35,19 +35,19 @@ class ProductFull extends Component {
     <article class="product" id="${item.id}">
             <div class="product__photo">
               <div class="product__photo-main">
-                <img src="${item.thumbnail}" alt="Product image"
+                <img src="${item.thumbnail}" alt="${item.title}"
                   class="product__img">
               </div>
               <ul class="product__thumbnails">
                 <li class="product__thumbnail active">
-                  <button class="product__thumbnail-pic"style="background-image: url(${item.images[0]})">
+                  <button class="product__thumbnail-pic" data-thums="0" style="background-image: url(${item.images[0]})">
                   </button>
                 </li>
                 <li class="product__thumbnail">
-                  <button class="product__thumbnail-pic" style="background-image: url(${item.images[1]})"></button>
+                  <button class="product__thumbnail-pic" data-thums="1" style="background-image: url(${item.images[1]})"></button>
                 </li>
                 <li class="product__thumbnail">
-                  <button class="product__thumbnail-pic" style="background-image: url(${item.images[2]})"></button>
+                  <button class="product__thumbnail-pic" data-thums="2" style="background-image: url(${item.images[2]})"></button>
                 </li>
               </ul>
             </div>
@@ -76,11 +76,6 @@ class ProductFull extends Component {
               </div>  
               </div>
               <div class="product__buttons">
-                <div class="product__count">
-                  <button class="product__count_minus">-</button>
-                  <span class="product__count_amount">1</span>
-                  <button class="product__count_plus">+</button>
-                </div>
                 <button class="product__button product__button_cart">
                   Добавить в корзину
                 </button>
@@ -93,8 +88,50 @@ class ProductFull extends Component {
     `;
   }
 
+  changeProductImageSrc(item: HTMLImageElement, imageUrl: string) {
+    item.setAttribute('style', 'opacity: 0');
+    item.src = imageUrl;
+    item.classList.add('product__img_replace');
+    setTimeout(() => {
+      item.classList.remove('product__img_replace');
+      item.setAttribute('style', 'opacity: 1');
+    }, 300);
+  }
+
+  changeThumbsActiveClass(thumbIndex: number, parent: HTMLUListElement) {
+    parent.querySelectorAll('.product__thumbnail').forEach((item) => {
+      item.classList.remove('active');
+    });
+    const activeThumb = parent.querySelectorAll('.product__thumbnail')[thumbIndex];
+    activeThumb.classList.add('active');
+  }
+
+  eventListener() {
+    const thumbnails = <HTMLUListElement>this.container.querySelector('.product__thumbnails');
+    if (!thumbnails) {
+      return;
+    }
+
+    thumbnails.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = <HTMLButtonElement>e.target;
+      if (target.classList.contains('product__thumbnail-pic')) {
+        const url = target.style.backgroundImage.slice(4, -1).replace(/"/g, '');
+        const imageEl = <HTMLImageElement>this.container.querySelector('.product__img');
+        this.changeProductImageSrc(imageEl, url);
+
+        const thumbIndex = target.dataset.thums;
+        if (!thumbIndex) {
+          return;
+        }
+        this.changeThumbsActiveClass(+thumbIndex, thumbnails);
+      }
+    });
+  }
+
   render() {
     this.container.innerHTML = this.renderProduct();
+    this.eventListener();
     return this.container;
   }
 }
