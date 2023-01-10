@@ -1,6 +1,6 @@
 .catalog {
   display: grid;
-  gap: 0 rem(24);
+  gap: 0 rem(20);
   grid-template-columns: auto repeat(3, 1fr);
 
   &__filters {
@@ -15,7 +15,7 @@
 
   &__list {
     display: grid;
-    gap: rem(24);
+    gap: rem(20);
     list-style: none;
 
     &_row {

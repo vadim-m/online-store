@@ -3,7 +3,7 @@
 
   &__photo {
     position: relative;
-    flex: 0 0 40%;
+    flex: 0 0 27%;
   }
 
   &__photo-main {
@@ -37,7 +37,7 @@
     right: 0;
     top: 0;
     width: rem(48);
-    height: rem(24);
+    height: rem(18);
     display: none;
     justify-content: center;
     align-items: center;
@@ -90,6 +90,12 @@
   &__info {
     display: flex;
     flex-direction: column;
+  }
+
+  &__full-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   &__name {
@@ -239,10 +245,10 @@
       content: '';
       display: block;
       position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
       opacity: 1;
       z-index: -1;
       transform: scaleX(0);
@@ -279,10 +285,6 @@
       margin-bottom: 0;
     }
 
-    .product__thumbnails {
-      display: none;
-    }
-
     .product__name {
       cursor: pointer;
       transition: color 0.3s linear;
@@ -298,15 +300,7 @@
     }
 
     .product__buttons {
-      flex-wrap: wrap;
       border-bottom: none;
-    }
-
-    .product__count {
-      width: 100%;
-      height: rem(42);
-
-      margin-bottom: rem(12);
     }
 
     .product__button {
@@ -328,30 +322,47 @@
       pointer-events: none;
     }
 
-    .product__thumbnails {
-      display: none;
-    }
-
     .product__content {
       position: absolute;
-      top: -100%;
+      top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 255, 255, 0.65);
-      opacity: 0;
-      transition: all 0.3s ease-out 0.5s;
 
-      padding: rem(22);
+      padding-left: 0;
+    }
+
+    .product__info {
+      position: absolute;
+      top: 0%;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background-color: rgba(255, 255, 255, 0.8);
+      overflow: hidden;
+
+      padding: rem(22) rem(16) 0;
+    }
+
+    .product__full-info {
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      height: 70%;
+      background-color: rgba(255, 255, 255, 0.55);
+
+      padding: 0 rem(16) rem(22);
     }
 
     .product__name {
+      height: rem(50);
       font-size: rem(18);
+      line-height: rem(25);
       cursor: pointer;
-      transform: translateY(-350px);
-      transition: color 0.2s linear 0s, transform 0.2s ease-in-out 0.1s;
+      overflow: hidden;
 
-      margin-bottom: rem(12);
+      margin-bottom: 0;
 
       &:hover {
         color: var(--red);
@@ -359,18 +370,15 @@
     }
 
     .product__price {
-      font-size: rem(28);
-      transform: translateY(-350px);
-      transition: all 0.2s ease-in-out 0.2s;
+      font-size: rem(24);
+      font-weight: bold;
 
-      margin-bottom: rem(12);
+      margin-bottom: rem(8);
     }
 
     .product__buttons {
       flex-wrap: wrap;
       border-bottom: none;
-      transform: translateY(-350px);
-      transition: all 0.2s ease-in-out 0.3s;
     }
 
     .product__button {
@@ -378,26 +386,11 @@
     }
 
     &:hover {
-      .product__content {
+      .product__full-info {
         opacity: 1;
-        top: 0;
+        bottom: 0;
         transition-delay: 0s;
-        animation: bounceY 0.8s linear;
-      }
-
-      .product__name {
-        transform: translateY(0);
-        transition-delay: 0s, 0.6s;
-      }
-
-      .product__price {
-        transform: translateY(0);
-        transition-delay: 0.5s;
-      }
-
-      .product__buttons {
-        transform: translateY(0);
-        transition-delay: 0;
+        animation: bounceX 0.8s linear;
       }
     }
   }
@@ -411,27 +404,26 @@
   }
 }
 
-@keyframes bounceY {
+@keyframes bounceX {
   0% {
-    transform: translateY(-205px);
+    transform: translateX(-205px);
   }
   40% {
-    transform: translateY(-100px);
+    transform: translateX(-100px);
   }
   65% {
-    transform: translateY(-52px);
+    transform: translateX(-52px);
   }
   82% {
-    transform: translateY(-25px);
+    transform: translateX(-25px);
   }
   92% {
-    transform: translateY(-12px);
+    transform: translateX(-12px);
   }
   55%,
   75%,
-  87%,
   97%,
   100% {
-    transform: translateY(0px);
+    transform: translateX(0px);
   }
 }

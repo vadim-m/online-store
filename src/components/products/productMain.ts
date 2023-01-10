@@ -74,19 +74,25 @@ class ProductMain {
               <a class="product__href" href="#${PageIds.ProductPage}?id=${this.product.id}">
                 <h3 class="product__name">${this.product.title}</h3>
               </a>
-              <div class="product__price">${this.product.price} ₽
-              </div>
             </div>
-            <div class="product__stock">В наличии:
-                <span class="product__stock-value">${this.product.stock}</span>
-            </div>
-            <div class="product__brand">Бренд:
+            <div class="product__full-info">
+            <div class="product__price">${this.product.price} ₽</div>
+              <div class="product__brand">Бренд:
                 <span class="product__brand-value">${this.product.brand}</span>
-            </div>
-            <div class="product__buttons">  
-              <button class="product__button product__button_cart" id="button__${this.product.id}">
-                ${this.changeButtonLabel()}
-              </button>
+              </div>
+              <div class="product__color">Цвет:
+                <span class="product__color-value">${this.product.color}</span>
+              </div>
+              <div class="product__stock">В наличии:
+                <span class="product__stock-value">${this.product.stock}</span>
+              </div>
+              <div class="product__buttons">  
+                <button class="product__button product__button_cart" id="button__${
+                  this.product.id
+                }">
+                  ${this.changeButtonLabel()}
+                </button>
+              </div>
             </div>
         </article>
       </li>
