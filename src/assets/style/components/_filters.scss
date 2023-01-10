@@ -31,6 +31,7 @@
 
   &__buttons {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     border: none;
@@ -40,8 +41,8 @@
   }
 
   &__btn {
+    width: 100%;
     height: rem(36);
-    flex: 0 0 48%;
     cursor: pointer;
     color: var(--black);
     font-size: rem(12);
@@ -59,6 +60,10 @@
     &:hover {
       border-color: var(--red);
       color: var(--red);
+    }
+
+    &:not(:last-child) {
+      margin-bottom: rem(8);
     }
   }
 }
