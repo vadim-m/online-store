@@ -1,9 +1,9 @@
 import Page from '../../components/page';
 import ProductFull from '../../components/products/productFull';
+import { getParamsSpecificValue } from '../../helpers/hash';
 
 class ProductPage extends Page {
   private product: ProductFull;
-  // ! нужно получить ID и передать в конструктор
 
   constructor(className: string) {
     super(className);
@@ -11,11 +11,8 @@ class ProductPage extends Page {
   }
 
   getId() {
-    const hash = window.location.hash;
-    const queries = hash.split('?')[1];
-    const searchParams = new URLSearchParams(queries);
-    const id = searchParams.get('id');
-    // console.log(queries, searchParams.toString(), id);
+    const id = getParamsSpecificValue('id');
+
     if (id) return +id;
   }
 
