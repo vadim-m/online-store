@@ -66,6 +66,7 @@ class ProductMain {
                 <img src="${this.product.thumbnail}" alt="Product image"
                 class="product__img">
               </a>
+              <span class="product__top product__top_${this.product.top}">Top</span>
             </div>
           </div>
           <div class="product__content">
