@@ -15,6 +15,22 @@ class ProductFull extends Component {
       return item.id === id;
     })[0];
 
+    if (!item) {
+      return `
+        <h3>
+          Товар с таким ID отсутствует!
+        </h3>
+        <hr>
+        <p>
+          <b>
+            <a href="#store?" style="color: var(--red)">
+              Вернуться на Главную
+            </a>
+          </b>
+        <p>
+      `;
+    }
+
     return `
     <article class="product" id="${item.id}">
             <div class="product__photo">
