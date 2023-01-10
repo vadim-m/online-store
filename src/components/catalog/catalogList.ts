@@ -38,13 +38,18 @@ class CatalogList extends Component {
     const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
     const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
 
-    const filteredProducts = PRODUCTS.filter((element) => {
+    let filteredProducts = PRODUCTS.filter((element) => {
       return (
         brandValue.includes(element.brand) &&
         categoryValue.includes(element.category) &&
         colorValue.includes(element.color)
       );
     });
+
+    const searchValue = getParamsSpecificValue('search') ?? null;
+    if (searchValue) {
+      filteredProducts = this.filterProductsBySearchValue(filteredProducts, searchValue);
+    }
 
     if (filteredProducts.length === 0) {
       return [
@@ -64,6 +69,21 @@ class CatalogList extends Component {
         },
       ];
     }
+
+    return filteredProducts;
+  }
+
+  filterProductsBySearchValue(products: Product[], value: string) {
+    const searchValue = value.toLocaleLowerCase();
+    const filteredProducts = products.filter((element) => {
+      return (
+        element.title.toLowerCase().includes(searchValue) ||
+        element.brand.toLowerCase().includes(searchValue) ||
+        element.color.toLowerCase().includes(searchValue) ||
+        element.stock.toString().includes(searchValue) ||
+        element.price.toString().includes(searchValue)
+      );
+    });
 
     return filteredProducts;
   }

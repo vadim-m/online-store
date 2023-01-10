@@ -6,11 +6,15 @@ class CatalogSearch extends Component {
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
-    this.searchInputValue = this.getSearchInputValue();
+    this.searchInputValue = this.getSearchInputValue() ?? '';
   }
 
   getSearchInputValue() {
-    return getParamsSpecificValue('search') ?? '';
+    const value = getParamsSpecificValue('search');
+
+    if (value) {
+      return value[0].toLocaleUpperCase() + value.slice(1);
+    }
   }
 
   setFoundProductsAmount() {
@@ -26,10 +30,12 @@ class CatalogSearch extends Component {
   }
 
   addSearch() {
+    console.log(this.searchInputValue);
+
     const htmlTemplate = `
       <div class="search">
         <input class="search__input" type="search" title="Для поиска необходимо нажать 'Enter' либо кнопку 'Поиск'"  placeholder="Какой товар Вас интересует?"
-        autocomplete="off" value=${this.searchInputValue}>
+        autocomplete="off" value="${this.searchInputValue}">
         <input class="search__input search__input-find" type="button" value="Поиск"></input>
         <input class="search__input search__input-reset" type="button" value="Очистить"></input>
         <div class="search__result">

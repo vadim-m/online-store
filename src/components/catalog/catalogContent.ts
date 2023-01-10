@@ -57,7 +57,7 @@ class CatalogContent extends Component {
       if (value === '' || value === ' ') {
         deleteParams('search');
       } else {
-        replaceParams('search', value);
+        replaceParams('search', value.toLocaleLowerCase());
       }
     });
     this.container.querySelector('.search__input-find')?.addEventListener('click', (e) => {
