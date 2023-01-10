@@ -7,11 +7,38 @@ class LocalStorage {
   private keyName: string;
   private keyOneName: string;
   private products: Product[] = [];
+  private promoName: string;
 
   constructor() {
     this.keyName = 'products';
     this.keyOneName = 'quick-product';
+    this.promoName = 'promo-codes';
   }
+
+  // ПРОМОКОДЫ
+
+  addPromoCode(name: string) {
+    const promoCode = this.getPromoCode();
+
+    if (promoCode.indexOf(name) === -1) {
+      promoCode.push(name);
+    }
+
+    localStorage.setItem(this.promoName, JSON.stringify(promoCode));
+
+    return { promoCode };
+  }
+
+  getPromoCode() {
+    const promoCodesInLocalStorage = localStorage.getItem(this.promoName);
+    console.log(promoCodesInLocalStorage);
+    if (promoCodesInLocalStorage !== null) {
+      return JSON.parse(promoCodesInLocalStorage);
+    }
+    return [];
+  }
+
+  // ДОБАВЛЕНИЕ ПРОДУКТОВ В КОРЗИНУ
 
   getProducts() {
     const productsLocalStorage = localStorage.getItem(this.keyName);

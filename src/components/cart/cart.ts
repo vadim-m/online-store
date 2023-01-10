@@ -7,6 +7,12 @@ import SuccessPurchase from '../modal-form/successPurchase';
 import { Product, IProductInStorage } from '../../types/interfaces';
 import Header from '../header/header';
 import { addParams } from '../../helpers/hash';
+import {
+  countDiscountPrice,
+  checkForPromoCode,
+  makeDiscountVisible,
+  makePriceCrossed,
+} from '../../helpers/utils';
 
 class Cart extends Component {
   private modal: Modal;
@@ -78,13 +84,28 @@ class Cart extends Component {
           <div class="product__price">${this.getTotalAmount()}</div>
         </div>
         <div class="cart__price"><span>Стоимость товаров:</span>
-          <div class="product__price">${this.getTotalCost()}₽
-            <span class="product__discount-price">50 ₽ promo (JS)</span>
+          <div class="product__price product__price_summary ${makePriceCrossed(
+            this.localStorage.getPromoCode()
+          )}">${this.getTotalCost()}₽
         </div>
+        <div class="product__discount-price product__discount-price_summary ${makeDiscountVisible(
+          this.localStorage.getPromoCode()
+        )}">${countDiscountPrice(this.getTotalCost())} ₽</div>
         </div>
         <div class="cart__promocode">
-            <input class="cart__input" placeholder="Введите промокод" type="text">
-            <div class="cart__promocode-example">Например, "Лебединое озеро" </div>
+          <div class="cart__container">
+            <input class="cart__input" placeholder="Введите промокод" value="${checkForPromoCode(
+              this.localStorage.getPromoCode()
+            )}" type="text">
+            <button class="product__button product__button_click cart__promo-delete">Удалить</button>
+          </div>
+             <div class="cart__resolve-promo">
+              <span class="cart__resolve-promo-info">${checkForPromoCode(
+                this.localStorage.getPromoCode()
+              )} -10%</span>
+              <button class="product__button product__button_click product__button_promo">Ок</button>
+            </div>
+            <div class="cart__promocode-example">Например, "ДОЖДЬ" </div>
         </div>
         <button class="product__button product__button_cart cart__button" id="buy">
           Купить
@@ -124,8 +145,33 @@ class Cart extends Component {
     const inputPromo = this.container.querySelector('input');
     inputPromo?.addEventListener('keyup', (e) => {
       const target = <HTMLInputElement>e.target;
-      const coupon10 = 'Лебединое озеро';
-      if (target.value === coupon10) console.log('Купон принят');
+      const coupon10 = 'ДОЖДЬ';
+      const promoResolve = document.querySelector('.cart__resolve-promo') as HTMLElement;
+      const a = promoResolve.querySelector('.cart__resolve-promo-info') as HTMLElement;
+      if (target.value === coupon10) {
+        this.localStorage.addPromoCode(target.value);
+        if (promoResolve) promoResolve.style.display = 'block';
+        a.innerText = `${target.value} -10%`;
+      }
+    });
+    const buttonAddPromo = this.container.querySelector('.product__button_promo');
+    const activePrice = this.container.querySelector('.product__price_summary');
+    const discountPrice = this.container.querySelector(
+      '.product__discount-price_summary'
+    ) as HTMLElement;
+    buttonAddPromo?.addEventListener('click', () => {
+      if (discountPrice) {
+        discountPrice.style.display = 'block';
+        discountPrice.innerText = `${countDiscountPrice(this.getTotalCost())} ₽`;
+      }
+      activePrice?.classList.add('active');
+    });
+    const deletePromo = this.container.querySelector('.cart__promo-delete');
+    deletePromo?.addEventListener('click', () => {
+      discountPrice.style.display = 'none';
+      activePrice?.classList.remove('active');
+      localStorage.removeItem('promo-codes');
+      if (inputPromo) inputPromo.value = '';
     });
   }
 
