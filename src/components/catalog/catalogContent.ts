@@ -39,8 +39,10 @@ class CatalogContent extends Component {
     this.container.querySelectorAll('.sort__view').forEach((el) => {
       el.addEventListener('click', (e) => {
         const button = <HTMLButtonElement>e.target;
-        const value = button.dataset.view!;
-        replaceParams('view', value);
+        const value = button.dataset.view;
+        if (value) {
+          replaceParams('view', value);
+        }
       });
     });
     this.container.querySelector('.sort__select')?.addEventListener('input', (e) => {
@@ -52,7 +54,7 @@ class CatalogContent extends Component {
       e.preventDefault();
       const input = <HTMLInputElement>e.target;
       const value = input.value;
-      if (value === '') {
+      if (value === '' || value === ' ') {
         deleteParams('search');
       } else {
         replaceParams('search', value);
