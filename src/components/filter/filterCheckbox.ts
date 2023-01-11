@@ -1,7 +1,7 @@
 import Component from '../component';
 import PRODUCTS from '../../data/products';
 import { Product } from '../../types/interfaces';
-import { getParamsValues } from '../../helpers/hash';
+import { getParamsSpecificValue, getParamsValues } from '../../helpers/hash';
 import { getOptions } from '../../helpers/utils';
 
 class FilterCheckbox extends Component {
@@ -28,13 +28,33 @@ class FilterCheckbox extends Component {
   addCheckbox(productCategory: string) {
     let labels = '';
     const categoryValues = getOptions(this.products, productCategory);
+
     categoryValues.forEach((value) => {
       if (typeof value === 'string') {
+        console.log('First', value);
+
+        const amount = this.products.filter(
+          (product: Product) => product[this.category as keyof Product] === value
+        ).length;
+
+        const filtered = this.filterProducts();
+        let count = 0;
+        filtered.forEach((item) => {
+          for (const key in item) {
+            if (item[key as keyof Product] === value) {
+              console.log(key);
+              count++;
+            }
+          }
+        });
+
         this.checkedAttr = this.isChecked(value);
         labels += `
         <label class="filters__checkbox">
         <input class="filters__input hide" type="checkbox" name="${this.category}" value="${value}" ${this.checkedAttr}>
         <span class="filters__checkbox-span"></span>${value}
+        <div class="filters__checkbox-count" style="margin-left: auto">${count} /&nbsp  </div>
+        <div class="filters__checkbox-count" style="width: 2ch; text-align: center;">${amount}</div>
         </label>
         `;
       }
@@ -42,6 +62,61 @@ class FilterCheckbox extends Component {
     const legend = `<legend class="filters__subtitle">${this.checkboxText}</legend>`;
 
     return legend + labels;
+  }
+
+  filterProductsBySearchValue(products: Product[], value: string) {
+    const searchValue = value.toLocaleLowerCase();
+    const filteredProducts = products.filter((element) => {
+      return (
+        element.title.toLowerCase().includes(searchValue) ||
+        element.brand.toLowerCase().includes(searchValue) ||
+        element.color.toLowerCase().includes(searchValue) ||
+        element.stock.toString().includes(searchValue) ||
+        element.price.toString().includes(searchValue)
+      );
+    });
+
+    return filteredProducts;
+  }
+
+  filterProducts() {
+    const brandValue = getParamsSpecificValue('brand') ?? getOptions(PRODUCTS, 'brand');
+    const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
+    const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
+
+    let filteredProducts = PRODUCTS.filter((element) => {
+      return (
+        brandValue.includes(element.brand) &&
+        categoryValue.includes(element.category) &&
+        colorValue.includes(element.color)
+      );
+    });
+
+    const searchValue = getParamsSpecificValue('search') ?? null;
+    if (searchValue) {
+      filteredProducts = this.filterProductsBySearchValue(filteredProducts, searchValue);
+    }
+
+    if (filteredProducts.length === 0) {
+      return [
+        {
+          brand: 'fake',
+          category: 'fake',
+          color: 'fake',
+          description: 'fake',
+          id: 0,
+          images: [],
+          material: 'fake',
+          price: 0,
+          stock: 0,
+          thumbnail: 'https://basharathospital.clinta.biz/assets/under-construction.png',
+          title: 'Товаров не найдено',
+          top: 'fake',
+        },
+      ];
+    }
+
+    return filteredProducts;
   }
 
   render() {
