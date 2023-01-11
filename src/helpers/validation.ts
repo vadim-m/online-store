@@ -6,6 +6,9 @@ import {
   CARD_REGEXP,
   DATE_REGEXP,
   CVV_REGEXP,
+  VISA_REGEXP,
+  MASTER_REGEXP,
+  MIR_REGEXP,
 } from '../types/constants';
 import LocalStorage from '../data/localStorage';
 import Header from '../components/header/header';
@@ -29,6 +32,7 @@ export function addEventsOnModalForm() {
     buttonClose.addEventListener('click', closeModalForm);
     form.addEventListener('submit', handleForm);
     inputNumber.addEventListener('input', addSpace);
+    inputNumber.addEventListener('keyup', changeLogo);
     inputDate.addEventListener('keyup', addSplitter);
     inputCVV.addEventListener('input', fixLength);
   }
@@ -160,4 +164,14 @@ export function addSplitter(event: Event) {
 
 export function fixLength(event: Event) {
   (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value.slice(0, 3);
+}
+
+// МЕНЯЕМ ЛОГОТИП
+
+export function changeLogo(event: Event) {
+  const target = (<HTMLInputElement>event.target).value;
+  const logo = document.querySelector('.modal-form__card-type') as HTMLDivElement;
+  if (VISA_REGEXP.test(target)) logo.innerText = 'VISA';
+  if (MASTER_REGEXP.test(target)) logo.innerText = 'Master Card';
+  if (MIR_REGEXP.test(target)) logo.innerText = 'МИР';
 }

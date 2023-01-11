@@ -1,12 +1,13 @@
 import { ItemCart } from '../types/types';
 import { ITEM } from '../types/constants';
 import PRODUCTS from './products';
-import { Product } from '../types/interfaces';
+import { IProduct } from '../types/interfaces';
+import { getParamsSpecificValue } from '../helpers/hash';
 
 class LocalStorage {
   private keyName: string;
   private keyOneName: string;
-  private products: Product[] = [];
+  private products: IProduct[] = [];
   private promoName: string;
 
   constructor() {
@@ -17,21 +18,20 @@ class LocalStorage {
 
   // ПРОМОКОДЫ
 
-  addPromoCode(name: string) {
-    const promoCode = this.getPromoCode();
-
-    if (promoCode.indexOf(name) === -1) {
-      promoCode.push(name);
+  // vadim
+  addPromoCode() {
+    const promoCode = getParamsSpecificValue('promo');
+    if (!promoCode) {
+      return;
     }
-
     localStorage.setItem(this.promoName, JSON.stringify(promoCode));
 
     return { promoCode };
   }
+  // vadim end
 
   getPromoCode() {
     const promoCodesInLocalStorage = localStorage.getItem(this.promoName);
-    console.log(promoCodesInLocalStorage);
     if (promoCodesInLocalStorage !== null) {
       return JSON.parse(promoCodesInLocalStorage);
     }
@@ -132,7 +132,7 @@ class LocalStorage {
   getOneTypeProductPrice(id: string) {
     const products = this.getProducts();
     let oneProductPrice: number | null = null;
-    products.forEach((product: Product) => {
+    products.forEach((product: IProduct) => {
       if (product.id === +id) oneProductPrice = product.price;
     });
     return String(oneProductPrice);

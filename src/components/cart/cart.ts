@@ -4,24 +4,23 @@ import LocalStorage from '../../data/localStorage';
 import PRODUCTS from '../../data/products';
 import CartItem from './cartItem';
 import SuccessPurchase from '../modal-form/successPurchase';
-import { Product, IProductInStorage } from '../../types/interfaces';
+import { IProduct, IProductInStorage } from '../../types/interfaces';
 import Header from '../header/header';
-import { addParams } from '../../helpers/hash';
-import {
-  countDiscountPrice,
-  checkForPromoCode,
-  makeDiscountVisible,
-  makePriceCrossed,
-} from '../../helpers/utils';
+import { addParams, getParamsSpecificValue } from '../../helpers/hash';
+import { promos } from '../../types/constants';
+import CartPromos from './cartPromo';
+import { countDiscountPrice } from '../../helpers/utils';
 
 class Cart extends Component {
   private modal: Modal;
   private sucessPurchase: SuccessPurchase;
   private localStorage: LocalStorage;
-  private products: Product[] = [];
+  private products: IProduct[] = [];
   private productsComponents: CartItem[] = [];
   private productsInStore;
   private header: Header;
+  private cartPromos: CartPromos;
+  private activePromoPriceClass: string;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
@@ -31,6 +30,8 @@ class Cart extends Component {
     this.getProducts();
     this.productsInStore = this.localStorage.getProducts();
     this.header = new Header();
+    this.cartPromos = new CartPromos('div', 'card__promos');
+    this.activePromoPriceClass = this.checkActivatedPromo();
   }
 
   getProducts() {
@@ -48,10 +49,38 @@ class Cart extends Component {
 
   getTotalCost() {
     const productsPrices: number[] = [];
-    this.productsInStore.forEach((product: Product) => {
+    this.productsInStore.forEach((product: IProduct) => {
       productsPrices.push(product.price);
     });
     return productsPrices.length > 0 ? productsPrices.reduce((a, b) => a + b) : 0;
+  }
+
+  getPromoSales() {
+    const sales = getParamsSpecificValue('promo')?.split('↕') ?? [''];
+    const resultArr: number[] = [];
+    console.log(sales);
+    sales.forEach((value) => {
+      if (typeof value === 'string') {
+        const promoItem = promos.find((item) => item.name === value) ?? { name: 'fake', value: 0 };
+        const promoAmount = promoItem.value;
+        resultArr.push(promoAmount);
+      }
+    });
+    console.log(resultArr);
+    if (resultArr.length === 0) {
+      return [0];
+    }
+
+    return resultArr;
+  }
+
+  checkActivatedPromo() {
+    const isPromoActive = getParamsSpecificValue('promo');
+    if (isPromoActive) {
+      return 'active';
+    }
+
+    return '';
   }
 
   renderCart() {
@@ -60,7 +89,7 @@ class Cart extends Component {
     const productsInCart: number[] = [];
     const filteredItems: CartItem[] = [];
 
-    this.productsInStore.forEach((product: Product) => {
+    this.productsInStore.forEach((product: IProduct) => {
       productsInCart.push(product.id);
     });
 
@@ -74,6 +103,8 @@ class Cart extends Component {
       <div class="cart__empty">КОРЗИНА ПУСТА</div>
     `;
 
+    const promos = this.cartPromos.addPromos();
+
     const html = `
       <ul class="catalog__list">
         ${filteredItems.map((product) => product.render()).join(' ')}
@@ -84,28 +115,21 @@ class Cart extends Component {
           <div class="product__price">${this.getTotalAmount()}</div>
         </div>
         <div class="cart__price"><span>Стоимость товаров:</span>
-          <div class="product__price product__price_summary ${makePriceCrossed(
-            this.localStorage.getPromoCode()
-          )}">${this.getTotalCost()}₽
+          <div class="cart__price-full ${this.activePromoPriceClass}">${this.getTotalCost()}₽
+          <span class="cart__price-discount">${countDiscountPrice(
+            this.getTotalCost(),
+            this.getPromoSales()
+          )} ₽</span>
+          </div>
         </div>
-        <div class="product__discount-price product__discount-price_summary ${makeDiscountVisible(
-          this.localStorage.getPromoCode()
-        )}">${countDiscountPrice(this.getTotalCost())} ₽</div>
-        </div>
+          ${promos}
         <div class="cart__promocode">
           <div class="cart__container">
-            <input class="cart__input" placeholder="Введите промокод" value="${checkForPromoCode(
-              this.localStorage.getPromoCode()
-            )}" type="text">
-            <button class="product__button product__button_click cart__promo-delete">Удалить</button>
+            <input class="cart__input" type="search" placeholder="Введите промокод" value="" type="text">
+            <button class="product__button product__button_click cart__promo-add" disabled>Добавить</button>
           </div>
-             <div class="cart__resolve-promo">
-              <span class="cart__resolve-promo-info">${checkForPromoCode(
-                this.localStorage.getPromoCode()
-              )} -10%</span>
-              <button class="product__button product__button_click product__button_promo">Ок</button>
-            </div>
-            <div class="cart__promocode-example">Например, "ДОЖДЬ" </div>
+            <div class="cart__promocode-value"></div>
+            <div class="cart__promocode-example">Например: "rs", "Student1"</div>
         </div>
         <button class="product__button product__button_cart cart__button" id="buy">
           Купить
@@ -131,8 +155,10 @@ class Cart extends Component {
   }
 
   eventListener() {
+    // Варя - надо + и -!
     this.container.querySelectorAll('button').forEach((el) => {
       el.addEventListener('click', (e) => {
+        e.preventDefault();
         const target = <HTMLButtonElement>e.target;
         if (target.innerText === '-' || target.innerText === '+') {
           const paramName = target.name;
@@ -142,37 +168,45 @@ class Cart extends Component {
         }
       });
     });
-    const inputPromo = this.container.querySelector('input');
+
+    // vadim start появление снизу и активируем кнопку
+    const inputPromo = <HTMLInputElement>this.container.querySelector('.cart__input');
     inputPromo?.addEventListener('keyup', (e) => {
       const target = <HTMLInputElement>e.target;
-      const coupon10 = 'ДОЖДЬ';
-      const promoResolve = document.querySelector('.cart__resolve-promo') as HTMLElement;
-      const a = promoResolve.querySelector('.cart__resolve-promo-info') as HTMLElement;
-      if (target.value === coupon10) {
-        this.localStorage.addPromoCode(target.value);
-        if (promoResolve) promoResolve.style.display = 'block';
-        a.innerText = `${target.value} -10%`;
+      const promoValue = target.value.toLocaleLowerCase();
+      const button = <HTMLButtonElement>this.container.querySelector('.cart__promo-add');
+      button.disabled = true;
+      const index = promos.findIndex((item) => item.name.toLocaleLowerCase() === promoValue);
+      if (index !== -1) {
+        const promocodeExampleEl = <HTMLDivElement>(
+          this.container.querySelector('.cart__promocode-value')
+        );
+        promocodeExampleEl.innerHTML = `Скидка по промокоду ${promos[index].name} =  ${promos[index].value}%`;
+
+        button.disabled = false;
       }
     });
-    const buttonAddPromo = this.container.querySelector('.product__button_promo');
-    const activePrice = this.container.querySelector('.product__price_summary');
-    const discountPrice = this.container.querySelector(
-      '.product__discount-price_summary'
-    ) as HTMLElement;
-    buttonAddPromo?.addEventListener('click', () => {
-      if (discountPrice) {
-        discountPrice.style.display = 'block';
-        discountPrice.innerText = `${countDiscountPrice(this.getTotalCost())} ₽`;
+
+    // добавить promocode
+    const addPromo = this.container.querySelector('.cart__promo-add');
+    addPromo?.addEventListener('click', () => {
+      if (inputPromo) {
+        addParams('promo', inputPromo.value.toLocaleLowerCase());
+        inputPromo.value = '';
       }
-      activePrice?.classList.add('active');
     });
-    const deletePromo = this.container.querySelector('.cart__promo-delete');
-    deletePromo?.addEventListener('click', () => {
-      discountPrice.style.display = 'none';
-      activePrice?.classList.remove('active');
-      localStorage.removeItem('promo-codes');
-      if (inputPromo) inputPromo.value = '';
-    });
+
+    // работа чекбоксов
+    const promoCheckboxs = this.container.querySelectorAll('.filters__input  ');
+    promoCheckboxs.forEach((item) =>
+      item.addEventListener('change', (e) => {
+        const input = <HTMLInputElement>e.target;
+        const name = input.name;
+        const value = input.value;
+        addParams(name, value);
+      })
+    );
+    // vadim end
   }
 
   changePlusMinus(button: HTMLElement) {

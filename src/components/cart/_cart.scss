@@ -1,6 +1,6 @@
 .cart {
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 1fr 30%;
   grid-gap: 2.5rem;
 
   &__empty {
@@ -40,13 +40,13 @@
   }
 
   &__summary {
+    align-self: start;
     display: flex;
     flex-direction: column;
     background-color: var(--white);
     border: 2px solid var(--red);
     border-radius: 0.5rem;
     padding: 1rem;
-    max-height: 35rem;
   }
 
   &__title {
@@ -63,37 +63,41 @@
   }
 
   &__button {
+    flex-grow: 0;
+
     padding: 0.5rem 1rem;
+    margin-top: auto;
   }
 
-  &__resolve-promo {
-    display: none;
-    margin-bottom: 0.5rem;
-    color: var(--red);
-  }
-
-  &__added-promo {
-    border: solid var(--black) 0.1rem;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  &__promo-header {
-    text-align: center;
-    font-weight: bold;
-  }
-
-  &__promo-item {
-    list-style-type: none;
+  &__promo-add {
+    &:disabled {
+      pointer-events: none;
+      background-color: var(--gray-dark);
+    }
   }
 
   &__container {
     display: grid;
-    grid-template-columns: 1fr 6rem;
     grid-gap: 0.5rem;
   }
-}
 
-.visible {
-  display: block;
+  &__price-full {
+    font-size: rem(28);
+    margin-bottom: rem(20);
+
+    .cart__price-discount {
+      display: none;
+    }
+
+    &.active {
+      text-decoration: line-through;
+      color: var(--red);
+
+      .cart__price-discount {
+        display: inline-block;
+        width: 100%;
+        color: var(--black);
+      }
+    }
+  }
 }

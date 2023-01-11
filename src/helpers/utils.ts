@@ -1,11 +1,12 @@
-export function countDiscountPrice(fullPrice: number) {
-  return fullPrice - (fullPrice / 100) * 10;
+import { IProduct } from '../types/interfaces';
+
+export function getOptions(array: IProduct[], key: string) {
+  return Array.from(new Set(array.map((product) => product[key as keyof IProduct]))).sort();
 }
 
-export function checkForPromoCode(array: string[]) {
-  if (array.length !== 0) {
-    return array[array.length - 1];
-  } else return '';
+export function countDiscountPrice(fullPrice: number, saleArr: number[]) {
+  const sales = saleArr.reduce((acc, item) => acc + item);
+  return Math.round(fullPrice - (fullPrice / 100) * sales);
 }
 
 export function makeDiscountVisible(array: string[]) {

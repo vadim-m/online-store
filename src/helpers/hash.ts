@@ -9,18 +9,13 @@ export function addParams(name: string, value: string) {
   changeHash(params.toString());
 }
 
-function changeHash(queries: string) {
-  const page = getPage();
-  window.location.hash = page + '?' + queries;
-}
-
 function checkParams(name: string, value: string) {
   let paramName = '';
   let paramValue = '';
   let isAdded = false;
   const params = getURLSearchParams();
-  const keys = getParamKeys();
-  const values = getParamValues();
+  const keys = getParamsKeys();
+  const values = getParamsValues();
 
   if (keys.indexOf(name) === -1) {
     paramName = name;
@@ -49,18 +44,45 @@ function checkParams(name: string, value: string) {
   return { paramName, paramValue, isAdded };
 }
 
+export function deleteParams(name: string) {
+  const params = getURLSearchParams();
+  params.delete(name);
+
+  changeHash(params.toString());
+}
+
+export function replaceParams(name: string, value: string) {
+  const params = getURLSearchParams();
+  const filter = getParamsSpecificValue(name);
+  if (filter) {
+    params.set(name, value);
+  } else {
+    params.append(name, value);
+  }
+
+  changeHash(params.toString());
+}
+
 function getHash() {
   return window.location.hash;
+}
+
+export function changeHash(queries: string) {
+  const page = getPage();
+  window.location.hash = page + '?' + queries;
 }
 
 export function getPage() {
   const hash = getHash();
   const page = hash.split('?')[0].slice(1);
+  if (page) {
+    return page;
+  }
 
-  return page;
+  return null;
 }
 
-function getParamKeys() {
+function getParamsKeys() {
   const keys = [];
   const params = getURLSearchParams();
   for (const value of params.keys()) {
@@ -70,7 +92,7 @@ function getParamKeys() {
   return keys;
 }
 
-export function getParamsSecificValue(key: string) {
+export function getParamsSpecificValue(key: string) {
   const params = getURLSearchParams();
   const value = params.get(key);
   if (value) {
@@ -80,7 +102,7 @@ export function getParamsSecificValue(key: string) {
   return null;
 }
 
-export function getParamValues() {
+export function getParamsValues() {
   const values = [];
   const params = getURLSearchParams();
   for (const key of params.keys()) {

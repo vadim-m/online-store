@@ -8,3 +8,12 @@ export type ItemCart = {
   id: number;
   price: number;
 };
+
+export type labelOption = {
+  value: string;
+  text: string;
+};
+export type promo = {
+  name: string;
+  value: number;
+};

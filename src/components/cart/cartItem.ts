@@ -1,4 +1,4 @@
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
 import LocalStorage from '../../data/localStorage';
 
@@ -6,7 +6,7 @@ class CartItem {
   private container: HTMLElement;
   private localStorage: LocalStorage;
 
-  constructor(private product: Product) {
+  constructor(private product: IProduct) {
     this.container = document.querySelector('.cart') as HTMLElement;
     this.localStorage = new LocalStorage();
   }
