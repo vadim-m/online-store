@@ -93,3 +93,23 @@
 input:checked + .filters__checkbox-span {
   background-color: var(--red);
 }
+
+input:checked + .filters__checkbox-span:before,
+input:checked + .filters__checkbox-span:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: rem(14);
+  height: rem(1);
+  background-color: var(--black);
+  transform: translateX(-50%);
+}
+
+input:checked + .filters__checkbox-span:before {
+  transform: translateX(-50%) rotate(45deg);
+}
+
+input:checked + .filters__checkbox-span:after {
+  transform: translateX(-50%) rotate(-45deg);
+}
