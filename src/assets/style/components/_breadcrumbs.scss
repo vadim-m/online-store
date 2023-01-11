@@ -1,0 +1,26 @@
+.breadcrumbs {
+  display: flex;
+  font-size: rem(24);
+  list-style-position: inside;
+
+  margin-bottom: rem(56);
+
+  &__item {
+    margin-right: rem(22);
+    transition: all 0.25s ease-in-out;
+
+    &:first-child {
+      list-style: none;
+    }
+
+    &:hover {
+      color: var(--red);
+      text-decoration: underline;
+    }
+
+    &:last-child:hover {
+      color: var(--black);
+      text-decoration: none;
+    }
+  }
+}
