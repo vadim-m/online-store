@@ -8,15 +8,3 @@ export function countDiscountPrice(fullPrice: number, saleArr: number[]) {
   const sales = saleArr.reduce((acc, item) => acc + item);
   return Math.round(fullPrice - (fullPrice / 100) * sales);
 }
-
-export function makeDiscountVisible(array: string[]) {
-  if (array.length !== 0) {
-    return 'visible';
-  } else return '';
-}
-
-export function makePriceCrossed(array: string[]) {
-  if (array.length !== 0) {
-    return 'active';
-  } else return '';
-}
