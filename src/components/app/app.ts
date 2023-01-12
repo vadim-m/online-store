@@ -63,8 +63,8 @@ class App {
   private enableRouteChange() {
     window.addEventListener('hashchange', () => {
       const page = getPage() ?? 'store';
-      const queries = getQueries();
-      console.log(page, queries);
+      // const queries = getQueries();
+      // console.log(page, queries);
       App.renderNewPage(page);
       this.catalogList.addEvents();
     });

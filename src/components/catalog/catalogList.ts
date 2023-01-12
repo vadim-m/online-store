@@ -37,12 +37,20 @@ class CatalogList extends Component {
     const brandValue = getParamsSpecificValue('brand') ?? getOptions(PRODUCTS, 'brand');
     const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
     const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
+    const minStockValue = getParamsSpecificValue('minStock') ?? '0';
+    const maxStockValue = getParamsSpecificValue('maxPStock') ?? '100000';
+    const minPriceValue = getParamsSpecificValue('minPrice') ?? '0';
+    const maxPriceValue = getParamsSpecificValue('maxPrice') ?? '100000';
 
     let filteredProducts = PRODUCTS.filter((element) => {
       return (
         brandValue.includes(element.brand) &&
         categoryValue.includes(element.category) &&
-        colorValue.includes(element.color)
+        colorValue.includes(element.color) && 
+        element.price >= +minPriceValue && 
+        element.price <= +maxPriceValue &&
+        element.stock >= +minStockValue && 
+        element.stock <= +maxStockValue 
       );
     });
 

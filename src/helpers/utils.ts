@@ -142,3 +142,15 @@ export function fixLength(event: Event) {
 export function getOptions(array: Product[], key: string) {
   return Array.from(new Set(array.map((product) => product[key as keyof Product]))).sort();
 }
+
+export function getMinProductValue(array: Product[], key: string) {
+  const arrayResult = array.map((product) => product[key as keyof Product]) as number[];
+
+  return Math.min(...arrayResult);
+}
+
+export function getMaxProductValue(array: Product[], key: string) {
+  const arrayResult = array.map((product) => product[key as keyof Product]) as number[];
+
+  return Math.max(...arrayResult);
+}

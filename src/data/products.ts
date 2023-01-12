@@ -5,7 +5,7 @@ const PRODUCTS: Product[] = [
     id: 1,
     brand: 'Kuchaland',
     title: 'Кружка, 330 мл, 2 шт',
-    price: 2550,
+    price: 550,
     category: 'Кружки',
     stock: 20,
     description:
@@ -26,7 +26,7 @@ const PRODUCTS: Product[] = [
     title: 'Бокал для мартини, 240 мл',
     price: 400,
     category: 'Бокалы',
-    stock: 23,
+    stock: 13,
     description:
       'По блеску и прозрачности этот бокал трудно отличить от хрустального, хотя он изготовлен из стекла без добавления свинца. Бокалы издают приятный звук, когда ими чокаются.',
     material: 'Стекло',
@@ -43,7 +43,7 @@ const PRODUCTS: Product[] = [
     id: 3,
     brand: 'DomaYa',
     title: 'Набор столовых приборов, 24 предмета',
-    price: 54000,
+    price: 10400,
     category: 'Приборы',
     stock: 7,
     description:
@@ -62,9 +62,9 @@ const PRODUCTS: Product[] = [
     id: 4,
     brand: 'DomaYa',
     title: 'Тарелка обеденная, 27 см',
-    price: 2500,
+    price: 1500,
     category: 'Тарелки',
-    stock: 19,
+    stock: 9,
     description:
       'Подходит для использования в микроволновой печи. Рекомендуется мыть вручную с применением мягких моющих средств.',
     material: 'Фарфор',
@@ -81,9 +81,9 @@ const PRODUCTS: Product[] = [
     id: 5,
     brand: 'Kuchaland',
     title: 'Чайная пара, 240 мл, 2 шт',
-    price: 3990,
+    price: 3500,
     category: 'Кружки',
-    stock: 16,
+    stock: 6,
     description:
       'Пара чайная, 2 персоны, 4 предмета. Подходит для использования в микроволновой печи.',
     material: 'Фарфор',
@@ -100,9 +100,9 @@ const PRODUCTS: Product[] = [
     id: 6,
     brand: 'Kuchaland',
     title: 'Бокал для шампанского, 180 мл, 4 шт',
-    price: 3990,
+    price: 2550,
     category: 'Бокалы',
-    stock: 25,
+    stock: 15,
     description:
       'Бокал для шампанского, 4 штуки. Рекомендуется мыть вручную с применением мягких моющих средств. Не использовать для ухода абразивные чистящие средства и жёсткие губки. Нельзя мыть в посудомоечной машине.',
     material: 'Стекло',
@@ -119,9 +119,9 @@ const PRODUCTS: Product[] = [
     id: 7,
     brand: 'AKIE',
     title: 'Стакан POKAL, 350 мл',
-    price: 299,
+    price: 250,
     category: 'Стаканы',
-    stock: 44,
+    stock: 14,
     description:
       'Изготовлено из закаленного стекла, которое отличается долговечностью и особой ударопрочностью.',
     material: 'Стекло',
@@ -138,7 +138,7 @@ const PRODUCTS: Product[] = [
     id: 8,
     brand: 'Kuchaland',
     title: 'Набор столовых приборов, 24 предмета',
-    price: 15990,
+    price: 11450,
     category: 'Приборы',
     stock: 3,
     description:
@@ -159,7 +159,7 @@ const PRODUCTS: Product[] = [
     title: 'Тарелка десертная, 24 см',
     price: 3300,
     category: 'Тарелки',
-    stock: 26,
+    stock: 12,
     description:
       'Подходит для использования в микроволновой печи. Рекомендуется мыть вручную с применением мягких моющих средств.',
     material: 'Фарфор',
@@ -176,7 +176,7 @@ const PRODUCTS: Product[] = [
     id: 10,
     brand: 'Kuchaland',
     title: 'Сервиз обеденный, 19 предметов',
-    price: 25990,
+    price: 11450,
     category: 'Сервизы',
     stock: 7,
     description:
@@ -214,9 +214,9 @@ const PRODUCTS: Product[] = [
     id: 12,
     brand: 'AKIE',
     title: 'Набор столовых приборов, 24 предмета',
-    price: 4990,
+    price: 4000,
     category: 'Приборы',
-    stock: 13,
+    stock: 10,
     description:
       'Сделайте сервировку праздничной: воспользуйтесь столовыми приборами простой и лаконичной формы.',
     material: 'Сталь',
@@ -273,7 +273,7 @@ const PRODUCTS: Product[] = [
     title: 'Бокал Cactus Yellow, 240 мл',
     price: 3600,
     category: 'Бокалы',
-    stock: 55,
+    stock: 11,
     description:
       'Бокал подойдет как для красного, так и для белого вина. Поставляется в подарочной упаковке по 1 шт.',
     material: 'Стекло',
@@ -290,9 +290,9 @@ const PRODUCTS: Product[] = [
     id: 16,
     brand: 'Kuchaland',
     title: 'Стакан, 480 мл, 2 шт',
-    price: 2990,
+    price: 1550,
     category: 'Стаканы',
-    stock: 19,
+    stock: 9,
     description:
       'Стакан, 2 штуки. Не использовать для ухода абразивные чистящие средства и жёсткие губки. Нельзя мыть в посудомоечной машине. Не подходит для использования в микроволновой печи.',
     material: 'Стекло',
@@ -309,9 +309,9 @@ const PRODUCTS: Product[] = [
     id: 17,
     brand: 'AKIE',
     title: 'Тарелка ФЭКЛАР, 26 см',
-    price: 990,
+    price: 950,
     category: 'Тарелки',
-    stock: 51,
+    stock: 7,
     description:
       'Отличное обрамление любого блюда. Тарелка ФЭКЛАР лаконичного дизайна прекрасно сочетается с другой столовой посудой. Выберите традиционную матовую поверхность или современную глянцевую.',
     material: 'Фарфор',
@@ -330,7 +330,7 @@ const PRODUCTS: Product[] = [
     title: 'Чайная пара Pink Rose, 200 мл',
     price: 1750,
     category: 'Кружки',
-    stock: 10,
+    stock: 1,
     description:
       'Идеально подходит для горячих или холодных напитков, препятствуя их быстрому остыванию или нагреву.',
     material: 'Фарфор',
@@ -347,7 +347,7 @@ const PRODUCTS: Product[] = [
     id: 19,
     brand: 'DomaYa',
     title: 'Набор столовых приборов, 24 предмета',
-    price: 30600,
+    price: 12000,
     category: 'Приборы',
     stock: 5,
     description:
@@ -366,7 +366,7 @@ const PRODUCTS: Product[] = [
     id: 20,
     brand: 'Kuchaland',
     title: 'Набор столовых приборов, 68 предметов',
-    price: 35500,
+    price: 15000,
     category: 'Приборы',
     stock: 8,
     description:
@@ -404,7 +404,7 @@ const PRODUCTS: Product[] = [
     id: 22,
     brand: 'DomaYa',
     title: 'Набор хрустальных бокалов для игристого, 6 шт',
-    price: 18000,
+    price: 13500,
     category: 'Бокалы',
     stock: 9,
     description:
@@ -423,7 +423,7 @@ const PRODUCTS: Product[] = [
     id: 23,
     brand: 'AKIE',
     title: 'Сервиз UPLAGG, 18 предметов',
-    price: 44990,
+    price: 10550,
     category: 'Сервизы',
     stock: 2,
     description:
@@ -444,7 +444,7 @@ const PRODUCTS: Product[] = [
     title: 'Тарелка обеденная, 28.5 см',
     price: 1650,
     category: 'Тарелки',
-    stock: 24,
+    stock: 14,
     description:
       'Подходит для использования в микроволновой печи. Рекомендуется мыть вручную с применением мягких моющих средств.',
     material: 'Фарфор',
@@ -461,7 +461,7 @@ const PRODUCTS: Product[] = [
     id: 25,
     brand: 'Kuchaland',
     title: 'Бокал для вина, 560 мл',
-    price: 9990,
+    price: 9950,
     category: 'Бокалы',
     stock: 10,
     description:
@@ -501,7 +501,7 @@ const PRODUCTS: Product[] = [
     title: 'Тарелка, 12x7 см',
     price: 800,
     category: 'Тарелки',
-    stock: 33,
+    stock: 17,
     description:
       'Глазурованная тарелка насыщенного синего цвета с золотисто-коричневым ободком украсит любое блюдо.',
     material: 'Фарфор',
@@ -539,7 +539,7 @@ const PRODUCTS: Product[] = [
     title: 'Чашка чайная, 250 мл',
     price: 1250,
     category: 'Кружки',
-    stock: 25,
+    stock: 15,
     description:
       'Нежная плавность линий лиможского фарфора в сочетании с утончённой художественной отделкой, вызывают искреннее восхищение. Идеально подходит для горячих или холодных напитков, препятствуя их быстрому остыванию или нагреву. Нельзя использовать в микроволновой печи.',
     material: 'Фарфор',
@@ -556,9 +556,9 @@ const PRODUCTS: Product[] = [
     id: 30,
     brand: 'Kuchaland',
     title: 'Стакан, 330 мл, 2 шт',
-    price: 2990,
+    price: 1750,
     category: 'Стаканы',
-    stock: 28,
+    stock: 6,
     description:
       'Стакан для холодных и горячих напитков, 2 штукию Объём: 330 мл. Материал: термостойкое стекло. ',
     material: 'Стекло',

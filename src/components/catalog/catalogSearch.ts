@@ -30,8 +30,6 @@ class CatalogSearch extends Component {
   }
 
   addSearch() {
-    console.log(this.searchInputValue);
-
     const htmlTemplate = `
       <div class="search">
         <input class="search__input" type="search" title="Для поиска необходимо нажать 'Enter' либо кнопку 'Поиск'"  placeholder="Какой товар Вас интересует?"
