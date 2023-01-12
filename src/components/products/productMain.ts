@@ -1,4 +1,4 @@
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
 import LocalStorage from '../../data/localStorage';
 import Header from '../header/header';
@@ -15,7 +15,7 @@ class ProductMain {
   private button: HTMLElement | null;
   private productViewStyle: string;
 
-  constructor(private product: Product) {
+  constructor(private product: IProduct) {
     this.localStorage = new LocalStorage();
     this.header = new Header();
     //this.mainPage = new StorePage('content');

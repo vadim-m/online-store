@@ -14,7 +14,6 @@ class ProductBreadcrumbs extends Component {
     const item = PRODUCTS.filter((item) => {
       return item.id === id;
     })[0];
-    console.log(item);
 
     if (!item) {
       return `

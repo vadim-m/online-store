@@ -1,6 +1,6 @@
 import Component from '../component';
 import PRODUCTS from '../../data/products';
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 import { getParamsSpecificValue, getParamsValues } from '../../helpers/hash';
 import { getOptions } from '../../helpers/utils';
 
@@ -8,7 +8,7 @@ class FilterCheckbox extends Component {
   private checkboxText = '';
   private category = '';
   private checkedAttr = '';
-  private products: Product[] = [...PRODUCTS];
+  private products: IProduct[] = [...PRODUCTS];
 
   constructor(tagName: string, className: string, checkboxText: string, category: string) {
     super(tagName, className);
@@ -31,18 +31,15 @@ class FilterCheckbox extends Component {
 
     categoryValues.forEach((value) => {
       if (typeof value === 'string') {
-        // console.log('First', value);
-
         const amount = this.products.filter(
-          (product: Product) => product[this.category as keyof Product] === value
+          (product: IProduct) => product[this.category as keyof IProduct] === value
         ).length;
 
         const filtered = this.filterProducts();
         let count = 0;
         filtered.forEach((item) => {
           for (const key in item) {
-            if (item[key as keyof Product] === value) {
-              // console.log(key);
+            if (item[key as keyof IProduct] === value) {
               count++;
             }
           }
@@ -64,7 +61,7 @@ class FilterCheckbox extends Component {
     return legend + labels;
   }
 
-  filterProductsBySearchValue(products: Product[], value: string) {
+  filterProductsBySearchValue(products: IProduct[], value: string) {
     const searchValue = value.toLocaleLowerCase();
     const filteredProducts = products.filter((element) => {
       return (
@@ -92,11 +89,11 @@ class FilterCheckbox extends Component {
       return (
         brandValue.includes(element.brand) &&
         categoryValue.includes(element.category) &&
-        colorValue.includes(element.color) && 
-        element.price >= +minPriceValue && 
+        colorValue.includes(element.color) &&
+        element.price >= +minPriceValue &&
         element.price <= +maxPriceValue &&
-        element.stock >= +minStockValue && 
-        element.stock <= +maxStockValue 
+        element.stock >= +minStockValue &&
+        element.stock <= +maxStockValue
       );
     });
 

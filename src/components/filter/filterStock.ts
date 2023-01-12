@@ -1,41 +1,47 @@
-import { getParamsSpecificValue ,replaceParams, } from '../../helpers/hash';
+import { getParamsSpecificValue, replaceParams } from '../../helpers/hash';
 import { getMaxProductValue, getMinProductValue, getOptions } from '../../helpers/utils';
 import Component from '../component';
 import PRODUCTS from '../../data/products';
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 
 class FilterStock extends Component {
   private currentMinValue: string;
   private curnetMaxValue: string;
   private productsMinValue: string;
   private productsMaxValue: string;
-  private products: Product[] = [...PRODUCTS];
+  private products: IProduct[] = [...PRODUCTS];
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
     this.productsMinValue = String(getMinProductValue(this.products, 'stock'));
     this.productsMaxValue = String(getMaxProductValue(this.products, 'stock'));
     this.products = this.filterProducts();
-    this.currentMinValue = getParamsSpecificValue('minStock') ?? String(getMinProductValue(this.products, 'stock'));
-    this.curnetMaxValue = getParamsSpecificValue('maxPStock') ?? String(getMaxProductValue(this.products, 'stock'));
+    this.currentMinValue =
+      getParamsSpecificValue('minStock') ?? String(getMinProductValue(this.products, 'stock'));
+    this.curnetMaxValue =
+      getParamsSpecificValue('maxPStock') ?? String(getMaxProductValue(this.products, 'stock'));
   }
 
-  addButtons() {  
+  addButtons() {
     const htmlTemplate = `
     <legend class="filters__subtitle">Количество:</legend>
     <div class="range_container">
       <div class="sliders_control">
-          <input id="fromSlider" type="range" value="${+this.currentMinValue}" step="1" min="${+this.productsMinValue}" max="${+this.productsMaxValue}"/>
-          <input id="toSlider" type="range" value="${+this.curnetMaxValue}" step="1" min="${+this.productsMinValue}" max="${+this.productsMaxValue}"/>
+          <input id="fromSlider" type="range" value="${+this.currentMinValue}" step="1" min="${+this
+      .productsMinValue}" max="${+this.productsMaxValue}"/>
+          <input id="toSlider" type="range" value="${+this.curnetMaxValue}" step="1" min="${+this
+      .productsMinValue}" max="${+this.productsMaxValue}"/>
       </div>
       <div class="form_control">
           <div class="form_control_container">
               <div class="form_control_container__time">Min</div>
-              <input class="form_control_container__time__input" type="number" id="fromInput" value="${+this.currentMinValue}"min="0" max="100"/>
+              <input class="form_control_container__time__input" type="number" id="fromInput" value="${+this
+                .currentMinValue}"min="0" max="100"/>
           </div>
           <div class="form_control_container">
               <div class="form_control_container__time">Max</div>
-              <input class="form_control_container__time__input" type="number" id="toInput" value="${+this.curnetMaxValue}"min="0" max="100"/>
+              <input class="form_control_container__time__input" type="number" id="toInput" value="${+this
+                .curnetMaxValue}"min="0" max="100"/>
           </div>
       </div>
     </div>
@@ -44,7 +50,7 @@ class FilterStock extends Component {
     return htmlTemplate;
   }
 
-  controlFromInput(fromSlider, fromInput  , toInput, controlSlider) {
+  controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
     const [from, to] = this.getParsed(fromInput, toInput);
     this.fillSlider(fromInput, toInput, '#C6C6C6', '#d31414', controlSlider);
     if (from > to) {
@@ -133,16 +139,14 @@ class FilterStock extends Component {
 
     this.container.querySelector('#fromSlider')?.addEventListener('change', (e) => {
       const label = <HTMLSelectElement>e.target;
-      console.log(e);
-      
+
       const value = label.value;
       replaceParams('minStock', value);
     });
 
     this.container.querySelector('#toSlider')?.addEventListener('change', (e) => {
       const label = <HTMLSelectElement>e.target;
-      console.log(e);
-      
+
       const value = label.value;
       replaceParams('maxPStock', value);
     });
@@ -153,15 +157,14 @@ class FilterStock extends Component {
     this.container.innerHTML = htmlTemplate;
     const value = getMinProductValue(this.products, 'stock');
     const value2 = getMaxProductValue(this.products, 'stock');
-    console.log(value, value2, this.products);
-    
+
     this.addEvent();
 
     return this.container;
   }
 
-  // filtered 
-  filterProductsBySearchValue(products: Product[], value: string) {
+  // filtered
+  filterProductsBySearchValue(products: IProduct[], value: string) {
     const searchValue = value.toLocaleLowerCase();
     const filteredProducts = products.filter((element) => {
       return (
@@ -189,11 +192,11 @@ class FilterStock extends Component {
       return (
         brandValue.includes(element.brand) &&
         categoryValue.includes(element.category) &&
-        colorValue.includes(element.color) && 
-        element.price >= +minPriceValue && 
+        colorValue.includes(element.color) &&
+        element.price >= +minPriceValue &&
         element.price <= +maxPriceValue &&
-        element.stock >= +minStockValue && 
-        element.stock <= +maxStockValue 
+        element.stock >= +minStockValue &&
+        element.stock <= +maxStockValue
       );
     });
 
@@ -223,8 +226,6 @@ class FilterStock extends Component {
 
     return filteredProducts;
   }
-
-
 }
 
 export default FilterStock;

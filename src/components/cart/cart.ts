@@ -3,12 +3,12 @@ import Modal from '../../components/modal-form/modal-form';
 import LocalStorage from '../../data/localStorage';
 import PRODUCTS from '../../data/products';
 import CartItem from './cartItem';
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 
 class Cart extends Component {
   private modal: Modal;
   private localStorage: LocalStorage;
-  private products: Product[] = [];
+  private products: IProduct[] = [];
   private productsComponents: CartItem[] = [];
 
   constructor(tagName: string, className: string) {
@@ -26,7 +26,7 @@ class Cart extends Component {
   renderCart() {
     const productsStore = this.localStorage.getProducts();
     const productsInCart: number[] = [];
-    productsStore.forEach((product: Product) => {
+    productsStore.forEach((product: IProduct) => {
       productsInCart.push(product.id);
     });
 

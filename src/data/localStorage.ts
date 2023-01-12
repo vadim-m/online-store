@@ -38,7 +38,6 @@ class LocalStorage {
       item.id = id;
       item.price = price;
       products.push(item);
-      console.log(item);
     } else {
       products = products.filter((object: ItemCart) => object.id !== id && object.price !== price);
     }

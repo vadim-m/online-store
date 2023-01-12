@@ -1,6 +1,6 @@
-import { Product } from '../types/interfaces';
+import { IProduct } from '../types/interfaces';
 
-const PRODUCTS: Product[] = [
+const PRODUCTS: IProduct[] = [
   {
     id: 1,
     brand: 'Kuchaland',

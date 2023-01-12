@@ -7,7 +7,7 @@ import {
   DATE_REGEXP,
   CVV_REGEXP,
 } from '../types/constants';
-import { Product } from '../types/interfaces';
+import { IProduct } from '../types/interfaces';
 
 // НАВЕШИВАЕМ ОБРАБОТЧИКИ
 
@@ -139,18 +139,18 @@ export function fixLength(event: Event) {
   (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value.slice(0, 3);
 }
 
-export function getOptions(array: Product[], key: string) {
-  return Array.from(new Set(array.map((product) => product[key as keyof Product]))).sort();
+export function getOptions(array: IProduct[], key: string) {
+  return Array.from(new Set(array.map((product) => product[key as keyof IProduct]))).sort();
 }
 
-export function getMinProductValue(array: Product[], key: string) {
-  const arrayResult = array.map((product) => product[key as keyof Product]) as number[];
+export function getMinProductValue(array: IProduct[], key: string) {
+  const arrayResult = array.map((product) => product[key as keyof IProduct]) as number[];
 
   return Math.min(...arrayResult);
 }
 
-export function getMaxProductValue(array: Product[], key: string) {
-  const arrayResult = array.map((product) => product[key as keyof Product]) as number[];
+export function getMaxProductValue(array: IProduct[], key: string) {
+  const arrayResult = array.map((product) => product[key as keyof IProduct]) as number[];
 
   return Math.max(...arrayResult);
 }

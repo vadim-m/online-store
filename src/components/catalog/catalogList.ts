@@ -1,12 +1,12 @@
 import Component from '../component';
 import ProductMain from '../products/productMain';
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 import PRODUCTS from '../../data/products';
 import { getParamsSpecificValue } from '../../helpers/hash';
 import { getOptions } from '../../helpers/utils';
 
 class CatalogList extends Component {
-  private products: Product[] = [];
+  private products: IProduct[] = [];
   private productsComponents: ProductMain[] = [];
   private listViewStyle: string;
 
@@ -46,11 +46,11 @@ class CatalogList extends Component {
       return (
         brandValue.includes(element.brand) &&
         categoryValue.includes(element.category) &&
-        colorValue.includes(element.color) && 
-        element.price >= +minPriceValue && 
+        colorValue.includes(element.color) &&
+        element.price >= +minPriceValue &&
         element.price <= +maxPriceValue &&
-        element.stock >= +minStockValue && 
-        element.stock <= +maxStockValue 
+        element.stock >= +minStockValue &&
+        element.stock <= +maxStockValue
       );
     });
 
@@ -81,7 +81,7 @@ class CatalogList extends Component {
     return filteredProducts;
   }
 
-  filterProductsBySearchValue(products: Product[], value: string) {
+  filterProductsBySearchValue(products: IProduct[], value: string) {
     const searchValue = value.toLocaleLowerCase();
     const filteredProducts = products.filter((element) => {
       return (
@@ -99,15 +99,15 @@ class CatalogList extends Component {
   sortProducts(sortFilter: string) {
     switch (sortFilter) {
       case 'p-asc':
-        this.products.sort((a: Product, b: Product) => a.price - b.price);
+        this.products.sort((a: IProduct, b: IProduct) => a.price - b.price);
         break;
 
       case 'p-des':
-        this.products.sort((a: Product, b: Product) => -a.price + b.price);
+        this.products.sort((a: IProduct, b: IProduct) => -a.price + b.price);
         break;
 
       case 'n-asc':
-        this.products.sort((a: Product, b: Product) => {
+        this.products.sort((a: IProduct, b: IProduct) => {
           const firstTitle = a.title.toLocaleLowerCase();
           const secondTitle = b.title.toLocaleLowerCase();
           if (firstTitle > secondTitle) {
@@ -122,7 +122,7 @@ class CatalogList extends Component {
         break;
 
       case 'n-des':
-        this.products.sort((a: Product, b: Product) => {
+        this.products.sort((a: IProduct, b: IProduct) => {
           const firstTitle = a.title[0];
           const secondTitle = b.title[0];
           if (firstTitle > secondTitle) {

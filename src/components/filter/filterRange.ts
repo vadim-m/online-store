@@ -1,41 +1,48 @@
-import { getParamsSpecificValue ,replaceParams, } from '../../helpers/hash';
+import { getParamsSpecificValue, replaceParams } from '../../helpers/hash';
 import { getMaxProductValue, getMinProductValue, getOptions } from '../../helpers/utils';
 import Component from '../component';
 import PRODUCTS from '../../data/products';
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 
 class FilterRange extends Component {
   private currentMinValue: string;
   private curnetMaxValue: string;
   private productsMinValue: string;
   private productsMaxValue: string;
-  private products: Product[] = [...PRODUCTS];
+  private products: IProduct[] = [...PRODUCTS];
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
     this.productsMinValue = String(getMinProductValue(this.products, 'price'));
     this.productsMaxValue = String(getMaxProductValue(this.products, 'price'));
     this.products = this.filterProducts();
-    this.currentMinValue = getParamsSpecificValue('minPrice') ?? String(getMinProductValue(this.products, 'price'));
-    this.curnetMaxValue = getParamsSpecificValue('maxPrice') ?? String(getMaxProductValue(this.products, 'price'));
+    this.currentMinValue =
+      getParamsSpecificValue('minPrice') ?? String(getMinProductValue(this.products, 'price'));
+    this.curnetMaxValue =
+      getParamsSpecificValue('maxPrice') ?? String(getMaxProductValue(this.products, 'price'));
   }
 
-  addButtons() {  
+  addButtons() {
     const htmlTemplate = `
     <legend class="filters__subtitle">Цена:</legend>
     <div class="range_container">
       <div class="sliders_control">
-          <input id="fromSlider" type="range" value="${+this.currentMinValue}" step="50" min="${+this.productsMinValue - 100}" max="${+this.productsMaxValue}"/>
-          <input id="toSlider" type="range" value="${+this.curnetMaxValue}" step="50" min="${+this.productsMinValue}" max="${+this.productsMaxValue + 100}"/>
+          <input id="fromSlider" type="range" value="${+this.currentMinValue}" step="50" min="${
+      +this.productsMinValue - 100
+    }" max="${+this.productsMaxValue}"/>
+          <input id="toSlider" type="range" value="${+this.curnetMaxValue}" step="50" min="${+this
+      .productsMinValue}" max="${+this.productsMaxValue + 100}"/>
       </div>
       <div class="form_control">
           <div class="form_control_container">
               <div class="form_control_container__time">Min</div>
-              <input class="form_control_container__time__input" type="number" id="fromInput" value="${+this.currentMinValue}"min="0" max="100"/>
+              <input class="form_control_container__time__input" type="number" id="fromInput" value="${+this
+                .currentMinValue}"min="0" max="100"/>
           </div>
           <div class="form_control_container">
               <div class="form_control_container__time">Max</div>
-              <input class="form_control_container__time__input" type="number" id="toInput" value="${+this.curnetMaxValue}"min="0" max="100"/>
+              <input class="form_control_container__time__input" type="number" id="toInput" value="${+this
+                .curnetMaxValue}"min="0" max="100"/>
           </div>
       </div>
     </div>
@@ -44,7 +51,7 @@ class FilterRange extends Component {
     return htmlTemplate;
   }
 
-  controlFromInput(fromSlider, fromInput  , toInput, controlSlider) {
+  controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
     const [from, to] = this.getParsed(fromInput, toInput);
     this.fillSlider(fromInput, toInput, '#C6C6C6', '#d31414', controlSlider);
     if (from > to) {
@@ -133,16 +140,14 @@ class FilterRange extends Component {
 
     this.container.querySelector('#fromSlider')?.addEventListener('change', (e) => {
       const label = <HTMLSelectElement>e.target;
-      console.log(e);
-      
+
       const value = label.value;
       replaceParams('minPrice', value);
     });
 
     this.container.querySelector('#toSlider')?.addEventListener('change', (e) => {
       const label = <HTMLSelectElement>e.target;
-      console.log(e);
-      
+
       const value = label.value;
       replaceParams('maxPrice', value);
     });
@@ -151,14 +156,14 @@ class FilterRange extends Component {
   render() {
     const htmlTemplate = this.addButtons();
     this.container.innerHTML = htmlTemplate;
-    
+
     this.addEvent();
 
     return this.container;
   }
 
-  // filtered 
-  filterProductsBySearchValue(products: Product[], value: string) {
+  // filtered
+  filterProductsBySearchValue(products: IProduct[], value: string) {
     const searchValue = value.toLocaleLowerCase();
     const filteredProducts = products.filter((element) => {
       return (
@@ -186,11 +191,11 @@ class FilterRange extends Component {
       return (
         brandValue.includes(element.brand) &&
         categoryValue.includes(element.category) &&
-        colorValue.includes(element.color) && 
-        element.price >= +minPriceValue && 
+        colorValue.includes(element.color) &&
+        element.price >= +minPriceValue &&
         element.price <= +maxPriceValue &&
-        element.stock >= +minStockValue && 
-        element.stock <= +maxStockValue 
+        element.stock >= +minStockValue &&
+        element.stock <= +maxStockValue
       );
     });
 
@@ -220,8 +225,6 @@ class FilterRange extends Component {
 
     return filteredProducts;
   }
-
-
 }
 
 export default FilterRange;
