@@ -9,6 +9,7 @@ import Header from '../header/header';
 import { addParams, getParamsSpecificValue } from '../../helpers/hash';
 import { promos } from '../../types/constants';
 import CartPromos from './cartPromo';
+import CartPagination from './cartPagination';
 import { countDiscountPrice } from '../../helpers/utils';
 
 class Cart extends Component {
@@ -20,6 +21,7 @@ class Cart extends Component {
   private productsInStore;
   private header: Header;
   private cartPromos: CartPromos;
+  private cartPagination: CartPagination;
   private activePromoPriceClass: string;
 
   constructor(tagName: string, className: string) {
@@ -30,6 +32,7 @@ class Cart extends Component {
     this.getProducts();
     this.productsInStore = this.localStorage.getProducts();
     this.header = new Header();
+    this.cartPagination = new CartPagination('div', 'pagination');
     this.cartPromos = new CartPromos('div', 'card__promos');
     this.activePromoPriceClass = this.checkActivatedPromo();
   }
@@ -58,7 +61,6 @@ class Cart extends Component {
   getPromoSales() {
     const sales = getParamsSpecificValue('promo')?.split('↕') ?? [''];
     const resultArr: number[] = [];
-    console.log(sales);
     sales.forEach((value) => {
       if (typeof value === 'string') {
         const promoItem = promos.find((item) => item.name === value) ?? { name: 'fake', value: 0 };
@@ -66,7 +68,6 @@ class Cart extends Component {
         resultArr.push(promoAmount);
       }
     });
-    console.log(resultArr);
     if (resultArr.length === 0) {
       return [0];
     }
@@ -143,6 +144,7 @@ class Cart extends Component {
       container.innerHTML = html;
     }
 
+    this.container.append(this.cartPagination.render());
     this.container.append(container);
     this.container.append(this.modal.render());
     this.container.append(this.sucessPurchase.render());
@@ -158,7 +160,6 @@ class Cart extends Component {
     // Варя - надо + и -!
     this.container.querySelectorAll('button').forEach((el) => {
       el.addEventListener('click', (e) => {
-        e.preventDefault();
         const target = <HTMLButtonElement>e.target;
         if (target.innerText === '-' || target.innerText === '+') {
           const paramName = target.name;
@@ -207,6 +208,17 @@ class Cart extends Component {
       })
     );
     // vadim end
+    // 12.01.23 - пагинация
+    const page = getParamsSpecificValue('page') ?? '1';
+    const perItem = getParamsSpecificValue('item') ?? '3';
+    const pagination = this.container.querySelectorAll('.catalog__item');
+    const endInd = +page * +perItem - 1;
+    const step = +perItem;
+    for (let i = 0; i < step; i++) {
+      if (pagination[endInd - i]) {
+        pagination[endInd - i].classList.toggle('hide');
+      }
+    }
   }
 
   changePlusMinus(button: HTMLElement) {

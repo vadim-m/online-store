@@ -17,8 +17,7 @@ class CartItem {
 
   render() {
     return `
-       <li class="catalog__item">
-       
+       <li class="catalog__item hide">
         <article class="product product_row cart__row" id="${this.product.id}">
           <div class="product__photo cart__photo">
             <div class="product__photo-main">
@@ -64,6 +63,7 @@ class CartItem {
           </div>
         </div>
        </article>
+       </br>
      </li>
     `;
   }
