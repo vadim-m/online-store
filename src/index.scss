@@ -12,5 +12,7 @@
 @import './assets/style/components/_sort';
 @import './assets/style/components/_product';
 
-// pages
-@import './pages/error-page/error.scss'
+@import './components/error/_error.scss';
+@import './components/modal-form/_modal-form.scss';
+@import './components/cart/_cart.scss';
+@import './components/modal-form/_successPurchase.scss';

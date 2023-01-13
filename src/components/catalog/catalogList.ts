@@ -1,11 +1,11 @@
 import Component from '../component';
 import ProductMain from '../products/productMain';
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 import PRODUCTS from '../../data/products';
 
 class CatalogList extends Component {
   private error: Error | null = null;
-  private products: Product[] = [];
+  private products: IProduct[] = [];
   private productsComponents: ProductMain[] = [];
 
   constructor(tagName: string, className: string) {

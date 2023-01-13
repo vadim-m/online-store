@@ -4,30 +4,31 @@ import CartPage from '../../pages/cart-page/cart';
 import ProductPage from '../../pages/product-page/product';
 import CatalogList from '../catalog/catalogList';
 import Header from '../header/header';
-//import Footer from '../footer/footer';
+import Footer from '../footer/footer';
 import ErrorPage from '../../pages/error-page/error';
 import { PageIds } from '../../types/types';
+import { addEventsOnModalForm } from '../../helpers/validation';
 
 class App {
   private static container: HTMLElement = document.querySelector('.wrapper') as HTMLElement;
+  private static main: HTMLElement = document.querySelector('.main') as HTMLElement;
   private static defaultPageId = 'current-page';
   private header: Header;
-  // private footer: Footer;
+  private footer: Footer;
   private catalogList = new CatalogList('main', 'main');
 
   constructor() {
-    this.header = new Header('header', 'header');
-    // this.footer = new Footer('footer', 'footer');
+    this.header = new Header();
+    this.footer = new Footer('footer', 'footer');
   }
 
   static renderNewPage(idPage: string) {
     const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
 
     if (currentPageHTML) {
-      console.log('currentPageHTML remove');
-
       currentPageHTML.remove();
     }
+
     let page: Page | null = null;
 
     switch (idPage) {
@@ -46,9 +47,15 @@ class App {
 
     if (page) {
       const pageHTML = page.render();
-      pageHTML.id = App.defaultPageId;
+      const before = document.querySelector('.footer');
 
-      App.container.append(pageHTML);
+      pageHTML.id = App.defaultPageId;
+      App.container.insertBefore(pageHTML, before);
+
+      // MODAL FORM - перенести
+      const buttonBuy = document.getElementById('buy');
+      if (buttonBuy) addEventsOnModalForm();
+      // КОНЕЦ
     }
   }
 
@@ -57,16 +64,16 @@ class App {
       const hash = window.location.hash;
       const link = hash.split('?')[0].slice(1);
       //! const queries = hash.split('?')[1]; потом передаем
-      console.log(link);
 
       App.renderNewPage(link);
+      this.catalogList.addEvents();
     });
   }
 
   run() {
-    App.container.append(this.header.render());
+    this.header.render();
     App.renderNewPage('store');
-    // App.container.append(this.footer.render());
+    App.container.append(this.footer.render());
     this.enableRouteChange();
   }
 

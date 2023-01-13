@@ -1,10 +1,36 @@
-import { Product } from '../../types/interfaces';
+import { IProduct } from '../../types/interfaces';
 import { PageIds } from '../../types/types';
+import LocalStorage from '../../data/localStorage';
+import Header from '../header/header';
+import { ItemCart } from '../../types/types';
 
 class ProductMain {
-  constructor(private product: Product) {}
+  private localStorage: LocalStorage;
+  private header: Header;
+  private labelAdd: string;
+  private labelRemove: string;
+  private button: HTMLElement | null;
+
+  constructor(private product: IProduct) {
+    this.localStorage = new LocalStorage();
+    this.header = new Header();
+    this.labelAdd = 'Добавить в корзину';
+    this.labelRemove = 'Удалить из корзины';
+    this.button = document.querySelector('.product__button_cart');
+  }
 
   private getHtmlID = () => `button__${this.product.id}`;
+
+  handleSetLocationStorage(element: HTMLElement, id: number) {
+    element.innerHTML = this.localStorage.getButtonState(id) ? this.labelRemove : this.labelAdd;
+  }
+
+  changeButtonLabel() {
+    const productsStore = this.localStorage.getProducts();
+    return productsStore.findIndex((object: ItemCart) => object.id === this.product.id) > -1
+      ? this.labelRemove
+      : this.labelAdd;
+  }
 
   render() {
     return `
@@ -37,10 +63,7 @@ class ProductMain {
                 <button class="product__count_plus">+</button>
               </div>
               <button class="product__button product__button_cart" id="button__${this.product.id}">
-                Добавить в корзину
-              </button>
-              <button class="product__button product__button_click">
-                Купить в один клик
+                ${this.changeButtonLabel()}
               </button>
             </div>
           </div> 
@@ -53,13 +76,15 @@ class ProductMain {
   addEvents() {
     const button = document.getElementById(this.getHtmlID());
 
-    if (!button) {
-      throw new Error('Button is undefined');
+    if (button) {
+      button.addEventListener('click', (event: MouseEvent) => {
+        event.preventDefault();
+        this.localStorage.putProducts(this.product.id, this.product.price);
+        this.header.render();
+        const currentButton = event.target as HTMLElement;
+        this.handleSetLocationStorage(currentButton, this.product.id);
+      });
     }
-    button.addEventListener('click', (event: MouseEvent) => {
-      event.preventDefault();
-      console.log('click', this.product);
-    });
   }
 }
 

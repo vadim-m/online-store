@@ -7,13 +7,6 @@ abstract class Page {
     this.mainEl.className = className;
   }
 
-  protected createBlock(text: string) {
-    const block = document.createElement('div');
-    block.className = 'container';
-    block.innerHTML = text;
-    return block;
-  }
-
   protected appendBlock(item: HTMLElement) {
     this.mainEl.append(item);
   }

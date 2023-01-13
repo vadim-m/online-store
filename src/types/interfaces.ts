@@ -1,4 +1,4 @@
-export interface Product {
+export interface IProduct {
   id: number;
   brand: string;
   title: string;
@@ -11,4 +11,10 @@ export interface Product {
   top: string;
   thumbnail: string;
   images: string[];
+}
+
+export interface IProductInStorage {
+  id: number;
+  price: number;
+  count: number;
 }

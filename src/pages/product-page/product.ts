@@ -15,7 +15,6 @@ class ProductPage extends Page {
     const queries = hash.split('?')[1];
     const searchParams = new URLSearchParams(queries);
     const id = searchParams.get('id');
-    // console.log(queries, searchParams.toString(), id);
     if (id) return +id;
   }
 

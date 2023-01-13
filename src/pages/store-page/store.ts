@@ -6,7 +6,7 @@ class StorePage extends Page {
 
   constructor(className: string) {
     super(className);
-    this.catalog = new Catalog('div', 'catalog container');
+    this.catalog = new Catalog('div', 'container');
   }
 
   render() {
