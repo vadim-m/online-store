@@ -157,7 +157,17 @@ class Cart extends Component {
   }
 
   eventListener() {
-    // Варя - надо + и -!
+    const inputPromo = <HTMLInputElement>this.container.querySelector('.cart__input');
+    const addPromo = this.container.querySelector('.cart__promo-add');
+    const promoCheckboxs = this.container.querySelectorAll('.filters__input  ');
+    const page = getParamsSpecificValue('page') ?? '1';
+    const perItem = getParamsSpecificValue('item') ?? '3';
+    const pagination = this.container.querySelectorAll('.catalog__item');
+    const endInd = +page * +perItem - 1;
+    const step = +perItem;
+
+    // Plus/Minus buttons
+
     this.container.querySelectorAll('button').forEach((el) => {
       el.addEventListener('click', (e) => {
         const target = <HTMLButtonElement>e.target;
@@ -170,8 +180,8 @@ class Cart extends Component {
       });
     });
 
-    // vadim start появление снизу и активируем кнопку
-    const inputPromo = <HTMLInputElement>this.container.querySelector('.cart__input');
+    // Promocode
+
     inputPromo?.addEventListener('keyup', (e) => {
       const target = <HTMLInputElement>e.target;
       const promoValue = target.value.toLocaleLowerCase();
@@ -188,8 +198,6 @@ class Cart extends Component {
       }
     });
 
-    // добавить promocode
-    const addPromo = this.container.querySelector('.cart__promo-add');
     addPromo?.addEventListener('click', () => {
       if (inputPromo) {
         addParams('promo', inputPromo.value.toLocaleLowerCase());
@@ -197,8 +205,8 @@ class Cart extends Component {
       }
     });
 
-    // работа чекбоксов
-    const promoCheckboxs = this.container.querySelectorAll('.filters__input  ');
+    // Checkboxes
+
     promoCheckboxs.forEach((item) =>
       item.addEventListener('change', (e) => {
         const input = <HTMLInputElement>e.target;
@@ -207,13 +215,9 @@ class Cart extends Component {
         addParams(name, value);
       })
     );
-    // vadim end
-    // 12.01.23 - пагинация
-    const page = getParamsSpecificValue('page') ?? '1';
-    const perItem = getParamsSpecificValue('item') ?? '3';
-    const pagination = this.container.querySelectorAll('.catalog__item');
-    const endInd = +page * +perItem - 1;
-    const step = +perItem;
+
+    // Pagination
+
     for (let i = 0; i < step; i++) {
       if (pagination[endInd - i]) {
         pagination[endInd - i].classList.toggle('hide');

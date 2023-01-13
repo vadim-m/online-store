@@ -44,3 +44,7 @@ export const promos: promo[] = [
   { name: 'rs', value: 10 },
   { name: 'student1', value: 1 },
 ];
+
+export const githubHrefVadim = 'https://github.com/vadim-m';
+export const githubHrefVarya = 'https://github.com/Varvarkadikarka';
+export const rsHref = 'https://rs.school/js/';

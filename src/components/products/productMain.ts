@@ -22,25 +22,14 @@ class ProductMain {
   private getHtmlID = () => `button__${this.product.id}`;
 
   handleSetLocationStorage(element: HTMLElement, id: number) {
-    const pushProduct = this.localStorage.getButtonState(id);
-    if (pushProduct) {
-      element.innerHTML = this.labelRemove;
-    } else {
-      element.innerHTML = this.labelAdd;
-    }
+    element.innerHTML = this.localStorage.getButtonState(id) ? this.labelRemove : this.labelAdd;
   }
 
   changeButtonLabel() {
     const productsStore = this.localStorage.getProducts();
-    const index = productsStore.findIndex((object: ItemCart) => object.id === this.product.id);
-    let activeText = '';
-
-    if (index === -1) {
-      activeText = this.labelAdd;
-    } else {
-      activeText = this.labelRemove;
-    }
-    return activeText;
+    return productsStore.findIndex((object: ItemCart) => object.id === this.product.id) > -1
+      ? this.labelRemove
+      : this.labelAdd;
   }
 
   render() {
@@ -93,9 +82,7 @@ class ProductMain {
         this.localStorage.putProducts(this.product.id, this.product.price);
         this.header.render();
         const currentButton = event.target as HTMLElement;
-        if (button) {
-          this.handleSetLocationStorage(currentButton, this.product.id);
-        }
+        this.handleSetLocationStorage(currentButton, this.product.id);
       });
     }
   }

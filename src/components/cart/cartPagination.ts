@@ -23,7 +23,7 @@ class CartPagination extends Component {
     if (!this.productsAmount || !this.productsPerPage) {
       return '';
     }
-    const itemsPerPage = +this.productsPerPage!;
+    const itemsPerPage = +this.productsPerPage;
     let pages = 0;
     if (this.productsAmount % itemsPerPage === 0) {
       pages = Math.floor(this.productsAmount / itemsPerPage);
@@ -37,8 +37,10 @@ class CartPagination extends Component {
     let htmlTemplate = '';
     for (let i = 1; i <= pages; i++) {
       let activeButton = '';
-      if (i === +activePage!) {
-        activeButton = 'active';
+      if (activePage) {
+        if (i === +activePage) {
+          activeButton = 'active';
+        }
       }
       htmlTemplate += `<button class="pagination__button ${activeButton}" name="page" value="${i}">${i}</button> `;
     }

@@ -136,7 +136,7 @@ function validationError(input: HTMLInputElement, message: string) {
 // ОБРЕЗАЕТ НОМЕР КАРТЫ И ВСТАВЛЯЕТ ПРОБЕЛЫ
 
 export function addSpace(event: Event) {
-  (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value.slice(0, 19);
+  (<HTMLInputElement>event.target).value.slice(0, 19);
   (<HTMLInputElement>event.target).value = (<HTMLInputElement>event.target).value
     .replace(/[^0-9]/gi, '')
     .replace(/(.{4})/g, '$1 ')

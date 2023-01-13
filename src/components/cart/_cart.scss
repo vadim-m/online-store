@@ -11,16 +11,10 @@
     flex: 0 0 25%;
   }
 
-  &__row .cart__category {
-    display: block;
-  }
-
-  &__row .cart__color {
-    display: block;
-  }
-
-  &__row .cart__material {
-    display: block;
+  &__row {
+    .cart__category, .cart__color, .cart__material {
+      display: block;
+    }
   }
 
   &__content {
