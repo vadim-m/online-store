@@ -1,5 +1,5 @@
 import { getParamsSpecificValue, replaceParams } from '../../helpers/hash';
-import { getMaxProductValue, getMinProductValue, getOptions } from '../../helpers/utils';
+import { getMaxProductsValue, getMinProductsValue, filterProducts } from '../../helpers/filters';
 import Component from '../component';
 import PRODUCTS from '../../data/products';
 import { IProduct } from '../../types/interfaces';
@@ -30,29 +30,11 @@ class FilterRange extends Component {
     this.rangeStep = rangeStep;
     this.minParamKey = this.setParamKey('min');
     this.maxParamKey = this.setParamKey('max');
-    this.productsMinValue = getMinProductValue(this.allProducts, this.category).toString();
-    this.productsMaxValue = getMaxProductValue(this.allProducts, this.category).toString();
-    this.filteredProducts = this.filterProducts();
+    this.productsMinValue = getMinProductsValue(this.allProducts, this.category).toString();
+    this.productsMaxValue = getMaxProductsValue(this.allProducts, this.category).toString();
+    this.filteredProducts = filterProducts(this.allProducts);
     this.currentMinValue = this.calcMinValue();
     this.curnetMaxValue = this.calcMaxValue();
-  }
-
-  setParamKey(prefix: string) {
-    return prefix + this.category[0].toLocaleUpperCase() + this.category.slice(1);
-  }
-
-  calcMinValue() {
-    return (
-      getParamsSpecificValue(this.minParamKey) ??
-      getMinProductValue(this.filteredProducts, this.category).toString()
-    );
-  }
-
-  calcMaxValue() {
-    return (
-      getParamsSpecificValue(this.maxParamKey) ??
-      getMaxProductValue(this.filteredProducts, this.category).toString()
-    );
   }
 
   getElementTemplate() {
@@ -77,6 +59,24 @@ class FilterRange extends Component {
     `;
 
     return htmlTemplate;
+  }
+
+  setParamKey(prefix: string) {
+    return prefix + this.category[0].toLocaleUpperCase() + this.category.slice(1);
+  }
+
+  calcMinValue() {
+    return (
+      getParamsSpecificValue(this.minParamKey) ??
+      getMinProductsValue(this.filteredProducts, this.category).toString()
+    );
+  }
+
+  calcMaxValue() {
+    return (
+      getParamsSpecificValue(this.maxParamKey) ??
+      getMaxProductsValue(this.filteredProducts, this.category).toString()
+    );
   }
 
   controlFromSlider(
@@ -123,14 +123,14 @@ class FilterRange extends Component {
     const toPosition: number = +to.value - +to.min;
     const inactiveColor = '#c6c6c6';
     const activeColor = '#d31414';
-    controlSlider.style.background = `linear-gradient(
-        to right,
-        ${inactiveColor} 0%,
-        ${inactiveColor} ${(fromPosition / rangeDistance) * 100}%,
-        ${activeColor} ${(fromPosition / rangeDistance) * 100}%,
-        ${activeColor} ${(toPosition / rangeDistance) * 100}%, 
-        ${inactiveColor} ${(toPosition / rangeDistance) * 100}%, 
-        ${inactiveColor} 100%)`;
+    controlSlider.style.background = `linear-gradient( to right,
+      ${inactiveColor} 0%,
+      ${inactiveColor} ${(fromPosition / rangeDistance) * 100}%,
+      ${activeColor} ${(fromPosition / rangeDistance) * 100}%,
+      ${activeColor} ${(toPosition / rangeDistance) * 100}%, 
+      ${inactiveColor} ${(toPosition / rangeDistance) * 100}%, 
+      ${inactiveColor} 100%)
+    `;
   }
 
   setToggleAccessible(currentTarget: HTMLInputElement) {
@@ -142,7 +142,7 @@ class FilterRange extends Component {
     }
   }
 
-  listen() {
+  addListeners() {
     const fromSlider = <HTMLInputElement>this.container.querySelector('#fromSlider');
     const toSlider = <HTMLInputElement>this.container.querySelector('#toSlider');
     const fromInput = <HTMLInputElement>this.container.querySelector('#fromInput');
@@ -174,73 +174,9 @@ class FilterRange extends Component {
   render() {
     const htmlTemplate = this.getElementTemplate();
     this.container.innerHTML = htmlTemplate;
-    this.listen();
+    this.addListeners();
 
     return this.container;
-  }
-
-  // filtered
-  filterProductsBySearchValue(products: IProduct[], value: string) {
-    const searchValue = value.toLocaleLowerCase();
-    const filteredProducts = products.filter((element) => {
-      return (
-        element.title.toLowerCase().includes(searchValue) ||
-        element.brand.toLowerCase().includes(searchValue) ||
-        element.color.toLowerCase().includes(searchValue) ||
-        element.stock.toString().includes(searchValue) ||
-        element.price.toString().includes(searchValue)
-      );
-    });
-
-    return filteredProducts;
-  }
-
-  filterProducts() {
-    const brandValue = getParamsSpecificValue('brand') ?? getOptions(PRODUCTS, 'brand');
-    const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
-    const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
-    const minStockValue = getParamsSpecificValue('minStock') ?? '0';
-    const maxStockValue = getParamsSpecificValue('maxStock') ?? '100000';
-    const minPriceValue = getParamsSpecificValue('minPrice') ?? '0';
-    const maxPriceValue = getParamsSpecificValue('maxPrice') ?? '100000';
-
-    let filteredProducts = PRODUCTS.filter((element) => {
-      return (
-        brandValue.includes(element.brand) &&
-        categoryValue.includes(element.category) &&
-        colorValue.includes(element.color) &&
-        element.price >= +minPriceValue &&
-        element.price <= +maxPriceValue &&
-        element.stock >= +minStockValue &&
-        element.stock <= +maxStockValue
-      );
-    });
-
-    const searchValue = getParamsSpecificValue('search') ?? null;
-    if (searchValue) {
-      filteredProducts = this.filterProductsBySearchValue(filteredProducts, searchValue);
-    }
-
-    if (filteredProducts.length === 0) {
-      return [
-        {
-          brand: 'fake',
-          category: 'fake',
-          color: 'fake',
-          description: 'fake',
-          id: 0,
-          images: [],
-          material: 'fake',
-          price: 0,
-          stock: 0,
-          thumbnail: 'https://basharathospital.clinta.biz/assets/under-construction.png',
-          title: 'Товаров не найдено',
-          top: 'fake',
-        },
-      ];
-    }
-
-    return filteredProducts;
   }
 }
 

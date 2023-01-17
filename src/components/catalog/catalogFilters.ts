@@ -1,7 +1,7 @@
 import Component from '../component';
 import FilterCheckbox from '../filter/filterCheckbox';
-import FilterButtons from '../filter/filterButtons';
 import FilterRange from '../filter/filterRange';
+import FilterButtons from '../filter/filterButtons';
 import { addParams, changeHash } from '../../helpers/hash';
 
 class CatalogFilters extends Component {
