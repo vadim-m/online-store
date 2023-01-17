@@ -6,14 +6,15 @@ import { getOptions } from '../../helpers/utils';
 
 class FilterCheckbox extends Component {
   private products: IProduct[] = [...PRODUCTS];
-  private title = '';
-  private category = '';
-  private checkedAttr = '';
+  private title: string;
+  private category: string;
+  private checkedAttr: string;
 
   constructor(tagName: string, className: string, title: string, category: string) {
     super(tagName, className);
     this.title = title;
     this.category = category;
+    this.checkedAttr = '';
   }
 
   isChecked(value: string) {
@@ -25,7 +26,7 @@ class FilterCheckbox extends Component {
     return '';
   }
 
-  addCheckbox(productCategory: string) {
+  getElementTemplate(productCategory: string) {
     let labels = '';
     const categoryValues = getOptions(this.products, productCategory);
 
@@ -48,10 +49,17 @@ class FilterCheckbox extends Component {
         this.checkedAttr = this.isChecked(value);
         labels += `
         <label class="filters__checkbox">
-        <input class="filters__input hide" type="checkbox" name="${this.category}" value="${value}" ${this.checkedAttr}>
-        <span class="filters__checkbox-span"></span>${value}
-        <div class="filters__checkbox-count" style="margin-left: auto">${count} /&nbsp  </div>
-        <div class="filters__checkbox-count" style="width: 2ch; text-align: center;">${amount}</div>
+          <input 
+            class="filters__input hide"
+            type="checkbox" 
+            name="${this.category}"
+            value="${value}" 
+            ${this.checkedAttr}
+          >
+          <span class="filters__checkbox-span"></span>${value}
+          <div class="filters__checkbox-count">${count}</div>
+          <div class="filters__checkbox-divider">&nbsp/</div>
+          <div class="filters__checkbox-count">${amount}</div>
         </label>
         `;
       }
@@ -125,7 +133,7 @@ class FilterCheckbox extends Component {
   }
 
   render() {
-    const htmlTemplate = this.addCheckbox(this.category);
+    const htmlTemplate = this.getElementTemplate(this.category);
     this.container.innerHTML = htmlTemplate;
 
     return this.container;

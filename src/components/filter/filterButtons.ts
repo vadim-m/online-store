@@ -5,7 +5,7 @@ class FilterButtons extends Component {
     super(tagName, className);
   }
 
-  addButtons() {
+  getElementTemplate() {
     const htmlTemplate = `
       <button class="filters__btn filters__btn-reset">Сбросить</button>
       <button class="filters__btn filters__btn-copy">Копировать</button>
@@ -15,7 +15,7 @@ class FilterButtons extends Component {
   }
 
   render() {
-    const htmlTemplate = this.addButtons();
+    const htmlTemplate = this.getElementTemplate();
     this.container.innerHTML = htmlTemplate;
 
     return this.container;
