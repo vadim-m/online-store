@@ -1,11 +1,11 @@
 import Component from '../component';
 import PRODUCTS from '../../data/products';
 import { IProduct } from '../../types/interfaces';
-import { getParamsSpecificValue, getParamsValues } from '../../helpers/hash';
-import { getOptions } from '../../helpers/utils';
+import { getParamsValues } from '../../helpers/hash';
+import { filterProducts, getPossibleVaulesListByKey } from '../../helpers/filters';
 
 class FilterCheckbox extends Component {
-  private products: IProduct[] = [...PRODUCTS];
+  private allProducts: IProduct[] = [...PRODUCTS];
   private title: string;
   private category: string;
   private checkedAttr: string;
@@ -27,109 +27,47 @@ class FilterCheckbox extends Component {
   }
 
   getElementTemplate(productCategory: string) {
-    let labels = '';
-    const categoryValues = getOptions(this.products, productCategory);
+    let checkboxLabelsHTML = '';
 
-    categoryValues.forEach((value) => {
+    const possibleValues = getPossibleVaulesListByKey(this.allProducts, productCategory);
+    possibleValues.forEach((value) => {
       if (typeof value === 'string') {
-        const amount = this.products.filter(
+        this.checkedAttr = this.isChecked(value);
+
+        const totalAmount = this.allProducts.filter(
           (product: IProduct) => product[this.category as keyof IProduct] === value
         ).length;
 
-        const filtered = this.filterProducts();
-        let count = 0;
-        filtered.forEach((item) => {
+        let detectedAmount = 0;
+        const filteredProducts = filterProducts(this.allProducts);
+        filteredProducts.forEach((item) => {
           for (const key in item) {
             if (item[key as keyof IProduct] === value) {
-              count++;
+              detectedAmount++;
             }
           }
         });
 
-        this.checkedAttr = this.isChecked(value);
-        labels += `
-        <label class="filters__checkbox">
-          <input 
-            class="filters__input hide"
-            type="checkbox" 
-            name="${this.category}"
-            value="${value}" 
-            ${this.checkedAttr}
-          >
-          <span class="filters__checkbox-span"></span>${value}
-          <div class="filters__checkbox-count">${count}</div>
-          <div class="filters__checkbox-divider">&nbsp/</div>
-          <div class="filters__checkbox-count">${amount}</div>
-        </label>
+        checkboxLabelsHTML += `
+          <label class="filters__checkbox">
+            <input 
+              class="filters__input hide"
+              type="checkbox" 
+              name="${this.category}"
+              value="${value}" 
+              ${this.checkedAttr}
+            />
+            <span class="filters__checkbox-span"></span>${value}
+            <div class="filters__checkbox-count">${detectedAmount}</div>
+            <div class="filters__checkbox-divider">&nbsp/</div>
+            <div class="filters__checkbox-count">${totalAmount}</div>
+          </label>
         `;
       }
     });
-    const legend = `<legend class="filters__subtitle">${this.title}</legend>`;
+    const legendHTML = `<legend class="filters__subtitle">${this.title}</legend>`;
 
-    return legend + labels;
-  }
-
-  filterProductsBySearchValue(products: IProduct[], value: string) {
-    const searchValue = value.toLocaleLowerCase();
-    const filteredProducts = products.filter((element) => {
-      return (
-        element.title.toLowerCase().includes(searchValue) ||
-        element.brand.toLowerCase().includes(searchValue) ||
-        element.color.toLowerCase().includes(searchValue) ||
-        element.stock.toString().includes(searchValue) ||
-        element.price.toString().includes(searchValue)
-      );
-    });
-
-    return filteredProducts;
-  }
-
-  filterProducts() {
-    const brandValue = getParamsSpecificValue('brand') ?? getOptions(PRODUCTS, 'brand');
-    const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
-    const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
-    const minStockValue = getParamsSpecificValue('minStock') ?? '0';
-    const maxStockValue = getParamsSpecificValue('maxStock') ?? '100000';
-    const minPriceValue = getParamsSpecificValue('minPrice') ?? '0';
-    const maxPriceValue = getParamsSpecificValue('maxPrice') ?? '100000';
-
-    let filteredProducts = PRODUCTS.filter((element) => {
-      return (
-        brandValue.includes(element.brand) &&
-        categoryValue.includes(element.category) &&
-        colorValue.includes(element.color) &&
-        element.price >= +minPriceValue &&
-        element.price <= +maxPriceValue &&
-        element.stock >= +minStockValue &&
-        element.stock <= +maxStockValue
-      );
-    });
-
-    const searchValue = getParamsSpecificValue('search') ?? null;
-    if (searchValue) {
-      filteredProducts = this.filterProductsBySearchValue(filteredProducts, searchValue);
-    }
-
-    if (filteredProducts.length === 0) {
-      return [
-        {
-          brand: 'fake',
-          category: 'fake',
-          color: 'fake',
-          description: 'fake',
-          id: 0,
-          images: [],
-          material: 'fake',
-          price: 0,
-          stock: 0,
-          thumbnail: 'https://basharathospital.clinta.biz/assets/under-construction.png',
-          title: 'Товаров не найдено',
-          top: 'fake',
-        },
-      ];
-    }
-
-    return filteredProducts;
+    return legendHTML + checkboxLabelsHTML;
   }
 
   render() {
