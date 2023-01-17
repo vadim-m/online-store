@@ -2,7 +2,6 @@ import Component from '../component';
 import FilterCheckbox from '../filter/filterCheckbox';
 import FilterRange from '../filter/filterRange';
 import FilterButtons from '../filter/filterButtons';
-import { addParams, changeHash } from '../../helpers/hash';
 
 class CatalogFilters extends Component {
   public filterBrand: FilterCheckbox;
@@ -27,7 +26,7 @@ class CatalogFilters extends Component {
     this.filterButtons = new FilterButtons('fieldset', 'filters__buttons');
   }
 
-  renderFilters() {
+  getContentNode() {
     const container = document.createElement('form');
     container.className = 'filters';
 
@@ -42,35 +41,9 @@ class CatalogFilters extends Component {
   }
 
   render() {
-    this.container.append(this.renderFilters());
-    this.eventListener();
+    this.container.append(this.getContentNode());
 
     return this.container;
-  }
-
-  eventListener() {
-    this.container.querySelectorAll('.filters__input').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        const target = <HTMLInputElement>e.target;
-        const paramName = target.name;
-        const paramValue = target.value;
-        addParams(paramName, paramValue);
-      });
-    });
-    this.container.querySelector('.filters__btn-reset')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      changeHash('');
-    });
-    this.container.querySelector('.filters__btn-copy')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const button = <HTMLButtonElement>e.target;
-      button.innerText = 'Успешно!';
-      const currentLocation = window.location.href;
-      navigator.clipboard.writeText(currentLocation);
-      setTimeout(() => {
-        button.innerText = 'Копировать';
-      }, 1000);
-    });
   }
 }
 

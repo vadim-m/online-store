@@ -1,20 +1,18 @@
 import Component from '../component';
 import PRODUCTS from '../../data/products';
 import { IProduct } from '../../types/interfaces';
-import { getParamsValues } from '../../helpers/hash';
+import { addParams, getParamsValues } from '../../helpers/hash';
 import { filterProducts, getPossibleVaulesListByKey } from '../../helpers/filters';
 
 class FilterCheckbox extends Component {
   private allProducts: IProduct[] = [...PRODUCTS];
   private title: string;
   private category: string;
-  private checkedAttr: string;
 
   constructor(tagName: string, className: string, title: string, category: string) {
     super(tagName, className);
     this.title = title;
     this.category = category;
-    this.checkedAttr = '';
   }
 
   isChecked(value: string) {
@@ -32,15 +30,12 @@ class FilterCheckbox extends Component {
     const possibleValues = getPossibleVaulesListByKey(this.allProducts, productCategory);
     possibleValues.forEach((value) => {
       if (typeof value === 'string') {
-        this.checkedAttr = this.isChecked(value);
-
         const totalAmount = this.allProducts.filter(
           (product: IProduct) => product[this.category as keyof IProduct] === value
         ).length;
 
         let detectedAmount = 0;
-        const filteredProducts = filterProducts(this.allProducts);
-        filteredProducts.forEach((item) => {
+        filterProducts(this.allProducts).forEach((item) => {
           for (const key in item) {
             if (item[key as keyof IProduct] === value) {
               detectedAmount++;
@@ -55,7 +50,7 @@ class FilterCheckbox extends Component {
               type="checkbox" 
               name="${this.category}"
               value="${value}" 
-              ${this.checkedAttr}
+              ${this.isChecked(value)}
             />
             <span class="filters__checkbox-span"></span>${value}
             <div class="filters__checkbox-count">${detectedAmount}</div>
@@ -70,9 +65,21 @@ class FilterCheckbox extends Component {
     return legendHTML + checkboxLabelsHTML;
   }
 
+  addListeners() {
+    this.container.querySelectorAll('.filters__input').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        const target = <HTMLInputElement>e.target;
+        const paramName = target.name;
+        const paramValue = target.value;
+        addParams(paramName, paramValue);
+      });
+    });
+  }
+
   render() {
     const htmlTemplate = this.getElementTemplate(this.category);
     this.container.innerHTML = htmlTemplate;
+    this.addListeners();
 
     return this.container;
   }

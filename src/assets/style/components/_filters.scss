@@ -83,17 +83,17 @@
     display: flex;
     flex-direction: column;
 
-    margin: rem(16) auto rem(8);
+    margin: 0 auto rem(8);
   }
 
   &__range-control {
     position: relative;
-    min-height: rem(18);
+    padding: rem(16) 0;
   }
 
   &__range-input {
     width: 100%;
-    height: rem(2);
+    height: rem(3);
     appearance: none;
     position: absolute;
     background-color: var(--gray-dark);
@@ -191,4 +191,9 @@
 #fromSlider {
   height: 0;
   z-index: 1;
+}
+
+#toSlider::-webkit-slider-thumb {
+  position: relative;
+  top: -1px;
 }
