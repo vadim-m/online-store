@@ -38,9 +38,9 @@ class CatalogList extends Component {
     const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
     const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
     const minStockValue = getParamsSpecificValue('minStock') ?? '0';
-    const maxStockValue = getParamsSpecificValue('maxPStock') ?? '100000';
+    const maxStockValue = getParamsSpecificValue('maxStock') ?? '100000'; //! 10000?
     const minPriceValue = getParamsSpecificValue('minPrice') ?? '0';
-    const maxPriceValue = getParamsSpecificValue('maxPrice') ?? '100000';
+    const maxPriceValue = getParamsSpecificValue('maxPrice') ?? '100000'; //! 10000?
 
     let filteredProducts = PRODUCTS.filter((element) => {
       return (
@@ -154,6 +154,7 @@ class CatalogList extends Component {
     return this.container;
   }
 
+  //! Варя делала.
   addEvents() {
     this.productsComponents.forEach((item) => item.addEvents());
   }

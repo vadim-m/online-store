@@ -5,14 +5,14 @@ import { getParamsSpecificValue, getParamsValues } from '../../helpers/hash';
 import { getOptions } from '../../helpers/utils';
 
 class FilterCheckbox extends Component {
-  private checkboxText = '';
+  private products: IProduct[] = [...PRODUCTS];
+  private title = '';
   private category = '';
   private checkedAttr = '';
-  private products: IProduct[] = [...PRODUCTS];
 
-  constructor(tagName: string, className: string, checkboxText: string, category: string) {
+  constructor(tagName: string, className: string, title: string, category: string) {
     super(tagName, className);
-    this.checkboxText = checkboxText;
+    this.title = title;
     this.category = category;
   }
 
@@ -56,7 +56,7 @@ class FilterCheckbox extends Component {
         `;
       }
     });
-    const legend = `<legend class="filters__subtitle">${this.checkboxText}</legend>`;
+    const legend = `<legend class="filters__subtitle">${this.title}</legend>`;
 
     return legend + labels;
   }
@@ -81,7 +81,7 @@ class FilterCheckbox extends Component {
     const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
     const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
     const minStockValue = getParamsSpecificValue('minStock') ?? '0';
-    const maxStockValue = getParamsSpecificValue('maxPStock') ?? '100000';
+    const maxStockValue = getParamsSpecificValue('maxStock') ?? '100000';
     const minPriceValue = getParamsSpecificValue('minPrice') ?? '0';
     const maxPriceValue = getParamsSpecificValue('maxPrice') ?? '100000';
 

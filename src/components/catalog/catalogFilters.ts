@@ -2,15 +2,14 @@ import Component from '../component';
 import FilterCheckbox from '../filter/filterCheckbox';
 import FilterButtons from '../filter/filterButtons';
 import FilterRange from '../filter/filterRange';
-import FilterStock from '../filter/filterStock';
 import { addParams, changeHash } from '../../helpers/hash';
 
 class CatalogFilters extends Component {
   public filterBrand: FilterCheckbox;
   public filterCategory: FilterCheckbox;
   public filterColor: FilterCheckbox;
-  public filterRange: FilterRange;
-  public filterStock: FilterStock;
+  public filterPrice: FilterRange;
+  public filterStock: FilterRange;
   public filterButtons: FilterButtons;
 
   constructor(tagName: string, className: string) {
@@ -19,12 +18,12 @@ class CatalogFilters extends Component {
     this.filterCategory = new FilterCheckbox(
       'fieldset',
       'filters__group',
-      'Категории:',
+      'Категория:',
       'category'
     );
     this.filterColor = new FilterCheckbox('fieldset', 'filters__group', 'Цвет:', 'color');
-    this.filterRange = new FilterRange('fieldset', 'filters__group');
-    this.filterStock = new FilterStock('fieldset', 'filters__group');
+    this.filterPrice = new FilterRange('fieldset', 'filters__group', 'Цена:', 'price', '50');
+    this.filterStock = new FilterRange('fieldset', 'filters__group', 'Количество:', 'stock', '1');
     this.filterButtons = new FilterButtons('fieldset', 'filters__buttons');
   }
 
@@ -34,7 +33,7 @@ class CatalogFilters extends Component {
 
     container.append(this.filterBrand.render());
     container.append(this.filterCategory.render());
-    container.append(this.filterRange.render());
+    container.append(this.filterPrice.render());
     container.append(this.filterStock.render());
     container.append(this.filterColor.render());
     container.append(this.filterButtons.render());

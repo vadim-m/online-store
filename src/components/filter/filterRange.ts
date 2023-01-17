@@ -5,159 +5,176 @@ import PRODUCTS from '../../data/products';
 import { IProduct } from '../../types/interfaces';
 
 class FilterRange extends Component {
+  private allProducts: IProduct[] = [...PRODUCTS];
+  private filteredProducts: IProduct[];
   private currentMinValue: string;
   private curnetMaxValue: string;
   private productsMinValue: string;
   private productsMaxValue: string;
-  private products: IProduct[] = [...PRODUCTS];
+  private title: string;
+  private category: string;
+  private minParamKey: string;
+  private maxParamKey: string;
+  private rangeStep: string;
 
-  constructor(tagName: string, className: string) {
+  constructor(
+    tagName: string,
+    className: string,
+    title: string,
+    category: string,
+    rangeStep: string
+  ) {
     super(tagName, className);
-    this.productsMinValue = String(getMinProductValue(this.products, 'price'));
-    this.productsMaxValue = String(getMaxProductValue(this.products, 'price'));
-    this.products = this.filterProducts();
-    this.currentMinValue =
-      getParamsSpecificValue('minPrice') ?? String(getMinProductValue(this.products, 'price'));
-    this.curnetMaxValue =
-      getParamsSpecificValue('maxPrice') ?? String(getMaxProductValue(this.products, 'price'));
+    this.title = title;
+    this.category = category;
+    this.rangeStep = rangeStep;
+    this.minParamKey = this.setParamKey('min');
+    this.maxParamKey = this.setParamKey('max');
+    this.productsMinValue = getMinProductValue(this.allProducts, this.category).toString();
+    this.productsMaxValue = getMaxProductValue(this.allProducts, this.category).toString();
+    this.filteredProducts = this.filterProducts();
+    this.currentMinValue = this.calcMinValue();
+    this.curnetMaxValue = this.calcMaxValue();
   }
 
-  addButtons() {
+  setParamKey(prefix: string) {
+    return prefix + this.category[0].toLocaleUpperCase() + this.category.slice(1);
+  }
+
+  calcMinValue() {
+    return (
+      getParamsSpecificValue(this.minParamKey) ??
+      getMinProductValue(this.filteredProducts, this.category).toString()
+    );
+  }
+
+  calcMaxValue() {
+    return (
+      getParamsSpecificValue(this.maxParamKey) ??
+      getMaxProductValue(this.filteredProducts, this.category).toString()
+    );
+  }
+
+  getElementTemplate() {
     const htmlTemplate = `
-    <legend class="filters__subtitle">Цена:</legend>
-    <div class="range_container">
-      <div class="sliders_control">
-          <input id="fromSlider" type="range" value="${+this.currentMinValue}" step="50" min="${
-      +this.productsMinValue - 100
-    }" max="${+this.productsMaxValue}"/>
-          <input id="toSlider" type="range" value="${+this.curnetMaxValue}" step="50" min="${+this
-      .productsMinValue}" max="${+this.productsMaxValue + 100}"/>
+      <legend class="filters__subtitle">${this.title}</legend>
+      <div class="range_container">
+        <div class="sliders_control">
+            <input id="fromSlider" type="range" value="${this.currentMinValue}" step="${this.rangeStep}" min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
+            <input id="toSlider" type="range" value="${this.curnetMaxValue}" step="${this.rangeStep}" min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
+        </div>
+        <div class="form_control">
+            <div class="form_control_container">
+                <div class="form_control_container__time">Min</div>
+                <input class="form_control_container__time__input" type="number" id="fromInput" value="${this.currentMinValue}"min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
+            </div>
+            <div class="form_control_container">
+                <div class="form_control_container__time">Max</div>
+                <input class="form_control_container__time__input" type="number" id="toInput" value="${this.curnetMaxValue}"min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
+            </div>
+        </div>
       </div>
-      <div class="form_control">
-          <div class="form_control_container">
-              <div class="form_control_container__time">Min</div>
-              <input class="form_control_container__time__input" type="number" id="fromInput" value="${+this
-                .currentMinValue}"min="0" max="100"/>
-          </div>
-          <div class="form_control_container">
-              <div class="form_control_container__time">Max</div>
-              <input class="form_control_container__time__input" type="number" id="toInput" value="${+this
-                .curnetMaxValue}"min="0" max="100"/>
-          </div>
-      </div>
-    </div>
     `;
 
     return htmlTemplate;
   }
 
-  controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
-    const [from, to] = this.getParsed(fromInput, toInput);
-    this.fillSlider(fromInput, toInput, '#C6C6C6', '#d31414', controlSlider);
-    if (from > to) {
-      fromSlider.value = to;
-      fromInput.value = to;
-    } else {
-      fromSlider.value = from;
-    }
-  }
-
-  controlToInput(toSlider, fromInput, toInput, controlSlider) {
-    const [from, to] = this.getParsed(fromInput, toInput);
-    this.fillSlider(fromInput, toInput, '#C6C6C6', '#d31414', controlSlider);
-    this.setToggleAccessible(toInput);
-    if (from <= to) {
-      toSlider.value = to;
-      toInput.value = to;
-    } else {
-      toInput.value = from;
-    }
-  }
-
-  controlFromSlider(fromSlider, toSlider, fromInput) {
+  controlFromSlider(
+    fromSlider: HTMLInputElement,
+    toSlider: HTMLInputElement,
+    fromInput: HTMLInputElement
+  ) {
     const [from, to] = this.getParsed(fromSlider, toSlider);
-    this.fillSlider(fromSlider, toSlider, '#C6C6C6', '#d31414', toSlider);
+    this.fillSlider(fromSlider, toSlider, toSlider);
     if (from > to) {
-      fromSlider.value = to;
-      fromInput.value = to;
+      fromSlider.value = to.toString();
+      fromInput.value = to.toString();
     } else {
-      fromInput.value = from;
+      fromInput.value = from.toString();
     }
   }
 
-  controlToSlider(fromSlider, toSlider, toInput) {
+  controlToSlider(
+    fromSlider: HTMLInputElement,
+    toSlider: HTMLInputElement,
+    toInput: HTMLInputElement
+  ) {
     const [from, to] = this.getParsed(fromSlider, toSlider);
-    this.fillSlider(fromSlider, toSlider, '#C6C6C6', '#d31414', toSlider);
+    this.fillSlider(fromSlider, toSlider, toSlider);
     this.setToggleAccessible(toSlider);
     if (from <= to) {
-      toSlider.value = to;
-      toInput.value = to;
+      toSlider.value = to.toString();
+      toInput.value = to.toString();
     } else {
-      toInput.value = from;
-      toSlider.value = from;
+      toInput.value = from.toString();
+      toSlider.value = from.toString();
     }
   }
 
-  getParsed(currentFrom, currentTo) {
-    const from = parseInt(currentFrom.value, 10);
-    const to = parseInt(currentTo.value, 10);
+  getParsed(currentFrom: HTMLInputElement, currentTo: HTMLInputElement) {
+    const from: number = parseInt(currentFrom.value, 10);
+    const to: number = parseInt(currentTo.value, 10);
     return [from, to];
   }
 
-  fillSlider(from, to, sliderColor, rangeColor, controlSlider) {
-    const rangeDistance = to.max - to.min;
-    const fromPosition = from.value - to.min;
-    const toPosition = to.value - to.min;
+  fillSlider(from: HTMLInputElement, to: HTMLInputElement, controlSlider: HTMLInputElement) {
+    const rangeDistance: number = +to.max - +to.min;
+    const fromPosition: number = +from.value - +to.min;
+    const toPosition: number = +to.value - +to.min;
+    const inactiveColor = '#c6c6c6';
+    const activeColor = '#d31414';
     controlSlider.style.background = `linear-gradient(
         to right,
-        ${sliderColor} 0%,
-        ${sliderColor} ${(fromPosition / rangeDistance) * 100}%,
-        ${rangeColor} ${(fromPosition / rangeDistance) * 100}%,
-        ${rangeColor} ${(toPosition / rangeDistance) * 100}%, 
-        ${sliderColor} ${(toPosition / rangeDistance) * 100}%, 
-        ${sliderColor} 100%)`;
+        ${inactiveColor} 0%,
+        ${inactiveColor} ${(fromPosition / rangeDistance) * 100}%,
+        ${activeColor} ${(fromPosition / rangeDistance) * 100}%,
+        ${activeColor} ${(toPosition / rangeDistance) * 100}%, 
+        ${inactiveColor} ${(toPosition / rangeDistance) * 100}%, 
+        ${inactiveColor} 100%)`;
   }
 
-  setToggleAccessible(currentTarget) {
+  setToggleAccessible(currentTarget: HTMLInputElement) {
     const toSlider = <HTMLInputElement>this.container.querySelector('#toSlider');
     if (Number(currentTarget.value) <= 0) {
-      toSlider.style.zIndex = '2';
+      toSlider.style.zIndex = '5';
     } else {
       toSlider.style.zIndex = '0';
     }
   }
 
-  addEvent() {
+  listen() {
     const fromSlider = <HTMLInputElement>this.container.querySelector('#fromSlider');
     const toSlider = <HTMLInputElement>this.container.querySelector('#toSlider');
     const fromInput = <HTMLInputElement>this.container.querySelector('#fromInput');
     const toInput = <HTMLInputElement>this.container.querySelector('#toInput');
-    this.fillSlider(fromSlider, toSlider, '#C6C6C6', '#d31414', toSlider);
+    this.fillSlider(fromSlider, toSlider, toSlider);
     this.setToggleAccessible(toSlider);
 
-    fromSlider!.oninput = () => this.controlFromSlider(fromSlider, toSlider, fromInput);
-    toSlider!.oninput = () => this.controlToSlider(fromSlider, toSlider, toInput);
-
-    this.container.querySelector('#fromSlider')?.addEventListener('change', (e) => {
+    fromSlider?.addEventListener('change', (e) => {
       const label = <HTMLSelectElement>e.target;
-
       const value = label.value;
-      replaceParams('minPrice', value);
+      replaceParams(this.minParamKey, value);
     });
 
-    this.container.querySelector('#toSlider')?.addEventListener('change', (e) => {
+    toSlider?.addEventListener('change', (e) => {
       const label = <HTMLSelectElement>e.target;
-
       const value = label.value;
-      replaceParams('maxPrice', value);
+      replaceParams(this.maxParamKey, value);
+    });
+
+    fromSlider?.addEventListener('input', () => {
+      this.controlFromSlider(fromSlider, toSlider, fromInput);
+    });
+
+    toSlider?.addEventListener('input', () => {
+      this.controlToSlider(fromSlider, toSlider, toInput);
     });
   }
 
   render() {
-    const htmlTemplate = this.addButtons();
+    const htmlTemplate = this.getElementTemplate();
     this.container.innerHTML = htmlTemplate;
-
-    this.addEvent();
+    this.listen();
 
     return this.container;
   }
@@ -183,7 +200,7 @@ class FilterRange extends Component {
     const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
     const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
     const minStockValue = getParamsSpecificValue('minStock') ?? '0';
-    const maxStockValue = getParamsSpecificValue('maxPStock') ?? '100000';
+    const maxStockValue = getParamsSpecificValue('maxStock') ?? '100000';
     const minPriceValue = getParamsSpecificValue('minPrice') ?? '0';
     const maxPriceValue = getParamsSpecificValue('maxPrice') ?? '100000';
 
