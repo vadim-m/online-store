@@ -40,19 +40,22 @@ class FilterRange extends Component {
   getElementTemplate() {
     const htmlTemplate = `
       <legend class="filters__subtitle">${this.title}</legend>
-      <div class="range_container">
-        <div class="sliders_control">
-            <input id="fromSlider" type="range" value="${this.currentMinValue}" step="${this.rangeStep}" min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
-            <input id="toSlider" type="range" value="${this.curnetMaxValue}" step="${this.rangeStep}" min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
+      <div class="filters__range-container">
+        <div class="filters__range-control">
+            <input id="fromSlider" type="range" class="filters__range-input"
+            value="${this.currentMinValue}" step="${this.rangeStep}" min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
+
+            <input id="toSlider" type="range" class="filters__range-input"
+            value="${this.curnetMaxValue}" step="${this.rangeStep}" min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
         </div>
-        <div class="form_control">
-            <div class="form_control_container">
-                <div class="form_control_container__time">Min</div>
-                <input class="form_control_container__time__input" type="number" id="fromInput" value="${this.currentMinValue}"min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
+        <div class="filters__values-container">
+            <div class="filters__values">
+                <div class="filters__values-title">Min</div>
+                <input class="filters__number-input" type="number" id="fromInput" value="${this.currentMinValue}"min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
             </div>
-            <div class="form_control_container">
-                <div class="form_control_container__time">Max</div>
-                <input class="form_control_container__time__input" type="number" id="toInput" value="${this.curnetMaxValue}"min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
+            <div class="filters__values">
+                <div class="filters__values-title">Max</div>
+                <input class="filters__number-input" type="number" id="toInput" value="${this.curnetMaxValue}"min="${this.productsMinValue}" max="${this.productsMaxValue}"/>
             </div>
         </div>
       </div>
