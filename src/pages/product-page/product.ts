@@ -2,7 +2,6 @@ import Page from '../../components/page';
 import ProductBreadcrumbs from '../../components/products/productBreadcrumbs';
 import ProductFull from '../../components/products/productFull';
 import { getParamsSpecificValue } from '../../helpers/hash';
-ProductBreadcrumbs;
 
 class ProductPage extends Page {
   private breadcrumbs: ProductBreadcrumbs;
@@ -10,8 +9,8 @@ class ProductPage extends Page {
 
   constructor(className: string) {
     super(className);
-    this.product = new ProductFull('div', 'container', this.getId() as number);
     this.breadcrumbs = new ProductBreadcrumbs('div', 'container', this.getId() as number);
+    this.product = new ProductFull('div', 'container', this.getId() as number);
   }
 
   getId() {

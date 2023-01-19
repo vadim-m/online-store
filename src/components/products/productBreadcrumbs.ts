@@ -9,42 +9,41 @@ class ProductBreadcrumbs extends Component {
     this.id = id;
   }
 
-  renderBreadcrumbs() {
-    const id = this.id;
-    const item = PRODUCTS.filter((item) => {
-      return item.id === id;
+  getElementTemplate() {
+    const currentProduct = PRODUCTS.filter((item) => {
+      return item.id === this.id;
     })[0];
 
-    if (!item) {
+    if (!currentProduct) {
       return `
-      <ul class="breadcrumbs">
-        <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#store?">На главную</a>
-        </li>
-      </ul>
+        <ul class="breadcrumbs">
+          <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link" href="#store?">На главную</a>
+          </li>
+        </ul>
+      `;
+    } else {
+      return `
+        <ul class="breadcrumbs">
+          <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link" href="#store?">Каталог</a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link" href="#store?brand=${currentProduct.brand}">${currentProduct.brand}</a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link" href="#store?category=${currentProduct.category}">${currentProduct.category}</a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link">${currentProduct.title}</a>
+          </li>
+        </ul>
       `;
     }
-
-    return `
-      <ul class="breadcrumbs">
-        <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#store?">Каталог</a>
-        </li>
-        <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#store?brand=${item.brand}">${item.brand}</a>
-        </li>
-        <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#store?category=${item.category}">${item.category}</a>
-        </li>
-        <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link">${item.title}</a>
-        </li>
-      </ul>
-    `;
   }
 
   render() {
-    this.container.innerHTML = this.renderBreadcrumbs();
+    this.container.innerHTML = this.getElementTemplate();
 
     return this.container;
   }
