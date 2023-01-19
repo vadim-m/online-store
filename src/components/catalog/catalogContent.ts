@@ -16,7 +16,7 @@ class CatalogContent extends Component {
     this.catalogList = new CatalogList('section', 'catalog__list-wrap');
   }
 
-  addContent() {
+  getContentNode() {
     const container = document.createElement('div');
     container.className = 'catalog__content-wrap';
 
@@ -28,7 +28,7 @@ class CatalogContent extends Component {
   }
 
   render() {
-    this.container.append(this.addContent());
+    this.container.append(this.getContentNode());
     this.eventListener();
     this.catalogSearch.setFoundProductsAmount.call(this);
 
