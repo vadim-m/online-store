@@ -1,5 +1,5 @@
 import Component from '../component';
-import { getParamsSpecificValue } from '../../helpers/hash';
+import { deleteParams, getParamsSpecificValue, replaceParams } from '../../helpers/hash';
 
 class CatalogSearch extends Component {
   private searchInputValue: string;
@@ -11,7 +11,6 @@ class CatalogSearch extends Component {
 
   getSearchInputValue() {
     const value = getParamsSpecificValue('search');
-
     if (value) {
       return value[0].toLocaleUpperCase() + value.slice(1);
     }
@@ -62,9 +61,39 @@ class CatalogSearch extends Component {
     return htmlTemplate;
   }
 
+  addListeners() {
+    this.container.querySelector('.search__input')?.addEventListener('search', (e) => {
+      e.preventDefault();
+      const input = <HTMLInputElement>e.target;
+      const value = input.value;
+      if (value === '' || value === ' ') {
+        deleteParams('search');
+      } else {
+        replaceParams('search', value.toLocaleLowerCase());
+      }
+    });
+    this.container.querySelector('.search__input-find')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const searchInput = <HTMLInputElement>this.container.querySelector('.search__input');
+      if (searchInput) {
+        const eventToDispatch = new Event('search');
+        searchInput.dispatchEvent(eventToDispatch);
+      }
+    });
+    this.container.querySelector('.search__input-reset')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      deleteParams('search');
+      const searchInput = <HTMLInputElement>this.container.querySelector('.search__input');
+      if (searchInput) {
+        searchInput.value = '';
+      }
+    });
+  }
+
   render() {
     const htmlTemplate = this.getElementTemplate();
     this.container.innerHTML = htmlTemplate;
+    this.addListeners();
 
     return this.container;
   }
