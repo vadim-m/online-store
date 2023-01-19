@@ -12,7 +12,7 @@ class Catalog extends Component {
     this.catalogContent = new CatalogContent('article', 'catalog__content');
   }
 
-  addCatalog() {
+  getContentNode() {
     const container = document.createElement('div');
     container.className = 'catalog';
 
@@ -23,7 +23,7 @@ class Catalog extends Component {
   }
 
   render() {
-    this.container.append(this.addCatalog());
+    this.container.append(this.getContentNode());
 
     return this.container;
   }
