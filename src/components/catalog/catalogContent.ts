@@ -2,7 +2,6 @@ import Component from '../component';
 import CatalogSearch from './catalogSearch';
 import CatalogSort from './catalogSort';
 import CatalogList from './catalogList';
-import { replaceParams } from '../../helpers/hash';
 
 class CatalogContent extends Component {
   public catalogSearch: CatalogSearch;
@@ -29,27 +28,9 @@ class CatalogContent extends Component {
 
   render() {
     this.container.append(this.getContentNode());
-    this.eventListener();
     this.catalogSearch.setFoundProductsAmount.call(this);
 
     return this.container;
-  }
-
-  eventListener() {
-    this.container.querySelectorAll('.sort__view').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        const button = <HTMLButtonElement>e.target;
-        const value = button.dataset.view;
-        if (value) {
-          replaceParams('view', value);
-        }
-      });
-    });
-    this.container.querySelector('.sort__select')?.addEventListener('input', (e) => {
-      const label = <HTMLSelectElement>e.target;
-      const value = label.options[label.selectedIndex].value;
-      replaceParams('sort', value);
-    });
   }
 }
 

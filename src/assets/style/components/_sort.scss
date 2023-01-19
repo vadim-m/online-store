@@ -34,18 +34,18 @@
 
     &-row {
       background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0iIzJiMmIyYiI+PHBhdGggZD0iTTAgMTBoM3YzSDB6bTUgMGg4djNINXpNMCA1aDN2M0gwem01IDBoOHYzSDV6TTAgMGgzdjNIMHptNSAwaDh2M0g1eiIvPjwvc3ZnPg==);
+
+      &.sort__view-row_active {
+        background-color: var(--yellow);
+      }
     }
 
     &-column {
       background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0iIzJiMmIyYiI+PHBhdGggZD0iTTAgMGg2djZIMHptNyAwaDZ2Nkg3em0wIDdoNnY2SDd6TTAgN2g2djZIMHoiLz48L3N2Zz4=);
+
+      &.sort__view-column_active {
+        background-color: var(--yellow);
+      }
     }
   }
-}
-
-.sort__view-column.sort__view-column_active {
-  background-color: var(--yellow);
-}
-
-.sort__view-row.sort__view-row_active {
-  background-color: var(--yellow);
 }

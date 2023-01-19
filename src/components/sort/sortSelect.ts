@@ -1,14 +1,16 @@
-import { getParamsSpecificValue } from '../../helpers/hash';
+import { getParamsSpecificValue, replaceParams } from '../../helpers/hash';
 import { sortOptions } from '../../types/constants';
 import { labelOption } from '../../types/types';
 import Component from '../component';
 
 class SortSelect extends Component {
   private sortOptions: labelOption[];
+  private sortParamValue: string;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
     this.sortOptions = [...sortOptions];
+    this.sortParamValue = this.checkSortParam();
   }
 
   checkSortParam() {
@@ -16,37 +18,44 @@ class SortSelect extends Component {
   }
 
   getSortingOptions(options: labelOption[]) {
-    const sortParamValue = this.checkSortParam();
-
     let htmlTemplate = '';
     options.forEach((option) => {
-      const isSelectted = sortParamValue === option.value ? 'selected' : '';
+      const selectedAttr = this.sortParamValue === option.value ? 'selected' : '';
 
       htmlTemplate += `
-        <option value="${option.value}" ${isSelectted}>${option.text}</option>
+        <option value="${option.value}" ${selectedAttr}>${option.text}</option>
       `;
     });
 
     return htmlTemplate;
   }
 
-  addSortSelect() {
+  getElementTemplate() {
     const options = this.getSortingOptions(this.sortOptions);
 
     const htmlTemplate = `
-    <label class="sort__label">Сортировать:
-      <select class="sort__select">
-        ${options}
-      </select>
-    </label>
-  `;
+      <label class="sort__label">Сортировать:
+        <select class="sort__select">
+          ${options}
+        </select>
+      </label>
+    `;
 
     return htmlTemplate;
   }
 
+  addListeners() {
+    this.container.querySelector('.sort__select')?.addEventListener('input', (e) => {
+      const label = <HTMLSelectElement>e.target;
+      const value = label.options[label.selectedIndex].value;
+      replaceParams('sort', value);
+    });
+  }
+
   render() {
-    const htmlTemplate = this.addSortSelect();
+    const htmlTemplate = this.getElementTemplate();
     this.container.innerHTML = htmlTemplate;
+    this.addListeners();
 
     return this.container;
   }

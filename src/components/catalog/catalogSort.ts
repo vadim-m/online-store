@@ -12,7 +12,7 @@ class CatalogSort extends Component {
     this.sortSelect = new SortSelect('div', 'sort__label-wrap');
   }
 
-  addSort() {
+  getContentNode() {
     const container = document.createElement('div');
     container.className = 'sort';
 
@@ -23,7 +23,7 @@ class CatalogSort extends Component {
   }
 
   render() {
-    this.container.append(this.addSort());
+    this.container.append(this.getContentNode());
 
     return this.container;
   }
