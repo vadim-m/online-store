@@ -3,16 +3,20 @@ import ProductMain from '../products/productMain';
 import { IProduct } from '../../types/interfaces';
 import PRODUCTS from '../../data/products';
 import { getParamsSpecificValue } from '../../helpers/hash';
-import { getOptions } from '../../helpers/utils';
+import { getFilteredProducts, getSortedProducts } from '../../helpers/filters';
 
 class CatalogList extends Component {
-  private products: IProduct[] = [];
+  private allProducts: IProduct[] = [...PRODUCTS];
+  private filteredProducts: IProduct[];
+  private sortedAndFilteredProducts: IProduct[];
   private productsComponents: ProductMain[] = [];
   private listViewStyle: string;
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
-    this.getProducts();
+    this.filteredProducts = this.getFilteredProducts(this.allProducts);
+    this.sortedAndFilteredProducts = this.getSortedProducts(this.filteredProducts);
+    this.productsComponents = this.fillProductsComponents(this.sortedAndFilteredProducts);
     this.listViewStyle = this.checkViewParam();
   }
 
@@ -21,124 +25,27 @@ class CatalogList extends Component {
     return `catalog__list_${viewValue}`;
   }
 
-  getProducts() {
-    this.products = this.filterProducts();
-    if (this.products.length === 0) {
-      this.products = PRODUCTS;
+  getFilteredProducts(products: IProduct[]) {
+    const resultArr = getFilteredProducts(products);
+    if (resultArr.length === 0) {
+      return products;
+    } else {
+      return resultArr;
     }
+  }
 
+  getSortedProducts(products: IProduct[]) {
     const sortValue = getParamsSpecificValue('sort') ?? 'default';
-    this.sortProducts(sortValue);
+    const resultArr = getSortedProducts(products, sortValue);
 
-    this.productsComponents = this.products.map((product) => new ProductMain(product));
+    return resultArr;
   }
 
-  filterProducts() {
-    const brandValue = getParamsSpecificValue('brand') ?? getOptions(PRODUCTS, 'brand');
-    const categoryValue = getParamsSpecificValue('category') ?? getOptions(PRODUCTS, 'category');
-    const colorValue = getParamsSpecificValue('color') ?? getOptions(PRODUCTS, 'color');
-    const minStockValue = getParamsSpecificValue('minStock') ?? '0';
-    const maxStockValue = getParamsSpecificValue('maxStock') ?? '100000'; //! 10000?
-    const minPriceValue = getParamsSpecificValue('minPrice') ?? '0';
-    const maxPriceValue = getParamsSpecificValue('maxPrice') ?? '100000'; //! 10000?
-
-    let filteredProducts = PRODUCTS.filter((element) => {
-      return (
-        brandValue.includes(element.brand) &&
-        categoryValue.includes(element.category) &&
-        colorValue.includes(element.color) &&
-        element.price >= +minPriceValue &&
-        element.price <= +maxPriceValue &&
-        element.stock >= +minStockValue &&
-        element.stock <= +maxStockValue
-      );
-    });
-
-    const searchValue = getParamsSpecificValue('search') ?? null;
-    if (searchValue) {
-      filteredProducts = this.filterProductsBySearchValue(filteredProducts, searchValue);
-    }
-
-    if (filteredProducts.length === 0) {
-      return [
-        {
-          brand: 'fake',
-          category: 'fake',
-          color: 'fake',
-          description: 'fake',
-          id: 0,
-          images: [],
-          material: 'fake',
-          price: 0,
-          stock: 0,
-          thumbnail: 'https://basharathospital.clinta.biz/assets/under-construction.png',
-          title: 'Товаров не найдено',
-          top: 'fake',
-        },
-      ];
-    }
-
-    return filteredProducts;
+  fillProductsComponents(products: IProduct[]) {
+    return products.map((product) => new ProductMain(product));
   }
 
-  filterProductsBySearchValue(products: IProduct[], value: string) {
-    const searchValue = value.toLocaleLowerCase();
-    const filteredProducts = products.filter((element) => {
-      return (
-        element.title.toLowerCase().includes(searchValue) ||
-        element.brand.toLowerCase().includes(searchValue) ||
-        element.color.toLowerCase().includes(searchValue) ||
-        element.stock.toString().includes(searchValue) ||
-        element.price.toString().includes(searchValue)
-      );
-    });
-
-    return filteredProducts;
-  }
-
-  sortProducts(sortFilter: string) {
-    switch (sortFilter) {
-      case 'p-asc':
-        this.products.sort((a: IProduct, b: IProduct) => a.price - b.price);
-        break;
-
-      case 'p-des':
-        this.products.sort((a: IProduct, b: IProduct) => -a.price + b.price);
-        break;
-
-      case 'n-asc':
-        this.products.sort((a: IProduct, b: IProduct) => {
-          const firstTitle = a.title.toLocaleLowerCase();
-          const secondTitle = b.title.toLocaleLowerCase();
-          if (firstTitle > secondTitle) {
-            return 1;
-          }
-          if (firstTitle < secondTitle) {
-            return -1;
-          }
-
-          return 0;
-        });
-        break;
-
-      case 'n-des':
-        this.products.sort((a: IProduct, b: IProduct) => {
-          const firstTitle = a.title[0];
-          const secondTitle = b.title[0];
-          if (firstTitle > secondTitle) {
-            return -1;
-          }
-          if (firstTitle < secondTitle) {
-            return 1;
-          }
-
-          return 0;
-        });
-        break;
-    }
-  }
-
-  addItems() {
+  getContentNode() {
     const container = document.createElement('ul');
     container.className = `catalog__list ${this.listViewStyle}`;
 
@@ -149,12 +56,12 @@ class CatalogList extends Component {
   }
 
   render() {
-    this.container.append(this.addItems());
+    this.container.append(this.getContentNode());
 
     return this.container;
   }
 
-  //! Варя делала.
+  //! Варя делала, не знаю что это.
   addEvents() {
     this.productsComponents.forEach((item) => item.addEvents());
   }

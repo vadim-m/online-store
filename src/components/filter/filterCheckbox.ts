@@ -2,7 +2,7 @@ import Component from '../component';
 import PRODUCTS from '../../data/products';
 import { IProduct } from '../../types/interfaces';
 import { addParams, getParamsValues } from '../../helpers/hash';
-import { filterProducts, getPossibleVaulesListByKey } from '../../helpers/filters';
+import { getFilteredProducts, getPossibleVaulesListByKey } from '../../helpers/filters';
 
 class FilterCheckbox extends Component {
   private allProducts: IProduct[] = [...PRODUCTS];
@@ -35,7 +35,7 @@ class FilterCheckbox extends Component {
         ).length;
 
         let detectedAmount = 0;
-        filterProducts(this.allProducts).forEach((item) => {
+        getFilteredProducts(this.allProducts).forEach((item) => {
           for (const key in item) {
             if (item[key as keyof IProduct] === value) {
               detectedAmount++;

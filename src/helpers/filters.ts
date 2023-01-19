@@ -33,7 +33,7 @@ function filterProductsBySearchValue(products: IProduct[], value: string) {
   return filteredProducts;
 }
 
-export function filterProducts(products: IProduct[]) {
+export function getFilteredProducts(products: IProduct[]) {
   const brandValue =
     getParamsSpecificValue('brand') ?? getPossibleVaulesListByKey(PRODUCTS, 'brand');
   const categoryValue =
@@ -82,4 +82,45 @@ export function filterProducts(products: IProduct[]) {
   }
 
   return filteredProducts;
+}
+
+export function getSortedProducts(filteredProducts: IProduct[], sortBy: string) {
+  switch (sortBy) {
+    case 'p-asc':
+      return filteredProducts.sort((a: IProduct, b: IProduct) => a.price - b.price);
+
+    case 'p-des':
+      return filteredProducts.sort((a: IProduct, b: IProduct) => -a.price + b.price);
+
+    case 'n-asc':
+      return filteredProducts.sort((a: IProduct, b: IProduct) => {
+        const firstTitle = a.title.toLocaleLowerCase();
+        const secondTitle = b.title.toLocaleLowerCase();
+        if (firstTitle > secondTitle) {
+          return 1;
+        }
+        if (firstTitle < secondTitle) {
+          return -1;
+        }
+
+        return 0;
+      });
+
+    case 'n-des':
+      return filteredProducts.sort((a: IProduct, b: IProduct) => {
+        const firstTitle = a.title[0];
+        const secondTitle = b.title[0];
+        if (firstTitle > secondTitle) {
+          return -1;
+        }
+        if (firstTitle < secondTitle) {
+          return 1;
+        }
+
+        return 0;
+      });
+
+    default:
+      return filteredProducts;
+  }
 }

@@ -2,7 +2,11 @@ import Component from '../component';
 import PRODUCTS from '../../data/products';
 import { IProduct } from '../../types/interfaces';
 import { getParamsSpecificValue, replaceParams } from '../../helpers/hash';
-import { getMaxProductsValue, getMinProductsValue, filterProducts } from '../../helpers/filters';
+import {
+  getMaxProductsValue,
+  getMinProductsValue,
+  getFilteredProducts,
+} from '../../helpers/filters';
 
 class FilterRange extends Component {
   private allProducts: IProduct[] = [...PRODUCTS];
@@ -32,7 +36,7 @@ class FilterRange extends Component {
     this.maxParamKey = this.setParamKey('max');
     this.productsMinValue = getMinProductsValue(this.allProducts, this.category).toString();
     this.productsMaxValue = getMaxProductsValue(this.allProducts, this.category).toString();
-    this.filteredProducts = filterProducts(this.allProducts);
+    this.filteredProducts = getFilteredProducts(this.allProducts);
     this.currentMinValue = this.calcMinValue();
     this.curnetMaxValue = this.calcMaxValue();
   }
