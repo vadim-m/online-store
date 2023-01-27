@@ -8,3 +8,5 @@ export function countDiscountPrice(fullPrice: number, saleArr: number[]) {
   const sales = saleArr.reduce((acc, item) => acc + item);
   return Math.round(fullPrice - (fullPrice / 100) * sales);
 }
+
+module.exports = countDiscountPrice;

@@ -1,5 +1,5 @@
 import Component from '../component';
-const chip = require('../../assets/img/modal-form/sim-card-chip.png');
+import { chip } from '../../types/constants';
 
 class Modal extends Component {
   constructor(tagName: string, className: string) {
@@ -72,3 +72,5 @@ class Modal extends Component {
 }
 
 export default Modal;
+
+module.exports = Modal;

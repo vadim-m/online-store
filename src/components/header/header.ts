@@ -43,7 +43,7 @@ class Header extends ComponentHF {
 
     const componentCode = `
     <a class="header__logo" href="#${PageLinks[0].id}?">
-      <img src="${logo}" alt="Site Logo!" class="header__logo-pic">
+      <img src="" alt="Site Logo!" class="header__logo-pic">
     </a>
     <div class="header__order">
       <div class="header__amount">
